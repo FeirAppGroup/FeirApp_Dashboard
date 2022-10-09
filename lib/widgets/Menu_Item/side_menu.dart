@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/widgets/Menu_Item/side_menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,7 +7,6 @@ import '../../constants/style.dart';
 import '../../helpers/responsiveness.dart';
 import '../../routing/routes.dart';
 import '../Text/custom_text.dart';
-import 'side_menu_item.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({Key? key}) : super(key: key);

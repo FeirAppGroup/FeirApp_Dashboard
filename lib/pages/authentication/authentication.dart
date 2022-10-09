@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/style.dart';
-import '../../layout.dart';
 import '../../routing/routes.dart';
 import '../../widgets/Text/custom_text.dart';
 
@@ -101,7 +100,7 @@ class AuthenticationPage extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Get.offAll(rootRoute);
+                  Get.offNamed(rootRoute);
                 },
                 child: Container(
                   alignment: Alignment.center,
