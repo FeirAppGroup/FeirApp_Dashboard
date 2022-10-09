@@ -1,5 +1,6 @@
-import 'package:dashboard_feirapp/widgets/Cards/info_card.dart';
 import 'package:flutter/material.dart';
+
+import '../../pages/overview/widgets/info_card.dart';
 
 class OverviewCardsLargeScreen extends StatelessWidget {
   @override

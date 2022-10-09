@@ -1,3 +1,5 @@
+import 'package:dashboard_feirapp/pages/overview/widgets/revenue_section/revenue_section_large.dart';
+import 'package:dashboard_feirapp/pages/overview/widgets/revenue_section/revenue_section_small.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,7 +37,8 @@ class OverviewPage extends StatelessWidget {
               if (ResponsiveWidget.isLargeScreen(context) || ResponsiveWidget.isMediumScreen(context))
                 if (ResponsiveWidget.isCustomSize(context)) OverviewCardsMediumScreen() else OverviewCardsLargeScreen()
               else
-                OverviewCardsSmallScreen()
+                OverviewCardsSmallScreen(),
+              if (!ResponsiveWidget.isSmallScreen(context)) RevenueSectionLarge() else RevenueSectionSmall(),
             ],
           ),
         ),

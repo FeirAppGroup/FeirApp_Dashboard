@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/style.dart';
-import '../Text/custom_text.dart';
+import '../../../constants/style.dart';
+import '../../../widgets/Text/custom_text.dart';
 
 class InfoCardSmall extends StatelessWidget {
   final String title;
