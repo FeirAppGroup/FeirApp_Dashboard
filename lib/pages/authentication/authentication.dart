@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/style.dart';
 import '../../layout.dart';
+import '../../routing/routes.dart';
 import '../../widgets/Text/custom_text.dart';
 
 class AuthenticationPage extends StatelessWidget {
@@ -100,19 +101,19 @@ class AuthenticationPage extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Get.offAll(() => SiteLayout());
+                  Get.offAll(rootRoute);
                 },
                 child: Container(
                   alignment: Alignment.center,
                   width: double.maxFinite,
                   padding: EdgeInsets.symmetric(vertical: 16),
-                  color: active,
                   child: CustomText(
                     text: "Login",
                     color: Colors.white,
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
+                    color: active,
                   ),
                 ),
               ),

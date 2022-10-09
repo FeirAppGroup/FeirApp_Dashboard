@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../../constants/controllers.dart';
 import '../../constants/style.dart';
 import '../../helpers/responsiveness.dart';
-import '../../pages/authentication/authentication.dart';
 import '../../routing/routes.dart';
 import '../Text/custom_text.dart';
 import 'side_menu_item.dart';
@@ -60,19 +59,20 @@ class SideMenu extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: sideMenuItems
                 .map(
-                  (itemName) => SideMenuItem(
-                    itemName: itemName == authenticationPageRoute ? "Log Out" : itemName,
+                  (item) => SideMenuItem(
+                    itemName: item.name,
                     onTap: () {
-                      if (itemName == authenticationPageRoute) {
-                        Get.offAll(() => AuthenticationPage());
+                      if (item.route == authenticationPageRoute) {
+                        menuController.changeActiveitemTo(overViewPageDisplayName);
+                        Get.offAllNamed(authenticationPageRoute);
                       }
 
-                      if (!menuController.isActive(itemName)) {
-                        menuController.changeActiveitemTo(itemName);
+                      if (!menuController.isActive(item.name)) {
+                        menuController.changeActiveitemTo(item.name);
                         if (ResponsiveWidget.isSmallScreen(context)) {
                           Get.back();
                         }
-                        navigationController.navigateTo(itemName);
+                        navigationController.navigateTo(item.route);
                       }
                     },
                   ),

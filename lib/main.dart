@@ -6,6 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'constants/style.dart';
 import 'controllers/menu_controller.dart';
 import 'controllers/navigation_controller.dart';
+import 'layout.dart';
+import 'pages/404/error_page.dart';
+import 'routing/routes.dart';
 
 void main() {
   Get.put(MenuController());
@@ -20,6 +23,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialRoute: authenticationPageRoute,
+      unknownRoute: GetPage(
+        name: '/not-found',
+        page: () => PageNotFound(),
+        transition: Transition.fadeIn,
+      ),
+      getPages: [
+        GetPage(name: rootRoute, page: () => SiteLayout()),
+        GetPage(name: authenticationPageRoute, page: () => AuthenticationPage()),
+      ],
       debugShowCheckedModeBanner: false,
       title: 'FeirApp Dashboard',
       theme: ThemeData(
@@ -35,7 +48,6 @@ class MyApp extends StatelessWidget {
         }),
         primaryColor: Colors.blue,
       ),
-      home: AuthenticationPage(),
     );
   }
 }
