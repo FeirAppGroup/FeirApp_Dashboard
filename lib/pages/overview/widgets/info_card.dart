@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/style.dart';
+import '../../../constants/style.dart';
 
 class InfoCard extends StatelessWidget {
   final String title;
@@ -38,6 +38,7 @@ class InfoCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 children: [
@@ -72,9 +73,6 @@ class InfoCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                child: Container(),
               ),
             ],
           ),

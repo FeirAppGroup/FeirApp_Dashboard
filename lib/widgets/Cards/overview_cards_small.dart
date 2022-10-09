@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'info_card_small.dart';
+import '../../pages/overview/widgets/info_card_small.dart';
 
 class OverviewCardsSmallScreen extends StatelessWidget {
   const OverviewCardsSmallScreen({Key? key}) : super(key: key);

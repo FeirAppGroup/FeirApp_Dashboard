@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../constants/controllers.dart';
 import '../../helpers/responsiveness.dart';
 import '../../widgets/Text/custom_text.dart';
+import 'widgets/drivers_table.dart';
 
 class DriversPage extends StatelessWidget {
   @override
@@ -21,6 +22,13 @@ class DriversPage extends StatelessWidget {
                   text: menuController.activeItem.value,
                   size: 24,
                   weight: FontWeight.bold,
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    DriversTable(),
+                  ],
                 ),
               )
             ],

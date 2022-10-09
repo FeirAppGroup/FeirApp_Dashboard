@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../constants/controllers.dart';
 import '../../helpers/responsiveness.dart';
 import '../../widgets/Text/custom_text.dart';
+import 'widgets/clients_table.dart';
 
 class ClientsPage extends StatelessWidget {
   @override
@@ -22,7 +23,14 @@ class ClientsPage extends StatelessWidget {
                   size: 24,
                   weight: FontWeight.bold,
                 ),
-              )
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    ClientsTable(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
