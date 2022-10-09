@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../constants/style.dart';
 import '../../../../widgets/Text/custom_text.dart';
 
+import '../bar_chart.dart';
 import 'revenue_info.dart';
 
 class RevenueSectionLarge extends StatelessWidget {
@@ -36,7 +37,7 @@ class RevenueSectionLarge extends StatelessWidget {
                 Container(
                   width: 500,
                   height: 200,
-                  //child: ChartsDrivers(),
+                  child: ChartsDrivers(),
                 ),
               ],
             ),

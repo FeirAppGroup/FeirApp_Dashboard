@@ -9,6 +9,7 @@ import '../../widgets/Cards/overview_cards_large.dart';
 import '../../widgets/Cards/overview_cards_medium.dart';
 import '../../widgets/Cards/overview_cards_small.dart';
 import '../../widgets/Text/custom_text.dart';
+import 'widgets/available_drivers.dart';
 
 class OverviewPage extends StatelessWidget {
   @override
@@ -39,6 +40,7 @@ class OverviewPage extends StatelessWidget {
               else
                 OverviewCardsSmallScreen(),
               if (!ResponsiveWidget.isSmallScreen(context)) RevenueSectionLarge() else RevenueSectionSmall(),
+              AvailableDrivers(),
             ],
           ),
         ),
