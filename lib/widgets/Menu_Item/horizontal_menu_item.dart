@@ -24,19 +24,25 @@ class HorizontalMenuItem extends StatelessWidget {
       },
       child: Obx(
         () => Container(
-          color: menuController.isHovering(itemName) ? lightGrey.withOpacity(.1) : Colors.transparent,
+          color: menuController.isHovering(itemName) ? text_blue.withOpacity(.1) : Colors.transparent,
           child: Row(
             children: [
               Visibility(
                 visible: menuController.isHovering(itemName) || menuController.isActive(itemName),
-                child: Container(
-                  width: 6,
-                  height: 40,
-                  color: dark,
-                ),
                 maintainSize: true,
                 maintainState: true,
                 maintainAnimation: true,
+                child: menuController.isHovering(itemName)
+                    ? Container(
+                        width: 6,
+                        height: 40,
+                        color: light,
+                      )
+                    : Container(
+                        width: 6,
+                        height: 40,
+                        color: text_gray,
+                      ),
               ),
               SizedBox(
                 width: _width / 80,
@@ -47,18 +53,20 @@ class HorizontalMenuItem extends StatelessWidget {
               ),
               if (!menuController.isActive(itemName))
                 Flexible(
-                    child: CustomText(
-                  text: itemName,
-                  color: menuController.isHovering(itemName) ? dark : lightGrey,
-                ))
+                  child: CustomText(
+                    text: itemName,
+                    color: menuController.isHovering(itemName) ? text_gray : text_white,
+                  ),
+                )
               else
                 Flexible(
-                    child: CustomText(
-                  text: itemName,
-                  color: dark,
-                  size: 18,
-                  weight: FontWeight.bold,
-                ))
+                  child: CustomText(
+                    text: itemName,
+                    color: text_gray,
+                    size: 18,
+                    weight: FontWeight.bold,
+                  ),
+                ),
             ],
           ),
         ),

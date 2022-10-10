@@ -16,7 +16,7 @@ class SideMenu extends StatelessWidget {
     double _width = MediaQuery.of(context).size.width;
 
     return Container(
-      color: light,
+      color: main_black,
       child: ListView(
         children: [
           if (ResponsiveWidget.isSmallScreen(context))
@@ -39,7 +39,7 @@ class SideMenu extends StatelessWidget {
                         text: "Dash",
                         size: 20,
                         weight: FontWeight.bold,
-                        color: active,
+                        color: text_gray,
                       ),
                     ),
                     SizedBox(
@@ -53,7 +53,7 @@ class SideMenu extends StatelessWidget {
             height: 40,
           ),
           Divider(
-            color: lightGrey.withOpacity(.1),
+            color: main_dividers,
           ),
           Column(
             mainAxisSize: MainAxisSize.min,
