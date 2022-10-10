@@ -15,7 +15,7 @@ class RevenueSectionSmall extends StatelessWidget {
       padding: EdgeInsets.all(24),
       margin: EdgeInsets.symmetric(vertical: 30),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: mainBlack,
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(offset: Offset(0, 6), color: lightGrey.withOpacity(.1), blurRadius: 12),
@@ -33,9 +33,10 @@ class RevenueSectionSmall extends StatelessWidget {
                   text: "Revenue Chart",
                   size: 20,
                   weight: FontWeight.bold,
-                  color: lightGrey,
+                  color: textWhite,
                 ),
                 Container(
+                  color: bgBlackMain,
                   width: 400,
                   height: 200,
                   child: ChartsDrivers(),
@@ -44,6 +45,7 @@ class RevenueSectionSmall extends StatelessWidget {
             ),
           ),
           Container(
+            color: bgBlackMain,
             height: 260,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

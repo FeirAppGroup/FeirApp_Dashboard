@@ -11,7 +11,7 @@ class AvailableDrivers extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: EdgeInsets.only(bottom: 30),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: bgBlackCard,
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(offset: Offset(0, 6), color: lightGrey.withOpacity(.1), blurRadius: 12),
@@ -58,8 +58,18 @@ class AvailableDrivers extends StatelessWidget {
               7,
               (index) => DataRow(
                 cells: [
-                  DataCell(CustomText(text: "Santos Enoque")),
-                  DataCell(CustomText(text: "New York City")),
+                  DataCell(
+                    CustomText(
+                      text: "Santos Enoque",
+                      color: textWhite,
+                    ),
+                  ),
+                  DataCell(
+                    CustomText(
+                      text: "New York City",
+                      color: textWhite,
+                    ),
+                  ),
                   DataCell(Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -71,7 +81,10 @@ class AvailableDrivers extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      CustomText(text: "4.$index"),
+                      CustomText(
+                        text: "4.$index",
+                        color: textWhite,
+                      ),
                     ],
                   )),
                   DataCell(
