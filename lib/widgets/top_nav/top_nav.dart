@@ -80,18 +80,11 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
         SizedBox(
           width: 24,
         ),
-        CustomText(
-          text: 'Santos Enoque',
-          color: lightGrey,
-        ),
-        SizedBox(
-          width: 5,
-        ),
         Container(
-          height: 20,
-          width: 20,
+          height: 40,
+          width: 40,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.black,
             borderRadius: BorderRadius.circular(30),
           ),
           child: Container(
