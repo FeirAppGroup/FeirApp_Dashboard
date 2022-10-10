@@ -7,24 +7,24 @@ Color dark = Color(0xFF363740);
 Color active = Color(0xFF3C19C0);
 
 //bg - background
-Color bg_blackmain = Color(0xFF1D202D);
-Color bg_blackcard = Color(0xFF272741);
+Color bgBlackMain = Color(0xFF1D202D);
+Color bgBlackCard = Color(0xFF272741);
 
 //main
-Color main_black = Color(0xFF2E2B46);
-Color main_stroke = Color(0xFF1B1D2A);
-Color main_white = Color(0xFFFAFBFC);
-Color main_dividers = Color(0xFF201E33);
-Color main_tooltip = Color(0xFF8561EA);
-Color main_hover = Color(0xFF6F43EA);
+Color mainBlack = Color(0xFF2E2B46);
+Color mainStroke = Color(0xFF1B1D2A);
+Color mainWhite = Color(0xFFFAFBFC);
+Color mainDividers = Color(0xFF201E33);
+Color mainTooltip = Color(0xFF8561EA);
+Color mainHover = Color(0xFF6F43EA);
 
 //text
-Color text_white = Color(0xFFFAFBFC);
-Color text_liteblue = Color(0xFFBEC1FF);
-Color text_blue = Color(0xFF8561EA);
-Color text_gray = Color(0xFF6889FF);
+Color textWhite = Color(0xFFFAFBFC);
+Color textLiteblue = Color(0xFFBEC1FF);
+Color textBlue = Color(0xFF8561EA);
+Color textGray = Color(0xFF6889FF);
 
 //Tertiary
-Color tertiary_red = Color(0xFFFF4F44);
-Color tertiary_green = Color(0xFF3BE155);
-Color tertiary_blue = Color(0xFF0C8AFF);
+Color tertiaryRed = Color(0xFFFF4F44);
+Color tertiaryGreen = Color(0xFF3BE155);
+Color tertiaryBlue = Color(0xFF0C8AFF);

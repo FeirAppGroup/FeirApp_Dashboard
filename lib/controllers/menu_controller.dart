@@ -42,13 +42,13 @@ class MenuController extends GetxController {
       return Icon(
         icon,
         size: 22,
-        color: text_gray,
+        color: textGray,
       );
     }
 
     return Icon(
       icon,
-      color: isHovering(itemName) ? text_gray : text_white,
+      color: isHovering(itemName) ? textGray : textWhite,
     );
   }
 }

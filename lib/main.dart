@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'FeirApp Dashboard',
       theme: ThemeData(
-        scaffoldBackgroundColor: light,
+        scaffoldBackgroundColor: bgBlackMain,
         textTheme: GoogleFonts.mulishTextTheme(
           Theme.of(context).textTheme,
         ).apply(
