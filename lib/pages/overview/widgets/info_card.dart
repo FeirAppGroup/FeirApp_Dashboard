@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/style.dart';
@@ -24,13 +25,13 @@ class InfoCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          height: 136,
+          height: Dimensions.height136,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: mainBlack,
             boxShadow: [
               BoxShadow(
-                offset: Offset(0, 6),
+                offset: Offset(0, Dimensions.height5),
                 color: lightGrey.withOpacity(.1),
                 blurRadius: 12,
               ),
@@ -46,7 +47,7 @@ class InfoCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       color: topColor,
-                      height: 5,
+                      height: Dimensions.height5,
                     ),
                   ),
                 ],
@@ -61,14 +62,14 @@ class InfoCard extends StatelessWidget {
                     TextSpan(
                       text: "$title\n",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: Dimensions.font16,
                         color: isActive ? textGray : textWhite,
                       ),
                     ),
                     TextSpan(
                       text: "$value\n",
                       style: TextStyle(
-                        fontSize: 40,
+                        fontSize: Dimensions.font40,
                         color: isActive ? textGray : textWhite,
                       ),
                     ),

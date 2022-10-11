@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/Text/custom_text.dart';
@@ -12,7 +13,7 @@ class PageNotFound extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset("assets/images/error.png"),
-          SizedBox(height: 10),
+          SizedBox(height: Dimensions.height10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

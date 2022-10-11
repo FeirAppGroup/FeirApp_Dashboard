@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,7 +42,7 @@ class MenuController extends GetxController {
     if (isActive(itemName)) {
       return Icon(
         icon,
-        size: 22,
+        size: Dimensions.icon22,
         color: textGray,
       );
     }

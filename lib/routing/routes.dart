@@ -12,6 +12,8 @@ const clientsPageRoute = '/clients';
 const authenticationPageDisplayName = 'Authentication';
 const authenticationPageRoute = '/authentication';
 
+const notfoundPageRoute = '/not-found';
+
 class MenuItem {
   final String name;
   final String route;
