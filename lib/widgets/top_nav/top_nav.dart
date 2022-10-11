@@ -32,7 +32,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
         Visibility(
           child: CustomText(
             text: 'Dash',
-            color: lightGrey,
+            color: textWhite,
             size: 20,
             weight: FontWeight.bold,
           ),
@@ -43,7 +43,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
         IconButton(
           icon: Icon(
             Icons.settings,
-            color: dark.withOpacity(.7),
+            color: mainWhite,
           ),
           onPressed: () {},
         ),
@@ -52,7 +52,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
             IconButton(
               icon: Icon(
                 Icons.notifications,
-                color: dark.withOpacity(.7),
+                color: mainWhite,
               ),
               onPressed: () {},
             ),
@@ -66,7 +66,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
                 decoration: BoxDecoration(
                   color: active,
                   borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: light, width: 2),
+                  border: Border.all(color: Colors.black, width: 2),
                 ),
               ),
             ),
@@ -75,7 +75,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
         Container(
           width: 1,
           height: 22,
-          color: lightGrey,
+          color: mainWhite,
         ),
         SizedBox(
           width: 24,
@@ -91,7 +91,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
             padding: EdgeInsets.all(2),
             margin: EdgeInsets.all(2),
             child: CircleAvatar(
-              backgroundColor: light,
+              backgroundColor: mainWhite,
               child: Icon(
                 Icons.person_outline,
                 color: dark,

@@ -21,14 +21,15 @@ class OverviewPage extends StatelessWidget {
           () => Row(
             children: [
               Container(
+                height: 50,
                 margin: EdgeInsets.only(
                   top: ResponsiveWidget.isSmallScreen(context) ? 56 : 6,
                 ),
                 child: CustomText(
                   text: menuController.activeItem.value,
                   size: 24,
-                  weight: FontWeight.bold,
                   color: textWhite,
+                  weight: FontWeight.bold,
                 ),
               )
             ],
