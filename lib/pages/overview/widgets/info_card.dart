@@ -27,7 +27,7 @@ class InfoCard extends StatelessWidget {
           height: 136,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: mainBlack,
             boxShadow: [
               BoxShadow(
                 offset: Offset(0, 6),
@@ -36,6 +36,7 @@ class InfoCard extends StatelessWidget {
               ),
             ],
             borderRadius: BorderRadius.circular(8),
+            border: Border.all(),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -61,14 +62,14 @@ class InfoCard extends StatelessWidget {
                       text: "$title\n",
                       style: TextStyle(
                         fontSize: 16,
-                        color: isActive ? active : lightGrey,
+                        color: isActive ? textGray : textWhite,
                       ),
                     ),
                     TextSpan(
                       text: "$value\n",
                       style: TextStyle(
                         fontSize: 40,
-                        color: isActive ? active : dark,
+                        color: isActive ? textGray : textWhite,
                       ),
                     ),
                   ],

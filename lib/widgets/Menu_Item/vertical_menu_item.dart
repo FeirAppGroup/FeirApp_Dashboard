@@ -23,20 +23,25 @@ class VerticalMenuItem extends StatelessWidget {
       },
       child: Obx(
         () => Container(
-          color: menuController.isHovering(itemName) ? lightGrey.withOpacity(.1) : Colors.transparent,
+          color: menuController.isHovering(itemName) ? textBlue.withOpacity(.1) : Colors.transparent,
           child: Row(
             children: [
               Visibility(
-                visible: menuController.isHovering(itemName) || menuController.isActive(itemName),
-                maintainSize: true,
-                maintainState: true,
-                maintainAnimation: true,
-                child: Container(
-                  width: 3,
-                  height: 72,
-                  color: dark,
-                ),
-              ),
+                  visible: menuController.isHovering(itemName) || menuController.isActive(itemName),
+                  maintainSize: true,
+                  maintainState: true,
+                  maintainAnimation: true,
+                  child: menuController.isHovering(itemName)
+                      ? Container(
+                          width: 3,
+                          height: 72,
+                          color: light,
+                        )
+                      : Container(
+                          width: 3,
+                          height: 72,
+                          color: textGray,
+                        )),
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -49,14 +54,14 @@ class VerticalMenuItem extends StatelessWidget {
                       Flexible(
                         child: CustomText(
                           text: itemName,
-                          color: menuController.isHovering(itemName) ? dark : lightGrey,
+                          color: menuController.isHovering(itemName) ? textGray : textWhite,
                         ),
                       )
                     else
                       Flexible(
                         child: CustomText(
                           text: itemName,
-                          color: dark,
+                          color: textGray,
                           size: 18,
                           weight: FontWeight.bold,
                         ),

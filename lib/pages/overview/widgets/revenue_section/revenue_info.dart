@@ -30,6 +30,7 @@ class RevenueInfo extends StatelessWidget {
               text: "$amount\n\n",
               style: TextStyle(
                 fontSize: 24,
+                color: textWhite,
                 fontWeight: FontWeight.bold,
               ),
             )

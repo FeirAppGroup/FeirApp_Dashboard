@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/constants/style.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -29,18 +30,19 @@ class _ChartsDriversState extends State<ChartsDrivers> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: bgBlackMain,
         child: SfCartesianChart(
             primaryXAxis: CategoryAxis(),
             primaryYAxis: NumericAxis(minimum: 0, maximum: 40, interval: 10),
             tooltipBehavior: _tooltip,
             series: <ChartSeries<_ChartData, String>>[
-          ColumnSeries<_ChartData, String>(
-              dataSource: data,
-              xValueMapper: (_ChartData data, _) => data.x,
-              yValueMapper: (_ChartData data, _) => data.y,
-              name: 'Gold',
-              color: Color.fromRGBO(8, 142, 255, 1))
-        ]));
+              ColumnSeries<_ChartData, String>(
+                  dataSource: data,
+                  xValueMapper: (_ChartData data, _) => data.x,
+                  yValueMapper: (_ChartData data, _) => data.y,
+                  name: 'Gold',
+                  color: Color.fromRGBO(8, 142, 255, 1))
+            ]));
   }
 }
 

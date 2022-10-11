@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: authenticationPageRoute,
+      initialRoute: overViewPageRoute,
       unknownRoute: GetPage(
         name: '/not-found',
         page: () => PageNotFound(),
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'FeirApp Dashboard',
       theme: ThemeData(
-        scaffoldBackgroundColor: light,
+        scaffoldBackgroundColor: bgBlackMain,
         textTheme: GoogleFonts.mulishTextTheme(
           Theme.of(context).textTheme,
         ).apply(
