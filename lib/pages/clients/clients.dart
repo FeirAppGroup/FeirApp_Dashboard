@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/constants/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,16 +22,19 @@ class ClientsPage extends StatelessWidget {
                 child: CustomText(
                   text: menuController.activeItem.value,
                   size: 24,
+                  color: textGray,
                   weight: FontWeight.bold,
                 ),
               ),
-              Expanded(
-                child: ListView(
-                  children: [
-                    ClientsTable(),
-                  ],
-                ),
-              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            children: [
+              ClientsTable(),
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/constants/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,25 +16,29 @@ class DriversPage extends StatelessWidget {
           () => Row(
             children: [
               Container(
+                height: 50,
                 margin: EdgeInsets.only(
                   top: ResponsiveWidget.isSmallScreen(context) ? 56 : 6,
                 ),
                 child: CustomText(
                   text: menuController.activeItem.value,
                   size: 24,
+                  color: textBlue,
                   weight: FontWeight.bold,
                 ),
               ),
-              Expanded(
-                child: ListView(
-                  children: [
-                    DriversTable(),
-                  ],
-                ),
-              )
             ],
           ),
         ),
+        Expanded(
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            children: [
+              DriversTable(),
+            ],
+          ),
+        )
       ],
     );
   }

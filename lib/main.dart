@@ -37,11 +37,6 @@ class MyApp extends StatelessWidget {
       title: 'FeirApp Dashboard',
       theme: ThemeData(
         scaffoldBackgroundColor: bgBlackMain,
-        textTheme: GoogleFonts.mulishTextTheme(
-          Theme.of(context).textTheme,
-        ).apply(
-          bodyColor: Colors.black,
-        ),
         pageTransitionsTheme: const PageTransitionsTheme(builders: {
           TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
           TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
