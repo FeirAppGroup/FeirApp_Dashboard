@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/main.dart';
 import 'package:dashboard_feirapp/pages/overview/widgets/revenue_section/revenue_section_large.dart';
 import 'package:dashboard_feirapp/pages/overview/widgets/revenue_section/revenue_section_small.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class OverviewPage extends StatelessWidget {
                   color: textWhite,
                   weight: FontWeight.bold,
                 ),
-              )
+              ),
             ],
           ),
         ),

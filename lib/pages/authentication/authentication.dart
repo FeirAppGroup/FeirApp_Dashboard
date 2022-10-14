@@ -1,3 +1,5 @@
+import 'package:dashboard_feirapp/controllers/auth/login_controller.dart';
+import 'package:dashboard_feirapp/models/dtos/login_dto.dart';
 import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -121,7 +123,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                         ),
                       ),
                       validator: _validarEmail,
-                      onSaved: (value) => _email = value,
+                      onChanged: (value) => _email = value,
                     ),
                   ],
                 ),
@@ -225,7 +227,14 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               ),
               InkWell(
                 onTap: () {
-                  Get.offNamed(rootRoute);
+                  Get.find<LoginController>().postAuth(
+                    LoginDTO(
+                      login: _email.toString(),
+                      senha: _password.toString(),
+                    ),
+                  );
+
+                  Get.toNamed(rootRoute);
                 },
                 child: Container(
                   alignment: Alignment.center,

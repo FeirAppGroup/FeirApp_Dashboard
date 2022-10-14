@@ -12,7 +12,7 @@ const clientsPageRoute = '/clients';
 const authenticationPageDisplayName = 'Authentication';
 const authenticationPageRoute = '/authentication';
 
-const notfoundPageRoute = '/not-found';
+const notfoundPageRoute = '/notfound';
 
 class MenuItem {
   final String name;

@@ -1,18 +1,20 @@
+import 'package:dashboard_feirapp/controllers/shared_init.dart';
 import 'package:dashboard_feirapp/pages/authentication/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/style.dart';
-import 'controllers/menu_controller.dart';
-import 'controllers/navigation_controller.dart';
 import 'layout.dart';
 import 'pages/404/error_page.dart';
 import 'routing/routes.dart';
+import 'helpers/dependences.dart' as dep;
 
-void main() {
-  Get.put(MenuController());
-  Get.put(NavigationController());
+var logado;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dep.init();
   runApp(const MyApp());
 }
 
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       initialRoute: authenticationPageRoute,
       unknownRoute: GetPage(
-        name: '/not-found',
+        name: '/notfound',
         page: () => PageNotFound(),
         transition: Transition.fadeIn,
       ),
