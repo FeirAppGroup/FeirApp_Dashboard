@@ -1,4 +1,3 @@
-import 'package:dashboard_feirapp/controllers/shared_init.dart';
 import 'package:dashboard_feirapp/pages/authentication/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

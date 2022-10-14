@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:dashboard_feirapp/controllers/shared_init.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -108,20 +107,14 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
             color: Colors.black,
             borderRadius: BorderRadius.circular(30),
           ),
-          child: GestureDetector(
-            onTap: () async {
-              SharedPreferences preferences = await SharedPreferences.getInstance();
-              await preferences.clear();
-            },
-            child: Container(
-              padding: EdgeInsets.all(2),
-              margin: EdgeInsets.all(2),
-              child: CircleAvatar(
-                backgroundColor: mainWhite,
-                child: Icon(
-                  Icons.clear,
-                  color: dark,
-                ),
+          child: Container(
+            padding: EdgeInsets.all(2),
+            margin: EdgeInsets.all(2),
+            child: CircleAvatar(
+              backgroundColor: mainWhite,
+              child: Icon(
+                Icons.clear,
+                color: dark,
               ),
             ),
           ),
