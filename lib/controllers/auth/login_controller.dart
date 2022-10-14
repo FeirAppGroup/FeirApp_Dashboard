@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/repository/login_repo.dart';
 import '../../models/dtos/login_dto.dart';
