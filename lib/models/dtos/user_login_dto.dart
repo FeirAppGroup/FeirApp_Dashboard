@@ -32,6 +32,5 @@ class UserLoginDto {
 
   String toJson() => json.encode(toMap());
 
-  factory UserLoginDto.fromJson(String source) =>
-      UserLoginDto.fromMap(json.decode(source));
+  factory UserLoginDto.fromJson(String source) => UserLoginDto.fromMap(json.decode(source));
 }

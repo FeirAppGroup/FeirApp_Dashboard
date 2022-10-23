@@ -226,15 +226,20 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 height: 15,
               ),
               InkWell(
-                onTap: () {
-                  Get.find<LoginController>().postAuth(
+                onTap: () async {
+                  String load = await Get.find<LoginController>().postAuth(
                     LoginDTO(
                       login: _email.toString(),
                       senha: _password.toString(),
                     ),
                   );
 
-                  Get.toNamed(rootRoute);
+                  print("resultado: " + load);
+                  if (load == "Ok") {
+                    Get.toNamed(rootRoute);
+                  } else {
+                    AuthenticationPage();
+                  }
                 },
                 child: Container(
                   alignment: Alignment.center,

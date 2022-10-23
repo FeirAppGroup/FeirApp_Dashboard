@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/helpers/shared_pref.dart';
 import 'package:get/get.dart';
 
 import '../constants/app_constants.dart';
