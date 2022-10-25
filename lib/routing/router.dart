@@ -1,4 +1,6 @@
+import 'package:dashboard_feirapp/pages/404/circular.dart';
 import 'package:dashboard_feirapp/pages/404/error_page.dart';
+import 'package:dashboard_feirapp/pages/splash/splashpage.dart';
 import 'package:dashboard_feirapp/routing/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +18,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(ClientsPage());
     case notfoundPageRoute:
       return _getPageRoute(PageNotFound());
+    case splashPageRoute:
+      return _getPageRoute(SplashPage());
     default:
       return _getPageRoute(OverviewPage());
   }

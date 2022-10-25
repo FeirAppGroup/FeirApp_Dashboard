@@ -1,14 +1,18 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:dashboard_feirapp/helpers/shared_pref.dart';
+import 'package:dashboard_feirapp/pages/404/circular.dart';
 import 'package:dashboard_feirapp/pages/authentication/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:after_layout/after_layout.dart';
 
 import 'constants/style.dart';
 import 'layout.dart';
 import 'models/dtos/user_login_dto.dart';
 import 'pages/404/error_page.dart';
+import 'pages/splash/splashpage.dart';
 import 'routing/routes.dart';
 import 'helpers/dependences.dart' as dep;
 
@@ -28,24 +32,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  loadPref() async {
-    SharedPreferences sharedUser = await SharedPreferences.getInstance();
-    user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
-    token = user.token;
-    print(token);
-
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  late UserLoginDto user;
-  String? token;
-  bool isLoading = true;
-
   @override
   void initState() {
-    loadPref();
     super.initState();
   }
 
@@ -53,11 +41,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: isLoading
-          ? notfoundPageRoute
-          : token == null
-              ? authenticationPageRoute
-              : rootRoute,
+      initialRoute: splashPageRoute,
       unknownRoute: GetPage(
         name: notfoundPageRoute,
         page: () => PageNotFound(),
@@ -66,6 +50,7 @@ class _MyAppState extends State<MyApp> {
       getPages: [
         GetPage(name: rootRoute, page: () => SiteLayout()),
         GetPage(name: authenticationPageRoute, page: () => AuthenticationPage()),
+        GetPage(name: splashPageRoute, page: () => SplashPage()),
       ],
       debugShowCheckedModeBanner: false,
       title: 'FeirApp Dashboard',

@@ -26,8 +26,10 @@ class OverviewPage extends StatefulWidget {
 class _OverviewPageState extends State<OverviewPage> {
   loadPref() async {
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
-    user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
-    print(user);
+    if (sharedUser.getString('user') != null) {
+      user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
+      print(user);
+    }
 
     setState(() {
       isLoading = false;
@@ -73,7 +75,7 @@ class _OverviewPageState extends State<OverviewPage> {
                         weight: FontWeight.bold,
                       ),
                     ),
-                    Text("Nome: " + user!.email)
+                    Text("Email: " + user!.email)
                   ],
                 ),
               ),

@@ -13,6 +13,8 @@ const authenticationPageDisplayName = 'Authentication';
 const authenticationPageRoute = '/authentication';
 
 const notfoundPageRoute = '/notfound';
+const circularPageRoute = '/circular';
+const splashPageRoute = '/splash';
 
 class MenuItem {
   final String name;
