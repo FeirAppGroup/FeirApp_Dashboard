@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 
 class CustomText extends StatelessWidget {
@@ -18,7 +19,7 @@ class CustomText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: size ?? 16,
+        fontSize: size ?? Dimensions.font16,
         color: color ?? Colors.black,
         fontWeight: weight ?? FontWeight.normal,
       ),

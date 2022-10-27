@@ -75,7 +75,7 @@ class _OverviewPageState extends State<OverviewPage> {
                         weight: FontWeight.bold,
                       ),
                     ),
-                    Text("Email: " + user!.email)
+                    //Text("Email: " + user!.email)
                   ],
                 ),
               ),

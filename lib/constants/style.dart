@@ -28,3 +28,6 @@ Color textGray = Color(0xFF6889FF);
 Color tertiaryRed = Color(0xFFFF4F44);
 Color tertiaryGreen = Color(0xFF3BE155);
 Color tertiaryBlue = Color(0xFF0C8AFF);
+
+//Icons
+Color starTableColor = Color(0xFFFF5722);

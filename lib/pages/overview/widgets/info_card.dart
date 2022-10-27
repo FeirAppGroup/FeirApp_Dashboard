@@ -33,10 +33,10 @@ class InfoCard extends StatelessWidget {
               BoxShadow(
                 offset: Offset(0, Dimensions.height5),
                 color: lightGrey.withOpacity(.1),
-                blurRadius: 12,
+                blurRadius: Dimensions.radius12,
               ),
             ],
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(Dimensions.radius8),
             border: Border.all(),
           ),
           child: Column(

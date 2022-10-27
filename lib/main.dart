@@ -41,7 +41,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: splashPageRoute,
+      //initialRoute: splashPageRoute,
+      home: SiteLayout(),
       unknownRoute: GetPage(
         name: notfoundPageRoute,
         page: () => PageNotFound(),
