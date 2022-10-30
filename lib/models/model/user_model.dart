@@ -12,7 +12,7 @@ class UserModel {
   String cpf;
   String cnpj;
   String dap;
-  TipoUsuarioEnum tipoUsuario;
+  int tipoUsuario;
 
   UserModel({
     this.id,
@@ -41,9 +41,7 @@ class UserModel {
     result.addAll({'cpf': cpf});
     result.addAll({'cnpj': cnpj});
     result.addAll({'dap': dap});
-    result.addAll({
-      'tipoUsuario': tipoUsuario.index,
-    });
+    result.addAll({'tipoUsuario': tipoUsuario});
 
     return result;
   }
@@ -60,7 +58,7 @@ class UserModel {
       cpf: map['cpf'] ?? '',
       cnpj: map['cnpj'] ?? '',
       dap: map['dap'] ?? '',
-      tipoUsuario: TipoUsuarioEnum.values[val],
+      tipoUsuario: map['tipo']?.toInt(),
     );
   }
 

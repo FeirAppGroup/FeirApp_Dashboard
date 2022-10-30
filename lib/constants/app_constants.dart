@@ -11,7 +11,7 @@ class AppConstants {
   static const String PROPERTY_URI = '/propriedade';
 
   static const String AUTH_URI = '/login';
-  static const String USUARIO = '/usuario';
-  static const String PEDIDOS_USER_LOGED = '/pedido/usuario/pedidos';
-  static const String POST_PEDIDO = '/pedido';
+  static const String USER_URI = '/usuario';
+  static const String ORDERS_BY_USER_URI = '/pedido/usuario/pedidos';
+  static const String POST_ORDER_URI = '/pedido';
 }

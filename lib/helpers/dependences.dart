@@ -1,3 +1,5 @@
+import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
+import 'package:dashboard_feirapp/data/repository/user_repo.dart';
 import 'package:dashboard_feirapp/helpers/shared_pref.dart';
 import 'package:get/get.dart';
 
@@ -14,9 +16,11 @@ Future<void> init() async {
 
   //repos
   Get.lazyPut(() => LoginRepo(apiClient: Get.find()));
+  Get.lazyPut(() => UserRepo(apiClient: Get.find()));
 
   //controllers
   Get.lazyPut(() => LoginController(loginRepo: Get.find()));
+  Get.lazyPut(() => UserController(userRepo: Get.find()));
 
   Get.put(MenuController());
   Get.put(NavigationController());

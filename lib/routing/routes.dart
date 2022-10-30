@@ -3,8 +3,11 @@ const rootRoute = "/";
 const overViewPageDisplayName = 'Overview';
 const overViewPageRoute = '/overview';
 
-const driversPageDisplayName = 'Drivers';
-const driversPageRoute = '/drivers';
+const productorPageDisplayName = 'Produtor';
+const productorPageRoute = '/productor';
+
+const productorFormDisplayName = 'Produtor Form';
+const productorFormRoute = '/productor-form';
 
 const clientsPageDisplayName = 'Clients';
 const clientsPageRoute = '/clients';
@@ -25,7 +28,7 @@ class MenuItem {
 
 List<MenuItem> sideMenuItems = [
   MenuItem(overViewPageDisplayName, overViewPageRoute),
-  MenuItem(driversPageDisplayName, driversPageRoute),
+  MenuItem(productorPageDisplayName, productorPageRoute),
   MenuItem(clientsPageDisplayName, clientsPageRoute),
   MenuItem(authenticationPageDisplayName, authenticationPageRoute),
 ];

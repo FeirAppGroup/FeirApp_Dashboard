@@ -20,11 +20,15 @@ class Dimensions {
   //dynamic width - padding and margin
   static double width1 = screenWidth / screenWidth;
   static double width5 = screenWidth / 204.8;
+  static double width20 = screenWidth / 51.2;
   static double width64 = screenWidth / 16;
   static double width150 = screenWidth / 6.82;
 
   //font size
+  static double font10 = screenHeight / 76.8;
+  static double font12 = screenHeight / 64;
   static double font16 = screenHeight / 48;
+  static double font18 = screenHeight / 42.66;
   static double font24 = screenHeight / 32;
   static double font40 = screenHeight / 19.2;
 
