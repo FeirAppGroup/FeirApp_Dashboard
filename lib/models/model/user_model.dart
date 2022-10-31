@@ -12,7 +12,7 @@ class UserModel {
   String cpf;
   String cnpj;
   String dap;
-  int tipoUsuario;
+  int tipo;
 
   UserModel({
     this.id,
@@ -24,7 +24,7 @@ class UserModel {
     required this.cpf,
     required this.cnpj,
     required this.dap,
-    required this.tipoUsuario,
+    required this.tipo,
   });
 
   Map<String, dynamic> toMap() {
@@ -41,7 +41,7 @@ class UserModel {
     result.addAll({'cpf': cpf});
     result.addAll({'cnpj': cnpj});
     result.addAll({'dap': dap});
-    result.addAll({'tipoUsuario': tipoUsuario});
+    result.addAll({'tipoUsuario': tipo});
 
     return result;
   }
@@ -58,7 +58,7 @@ class UserModel {
       cpf: map['cpf'] ?? '',
       cnpj: map['cnpj'] ?? '',
       dap: map['dap'] ?? '',
-      tipoUsuario: map['tipo']?.toInt(),
+      tipo: map['tipo']?.toInt(),
     );
   }
 

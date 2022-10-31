@@ -12,6 +12,7 @@ class UserController extends GetxController {
 
   Future<String> registerNewUser(UserModel user) async {
     Response response = await userRepo.registerNewUser(user.toJson());
+    print(user.toJson());
     if (response.statusCode == 200) {
       return 'Usuário cadastrado com sucesso!';
     } else {

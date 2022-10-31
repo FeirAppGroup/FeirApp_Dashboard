@@ -6,7 +6,7 @@ import '../../../constants/style.dart';
 import '../../../widgets/Text/custom_text.dart';
 
 /// Example without a datasource
-class DriversTable extends StatelessWidget {
+class ProductorTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -110,6 +110,57 @@ class DriversTable extends StatelessWidget {
                 ],
               ),
             ),
+            // rows: List<DataRow>.generate(
+            //   15,
+            //   (index) => DataRow(
+            //     cells: [
+            //       DataCell(
+            //         CustomText(
+            //           text: "Santos Enoque San Francisco",
+            //           color: textWhite,
+            //         ),
+            //       ),
+            //       DataCell(CustomText(
+            //         text: "New York City",
+            //         color: textWhite,
+            //       )),
+            //       DataCell(
+            //         Row(
+            //           mainAxisSize: MainAxisSize.min,
+            //           children: [
+            //             Icon(
+            //               Icons.star,
+            //               color: starTableColor,
+            //               size: Dimensions.icon18,
+            //             ),
+            //             SizedBox(
+            //               width: Dimensions.width5,
+            //             ),
+            //             CustomText(
+            //               text: "4.$index",
+            //               color: textWhite,
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //       DataCell(
+            //         Container(
+            //           decoration: BoxDecoration(
+            //             border: Border.all(color: active, width: .5),
+            //             color: textLiteblue,
+            //             borderRadius: BorderRadius.circular(20),
+            //           ),
+            //           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            //           child: CustomText(
+            //             text: "Assign ",
+            //             color: active.withOpacity(.7),
+            //             weight: FontWeight.bold,
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ),
         ],
       ),
