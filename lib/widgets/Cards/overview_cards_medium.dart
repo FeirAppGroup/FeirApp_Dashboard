@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../pages/overview/widgets/info_card.dart';
+import '../../utils/dimensions.dart';
 
 class OverviewCardsMediumScreen extends StatelessWidget {
   const OverviewCardsMediumScreen({Key? key}) : super(key: key);
@@ -8,6 +9,10 @@ class OverviewCardsMediumScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
+
+    var divider64 = SizedBox(
+      width: _width / Dimensions.width64,
+    );
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -21,9 +26,7 @@ class OverviewCardsMediumScreen extends StatelessWidget {
               isActive: false,
               onTap: () {},
             ),
-            SizedBox(
-              width: _width / 64,
-            ),
+            divider64,
             InfoCard(
               title: "Packages delivered",
               value: "17",
@@ -33,7 +36,7 @@ class OverviewCardsMediumScreen extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 16),
+        SizedBox(height: Dimensions.height16),
         Row(
           children: [
             InfoCard(
@@ -43,18 +46,13 @@ class OverviewCardsMediumScreen extends StatelessWidget {
               isActive: false,
               onTap: () {},
             ),
-            SizedBox(
-              width: _width / 64,
-            ),
+            divider64,
             InfoCard(
               title: "Scheduled deliveries",
               value: "3",
               topColor: Colors.blueGrey,
               isActive: false,
               onTap: () {},
-            ),
-            SizedBox(
-              width: _width / 64,
             ),
           ],
         ),

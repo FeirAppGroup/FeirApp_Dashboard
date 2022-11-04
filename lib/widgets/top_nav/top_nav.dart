@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:dashboard_feirapp/routing/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/style.dart';
 import '../../helpers/responsiveness.dart';
@@ -95,6 +98,32 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
               child: Icon(
                 Icons.person_outline,
                 color: dark,
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () async {
+            SharedPreferences preferences = await SharedPreferences.getInstance();
+            await preferences.clear();
+            Get.toNamed(authenticationPageRoute);
+          },
+          child: Container(
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Container(
+              padding: EdgeInsets.all(2),
+              margin: EdgeInsets.all(2),
+              child: CircleAvatar(
+                backgroundColor: mainWhite,
+                child: Icon(
+                  Icons.clear,
+                  color: dark,
+                ),
               ),
             ),
           ),

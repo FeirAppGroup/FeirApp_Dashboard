@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +27,7 @@ class MenuController extends GetxController {
     switch (itemName) {
       case overViewPageDisplayName:
         return _customIcon(Icons.trending_up, itemName);
-      case driversPageDisplayName:
+      case productorPageDisplayName:
         return _customIcon(Icons.drive_eta, itemName);
       case clientsPageDisplayName:
         return _customIcon(Icons.people_alt_outlined, itemName);
@@ -41,7 +42,7 @@ class MenuController extends GetxController {
     if (isActive(itemName)) {
       return Icon(
         icon,
-        size: 22,
+        size: Dimensions.icon22,
         color: textGray,
       );
     }
