@@ -1,5 +1,7 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
 import 'package:dashboard_feirapp/helpers/shared_pref.dart';
+import 'package:dashboard_feirapp/models/model/user_model.dart';
 import 'package:dashboard_feirapp/pages/404/circular.dart';
 import 'package:dashboard_feirapp/pages/authentication/authentication.dart';
 import 'package:flutter/material.dart';

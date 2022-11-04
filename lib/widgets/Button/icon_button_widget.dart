@@ -4,22 +4,22 @@ import '../../constants/style.dart';
 import '../../utils/dimensions.dart';
 import '../Text/custom_text.dart';
 
-class ButtonWidget extends StatelessWidget {
-  final String text;
+class IconButtonWidget extends StatelessWidget {
   final double width;
   final double height;
   final Color backgroundColor;
-  final Color textColor;
+  final Color iconColor;
   final VoidCallback onTap;
+  final IconData icon;
 
-  ButtonWidget({
+  const IconButtonWidget({
     Key? key,
-    required this.text,
     required this.width,
     required this.height,
     required this.backgroundColor,
-    required this.textColor,
     required this.onTap,
+    required this.icon,
+    required this.iconColor,
   }) : super(key: key);
 
   @override
@@ -35,10 +35,9 @@ class ButtonWidget extends StatelessWidget {
             color: backgroundColor,
           ),
           child: Center(
-            child: CustomText(
-              size: Dimensions.font16,
-              text: text,
-              color: textWhite,
+            child: Icon(
+              icon,
+              color: iconColor,
             ),
           ),
         ),

@@ -1,12 +1,24 @@
+import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
+import 'package:dashboard_feirapp/models/model/user_model.dart';
 import 'package:dashboard_feirapp/utils/dimensions.dart';
+import 'package:dashboard_feirapp/widgets/Button/button_widget.dart';
+import 'package:dashboard_feirapp/widgets/Button/icon_button_widget.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../constants/style.dart';
 import '../../../widgets/Text/custom_text.dart';
 
 /// Example without a datasource
-class ProductorTable extends StatelessWidget {
+class ProductorTable extends StatefulWidget {
+  const ProductorTable({Key? key}) : super(key: key);
+
+  @override
+  State<ProductorTable> createState() => _ProductorTableState();
+}
+
+class _ProductorTableState extends State<ProductorTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,140 +42,92 @@ class ProductorTable extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          DataTable(
-            columns: [
-              DataColumn2(
-                label: CustomText(
-                  text: 'Nome',
-                  color: textWhite,
-                ),
-                size: ColumnSize.L,
-              ),
-              DataColumn(
-                label: CustomText(
-                  text: 'Location',
-                  color: textWhite,
-                ),
-              ),
-              DataColumn(
-                label: CustomText(
-                  text: 'Rating',
-                  color: textWhite,
-                ),
-              ),
-              DataColumn(
-                label: CustomText(
-                  text: 'Action',
-                  color: textWhite,
-                ),
-              ),
-            ],
-            dataRowHeight: 60,
-            rows: List<DataRow>.generate(
-              15,
-              (index) => DataRow(
-                cells: [
-                  DataCell(
-                    CustomText(
-                      text: "Santos Enoque San Francisco",
-                      color: textWhite,
-                    ),
-                  ),
-                  DataCell(CustomText(
-                    text: "New York City",
-                    color: textWhite,
-                  )),
-                  DataCell(
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.star,
-                          color: starTableColor,
-                          size: Dimensions.icon18,
-                        ),
-                        SizedBox(
-                          width: Dimensions.width5,
-                        ),
-                        CustomText(
-                          text: "4.$index",
-                          color: textWhite,
-                        ),
-                      ],
-                    ),
-                  ),
-                  DataCell(
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: active, width: .5),
-                        color: textLiteblue,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      child: CustomText(
-                        text: "Assign ",
-                        color: active.withOpacity(.7),
-                        weight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // rows: List<DataRow>.generate(
-            //   15,
-            //   (index) => DataRow(
-            //     cells: [
-            //       DataCell(
-            //         CustomText(
-            //           text: "Santos Enoque San Francisco",
-            //           color: textWhite,
-            //         ),
-            //       ),
-            //       DataCell(CustomText(
-            //         text: "New York City",
-            //         color: textWhite,
-            //       )),
-            //       DataCell(
-            //         Row(
-            //           mainAxisSize: MainAxisSize.min,
-            //           children: [
-            //             Icon(
-            //               Icons.star,
-            //               color: starTableColor,
-            //               size: Dimensions.icon18,
-            //             ),
-            //             SizedBox(
-            //               width: Dimensions.width5,
-            //             ),
-            //             CustomText(
-            //               text: "4.$index",
-            //               color: textWhite,
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //       DataCell(
-            //         Container(
-            //           decoration: BoxDecoration(
-            //             border: Border.all(color: active, width: .5),
-            //             color: textLiteblue,
-            //             borderRadius: BorderRadius.circular(20),
-            //           ),
-            //           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            //           child: CustomText(
-            //             text: "Assign ",
-            //             color: active.withOpacity(.7),
-            //             weight: FontWeight.bold,
-            //           ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-          ),
+          initProductors,
+          _createDataTable(),
         ],
       ),
     );
   }
+}
+
+List<UserModel> productors = [];
+
+var userController = Get.find<UserController>();
+
+var initProductors = GetBuilder<UserController>(builder: (productor) {
+  productors = productor.productorList;
+  return Container();
+});
+
+DataTable _createDataTable() {
+  return DataTable(columns: _createColumns(), rows: _createRows());
+}
+
+List<DataColumn> _createColumns() {
+  return [
+    DataColumn2(
+      label: CustomText(
+        text: 'ID',
+        color: textWhite,
+      ),
+      size: ColumnSize.L,
+    ),
+    DataColumn(
+      label: CustomText(
+        text: 'Nome',
+        color: textWhite,
+      ),
+    ),
+    DataColumn(
+      label: CustomText(
+        text: 'Email',
+        color: textWhite,
+      ),
+    ),
+    DataColumn(
+      label: CustomText(
+        text: 'Ação',
+        color: textWhite,
+      ),
+    ),
+  ];
+}
+
+List<DataRow> _createRows() {
+  return productors
+      .map(
+        (productor) => DataRow(
+          cells: [
+            DataCell(
+              CustomText(
+                text: productor.id.toString(),
+                color: textWhite,
+              ),
+            ),
+            DataCell(
+              CustomText(
+                text: productor.nome,
+                color: textWhite,
+              ),
+            ),
+            DataCell(
+              CustomText(
+                text: productor.email,
+                color: textWhite,
+              ),
+            ),
+            DataCell(
+              IconButtonWidget(
+                width: Dimensions.width40,
+                height: Dimensions.height40,
+                backgroundColor: textLiteblue,
+                iconColor: mainBlack,
+                icon: Icons.edit,
+                onTap: () {},
+              ),
+            ),
+          ],
+        ),
+      )
+      .toList();
 }

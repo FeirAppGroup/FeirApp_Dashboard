@@ -11,6 +11,11 @@ class UserRepo extends GetxService {
     required this.apiClient,
   });
 
+  Future<Response> getProductorList(String token) async {
+    apiClient.token = token;
+    return await apiClient.getData(AppConstants.USER_URI);
+  }
+
   //busca informações do usuário
   Future<Response> getInfoProfileUser(int idUser, String token) async {
     apiClient.token = token;
