@@ -2,13 +2,13 @@ import 'package:dashboard_feirapp/constants/style.dart';
 import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
 import 'package:dashboard_feirapp/models/enum/type_user_enum.dart';
 import 'package:dashboard_feirapp/models/model/user_model.dart';
+import 'package:dashboard_feirapp/pages/productors/productor_form.dart';
 import 'package:dashboard_feirapp/routing/routes.dart';
 import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:dashboard_feirapp/widgets/Button/button_widget.dart';
 import 'package:dashboard_feirapp/widgets/Button/icon_button_widget.dart';
 import 'package:dashboard_feirapp/widgets/TextFormField/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,18 +29,17 @@ class _ProductorPageState extends State<ProductorPage> {
   UserLoginDto? user;
   String? token;
 
+  final UserController c = Get.put(UserController(userRepo: Get.find()));
+
   @override
   void initState() {
+    super.initState();
     loadPref();
-
-    setState(() {
-      isLoading = false;
-    });
   }
 
   loadPref() async {
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
-    print(sharedUser.getString('user'));
+    //print(sharedUser.getString('user'));
     if (sharedUser.getString('user') != null) {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
@@ -49,8 +48,6 @@ class _ProductorPageState extends State<ProductorPage> {
       Get.find<UserController>().getProductorList(token!);
     }
   }
-
-  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +79,12 @@ class _ProductorPageState extends State<ProductorPage> {
               children: [
                 ButtonWidget(
                   onTap: () {
-                    navigationController.navigateTo(productorFormRoute);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProductorForm(id: null),
+                      ),
+                    );
                   },
                   text: 'Adicionar Produtor',
                   backgroundColor: active,
@@ -98,7 +100,7 @@ class _ProductorPageState extends State<ProductorPage> {
                   height: Dimensions.height40,
                   width: Dimensions.width64,
                   onTap: () {
-// Just insert this code to button to refresh page.​
+                    // Just insert this code to button to refresh page.​
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(

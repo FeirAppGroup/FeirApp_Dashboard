@@ -1,5 +1,6 @@
 import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
 import 'package:dashboard_feirapp/models/model/user_model.dart';
+import 'package:dashboard_feirapp/pages/productors/productor_form.dart';
 import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:dashboard_feirapp/widgets/Button/button_widget.dart';
 import 'package:dashboard_feirapp/widgets/Button/icon_button_widget.dart';
@@ -7,7 +8,9 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../constants/controllers.dart';
 import '../../../constants/style.dart';
+import '../../../routing/routes.dart';
 import '../../../widgets/Text/custom_text.dart';
 
 /// Example without a datasource
@@ -19,6 +22,13 @@ class ProductorTable extends StatefulWidget {
 }
 
 class _ProductorTableState extends State<ProductorTable> {
+  var userController = Get.find<UserController>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +53,7 @@ class _ProductorTableState extends State<ProductorTable> {
         mainAxisSize: MainAxisSize.min,
         children: [
           initProductors,
-          _createDataTable(),
+          _createDataTable(context),
         ],
       ),
     );
@@ -59,8 +69,8 @@ var initProductors = GetBuilder<UserController>(builder: (productor) {
   return Container();
 });
 
-DataTable _createDataTable() {
-  return DataTable(columns: _createColumns(), rows: _createRows());
+DataTable _createDataTable(BuildContext context) {
+  return DataTable(columns: _createColumns(), rows: _createRows(context));
 }
 
 List<DataColumn> _createColumns() {
@@ -93,7 +103,7 @@ List<DataColumn> _createColumns() {
   ];
 }
 
-List<DataRow> _createRows() {
+List<DataRow> _createRows(BuildContext context) {
   return productors
       .map(
         (productor) => DataRow(
@@ -123,7 +133,14 @@ List<DataRow> _createRows() {
                 backgroundColor: textLiteblue,
                 iconColor: mainBlack,
                 icon: Icons.edit,
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductorForm(id: productor.id),
+                    ),
+                  );
+                },
               ),
             ),
           ],

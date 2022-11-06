@@ -1,20 +1,8 @@
-import 'package:after_layout/after_layout.dart';
-import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
-import 'package:dashboard_feirapp/helpers/shared_pref.dart';
-import 'package:dashboard_feirapp/models/model/user_model.dart';
-import 'package:dashboard_feirapp/pages/404/circular.dart';
-import 'package:dashboard_feirapp/pages/authentication/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:after_layout/after_layout.dart';
 
 import 'constants/style.dart';
-import 'layout.dart';
-import 'models/dtos/user_login_dto.dart';
 import 'pages/404/error_page.dart';
-import 'pages/splash/splashpage.dart';
 import 'routing/routes.dart';
 import 'helpers/dependences.dart' as dep;
 
@@ -50,11 +38,8 @@ class _MyAppState extends State<MyApp> {
         page: () => PageNotFound(),
         transition: Transition.fadeIn,
       ),
-      getPages: [
-        GetPage(name: rootRoute, page: () => SiteLayout()),
-        GetPage(name: authenticationPageRoute, page: () => AuthenticationPage()),
-        GetPage(name: splashPageRoute, page: () => SplashPage()),
-      ],
+      getPages: Routes.routes,
+
       debugShowCheckedModeBanner: false,
       title: 'FeirApp Dashboard',
       theme: ThemeData(

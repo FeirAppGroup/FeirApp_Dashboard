@@ -26,6 +26,15 @@ class UserController extends GetxController with StateMixin {
     } else {}
   }
 
+  Future<UserModel> getInfoProfileUser(int idUser, String token) async {
+    Response response = await userRepo.getInfoProfileUser(idUser, token);
+    if (response.statusCode == 200) {
+      return UserModel.fromMap(response.body);
+    } else {
+      return throw Exception('Erro ao buscar produtor.');
+    }
+  }
+
   Future<String> registerNewUser(UserModel user) async {
     Response response = await userRepo.registerNewUser(user.toJson());
     print(user.toJson());

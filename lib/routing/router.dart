@@ -15,8 +15,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(OverviewPage());
     case productorPageRoute:
       return _getPageRoute(ProductorPage());
-    case productorFormRoute:
-      return _getPageRoute(ProductorForm());
+    // case productorFormRoute:
+    //   return _getPageRoute(ProductorForm());
     case clientsPageRoute:
       return _getPageRoute(ClientsPage());
     case notfoundPageRoute:
