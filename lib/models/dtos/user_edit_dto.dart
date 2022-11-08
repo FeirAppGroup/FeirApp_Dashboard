@@ -1,27 +1,43 @@
 import 'dart:convert';
 
-class UserModel {
+class UserEditDto {
   int? id;
   String nome;
   String telefone;
-  String email;
+  String? _email;
+
+  String? get email => _email;
+
+  set email(String? email) {
+    _email = email;
+  }
+
   String cep;
-  String senha;
-  String cpf;
+  String? _cpf;
+
+  String? get cpf => _cpf;
+
+  set cpf(String? cpf) {
+    _cpf = cpf;
+  }
+
   String cnpj;
-  String dap;
+  String? _dap;
+
+  String? get dap => _dap;
+
+  set dap(String? dap) {
+    _dap = dap;
+  }
+
   int tipo;
 
-  UserModel({
+  UserEditDto({
     this.id,
     required this.nome,
     required this.telefone,
-    required this.email,
     required this.cep,
-    required this.senha,
-    required this.cpf,
     required this.cnpj,
-    required this.dap,
     required this.tipo,
   });
 
@@ -33,34 +49,34 @@ class UserModel {
     }
     result.addAll({'nome': nome});
     result.addAll({'telefone': telefone});
-    result.addAll({'email': email});
+    if (_email != null) {
+      result.addAll({'_email': _email});
+    }
     result.addAll({'cep': cep});
-    result.addAll({'senha': senha});
-    result.addAll({'cpf': cpf});
+    if (_cpf != null) {
+      result.addAll({'_cpf': _cpf});
+    }
     result.addAll({'cnpj': cnpj});
-    result.addAll({'dap': dap});
-    result.addAll({'tipoUsuario': tipo});
+    if (_dap != null) {
+      result.addAll({'_dap': _dap});
+    }
+    result.addAll({'tipo': tipo});
 
     return result;
   }
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    int val = map['tipo'];
-    return UserModel(
+  factory UserEditDto.fromMap(Map<String, dynamic> map) {
+    return UserEditDto(
       id: map['id']?.toInt(),
       nome: map['nome'] ?? '',
       telefone: map['telefone'] ?? '',
-      email: map['email'] ?? '',
       cep: map['cep'] ?? '',
-      senha: map['senha'] ?? '',
-      cpf: map['cpf'] ?? '',
       cnpj: map['cnpj'] ?? '',
-      dap: map['dap'] ?? '',
-      tipo: map['tipo']?.toInt(),
+      tipo: map['tipo']?.toInt() ?? 0,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source));
+  factory UserEditDto.fromJson(String source) => UserEditDto.fromMap(json.decode(source));
 }

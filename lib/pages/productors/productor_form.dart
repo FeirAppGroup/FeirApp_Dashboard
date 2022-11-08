@@ -1,9 +1,9 @@
+import 'package:dashboard_feirapp/models/dtos/user_edit_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:dashboard_feirapp/layout.dart';
 import 'package:dashboard_feirapp/routing/routes.dart';
 import 'package:dashboard_feirapp/widgets/Button/button_widget.dart';
 
@@ -16,6 +16,7 @@ import '../../models/model/user_model.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/Text/custom_text.dart';
 import '../../widgets/TextFormField/custom_text_form_field.dart';
+import '../productors/widgets/card_title.dart';
 
 bool isOk = false;
 bool isClicked = false;
@@ -48,10 +49,10 @@ class _ProductorFormState extends State<ProductorForm> {
   String? _cnpj;
   String? _dap;
 
-  bool agree = false;
   bool _passwordVisible = false;
   bool isLoading = true;
   bool isEdit = false;
+  bool pass = false;
 
   var tipo = TipoUsuarioEnum.produtor;
 
@@ -81,6 +82,42 @@ class _ProductorFormState extends State<ProductorForm> {
     });
   }
 
+  Future<void> _updateUser() async {
+    UserEditDto userEdit = UserEditDto(
+      nome: _fullName!,
+      telefone: _phoneNumber!,
+      cep: _cep!,
+      cnpj: _cnpj!,
+      tipo: 1,
+    );
+
+    if (_email! != userModel!.email) {
+      userEdit.email = _email!;
+    }
+    if (_dap! != userModel!.dap) {
+      userEdit.dap = _dap!;
+    }
+    if (_cpf! != userModel!.cpf) {
+      userEdit.cpf = _cpf!;
+    }
+
+    var resp = await userController.updateInfoProfileUser(
+      widget.id!.toInt(),
+      token!,
+      userEdit,
+    );
+
+    setState(() {
+      isClicked = true;
+
+      if (resp == 'Usuário atualizado com sucesso!') {
+        isOk = true;
+      } else {
+        isOk = false;
+      }
+    });
+  }
+
   final _formKey = GlobalKey<FormState>();
   final formValidVN = ValueNotifier<bool>(false);
 
@@ -93,14 +130,12 @@ class _ProductorFormState extends State<ProductorForm> {
       print(token);
     }
 
-    print("Chamando o Produtor");
-
-    if (widget.id != null && token != null) {
+    if (widget.id != null && token != null && !pass) {
       userModel = await userController.getInfoProfileUser(
         widget.id!,
         token!,
       );
-      print(userModel!.email.toString());
+      pass = true;
 
       setState(() {
         isEdit = true;
@@ -131,28 +166,16 @@ class _ProductorFormState extends State<ProductorForm> {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  top: Dimensions.height50,
+                  top: Dimensions.height60,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
                   bottom: Dimensions.height50,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CustomText(
-                      text: 'Adicionar Produtor',
-                      size: Dimensions.font24,
-                      color: textWhite,
-                    ),
-                    ButtonWidget(
-                      text: 'Cancelar',
-                      backgroundColor: active,
-                      height: Dimensions.height40,
-                      width: Dimensions.width150,
-                      textColor: textWhite,
-                      onTap: () {
-                        navigationController.navigateTo(productorPageRoute);
-                      },
-                    )
+                    CardTitle(title: !isEdit ? "Adicionar" : "Edição", isActive: true),
                   ],
                 ),
               ),
@@ -178,12 +201,6 @@ class _ProductorFormState extends State<ProductorForm> {
                             },
                             child: Column(
                               children: [
-                                isEdit
-                                    ? CustomText(
-                                        text: userModel!.nome,
-                                        color: textWhite,
-                                      )
-                                    : Container(),
                                 _space20,
                                 CustomTextFormField(
                                   initialValue: isEdit ? userModel!.nome : "",
@@ -210,36 +227,39 @@ class _ProductorFormState extends State<ProductorForm> {
                                   onSaved: (value) => _email = value,
                                 ),
                                 _space20,
-                                CustomTextFormField(
-                                  initialValue: isEdit ? userModel!.senha : "",
-                                  textInputType: TextInputType.visiblePassword,
-                                  text: 'Senha',
-                                  suffixIconButton: IconButton(
-                                    icon: Icon(
-                                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        _passwordVisible = !_passwordVisible;
-                                      });
-                                    },
-                                  ),
-                                  obscureText: !_passwordVisible,
-                                  validator: _validatePassword,
-                                  onChanged: (value) => _password = value,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(top: Dimensions.font10),
-                                  child: Text(
-                                    'Mínimo de 8 caracteres, 1 letra maiúscula, 1 letra minúscula, 1 número',
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      fontSize: Dimensions.font12,
-                                      fontWeight: FontWeight.w400,
-                                      color: mainWhite,
-                                    ),
-                                  ),
-                                ),
+                                !isEdit
+                                    ? CustomTextFormField(
+                                        textInputType: TextInputType.visiblePassword,
+                                        text: 'Senha',
+                                        suffixIconButton: IconButton(
+                                          icon: Icon(
+                                            _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              _passwordVisible = !_passwordVisible;
+                                            });
+                                          },
+                                        ),
+                                        obscureText: !_passwordVisible,
+                                        validator: _validatePassword,
+                                        onChanged: (value) => _password = value,
+                                      )
+                                    : Container(),
+                                !isEdit
+                                    ? Container(
+                                        padding: EdgeInsets.only(top: Dimensions.font10),
+                                        child: Text(
+                                          'Mínimo de 8 caracteres, 1 letra maiúscula, 1 letra minúscula, 1 número',
+                                          style: TextStyle(
+                                            fontFamily: 'Roboto',
+                                            fontSize: Dimensions.font12,
+                                            fontWeight: FontWeight.w400,
+                                            color: mainWhite,
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
                                 _space20,
                                 CustomTextFormField(
                                   initialValue: isEdit ? userModel!.cpf : "",
@@ -334,18 +354,18 @@ class _ProductorFormState extends State<ProductorForm> {
                                             : () {
                                                 _formKey.currentState!.validate();
                                                 _formKey.currentState!.save();
-                                                _registerUser();
+                                                isEdit ? _updateUser() : _registerUser();
                                               },
                                         child: Container(
                                           alignment: Alignment.center,
                                           width: double.maxFinite,
-                                          padding: EdgeInsets.symmetric(vertical: 16),
+                                          padding: EdgeInsets.symmetric(vertical: Dimensions.height20),
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius: BorderRadius.circular(Dimensions.radius20),
                                             color: active,
                                           ),
                                           child: CustomText(
-                                            text: "Cadastrar",
+                                            text: "Continuar",
                                             color: textWhite,
                                             size: Dimensions.font16,
                                           ),
@@ -360,7 +380,9 @@ class _ProductorFormState extends State<ProductorForm> {
                                         ? Column(
                                             children: [
                                               CustomText(
-                                                text: "Cadastro realizado com Sucesso ",
+                                                text: !isEdit
+                                                    ? "Cadastro realizado com Sucesso "
+                                                    : "Usuário atualizado com Sucesso !",
                                                 size: Dimensions.font18,
                                                 color: textWhite,
                                               ),
@@ -378,7 +400,9 @@ class _ProductorFormState extends State<ProductorForm> {
                                         : Column(
                                             children: [
                                               CustomText(
-                                                text: "Erro a realizar o cadastro",
+                                                text: !isEdit
+                                                    ? "Erro a realizar o cadastro"
+                                                    : "Erro na atualização do usuário",
                                                 size: Dimensions.font18,
                                                 color: tertiaryRed,
                                               ),
