@@ -32,10 +32,10 @@ class LoginController extends GetxController with StateMixin {
       Map<String, dynamic> userMap = _user!.toMap();
       await prefs.setString('user', json.encode(userMap));
 
+      await prefs.setInt('maxDuration', 15);
+
       print(response.statusCode);
       print(response.body);
-
-      //sharedPref.save("user", _user);
 
       update();
 

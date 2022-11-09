@@ -13,6 +13,8 @@ class CustomTextFormField extends StatelessWidget {
   String? Function(String?)? validator;
   void Function(String?)? onSaved;
   void Function(String?)? onChanged;
+  TextEditingController? controller;
+  String? initialValue;
 
   CustomTextFormField({
     Key? key,
@@ -25,11 +27,15 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.onSaved,
     this.onChanged,
+    this.controller,
+    this.initialValue,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
+      controller: controller,
       keyboardType: textInputType,
       obscureText: obscureText ?? false,
       style: TextStyle(
