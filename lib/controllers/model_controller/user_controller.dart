@@ -55,4 +55,13 @@ class UserController extends GetxController with StateMixin {
       return 'Erro ao atualizar usuário!';
     }
   }
+
+  Future<String> deleteProfileUser(int idUser, String token) async {
+    Response response = await userRepo.deleteProfileUser(idUser, token);
+    if (response.statusCode == 200) {
+      return 'Usuário apagado com sucesso!';
+    } else {
+      return 'Erro ao apagar usuário!';
+    }
+  }
 }

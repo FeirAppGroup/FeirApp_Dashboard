@@ -122,6 +122,7 @@ class _ProductorFormState extends State<ProductorForm> {
   final formValidVN = ValueNotifier<bool>(false);
 
   loadPref() async {
+    //TODO Refatorar todas as ocorrencias dessa function
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
     //print(sharedUser.getString('user'));
     if (sharedUser.getString('user') != null) {
@@ -317,14 +318,6 @@ class _ProductorFormState extends State<ProductorForm> {
                                   initialValue: isEdit ? userModel!.cnpj : "",
                                   text: 'CNPJ',
                                   textInputType: TextInputType.number,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Campo obrigatório';
-                                    } else {
-                                      _cnpj = value;
-                                    }
-                                    return null;
-                                  },
                                   onSaved: (value) => _cnpj = value,
                                 ),
                                 _space20,

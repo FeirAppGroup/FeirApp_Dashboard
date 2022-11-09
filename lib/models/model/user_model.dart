@@ -8,7 +8,7 @@ class UserModel {
   String cep;
   String senha;
   String cpf;
-  String cnpj;
+  String? cnpj;
   String dap;
   int tipo;
 
@@ -20,7 +20,7 @@ class UserModel {
     required this.cep,
     required this.senha,
     required this.cpf,
-    required this.cnpj,
+    this.cnpj,
     required this.dap,
     required this.tipo,
   });
@@ -39,13 +39,13 @@ class UserModel {
     result.addAll({'cpf': cpf});
     result.addAll({'cnpj': cnpj});
     result.addAll({'dap': dap});
-    result.addAll({'tipoUsuario': tipo});
+    result.addAll({'tipo': tipo});
 
     return result;
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
-    int val = map['tipo'];
+    //int val = map['tipo'];
     return UserModel(
       id: map['id']?.toInt(),
       nome: map['nome'] ?? '',

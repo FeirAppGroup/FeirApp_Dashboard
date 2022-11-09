@@ -40,4 +40,10 @@ class UserRepo extends GetxService {
     apiClient.token = token;
     return await apiClient.putData(AppConstants.USER_URI + '/$idUser', body);
   }
+
+  //deleta informações do usuário pelo ID
+  Future<Response> deleteProfileUser(int idUser, String token) async {
+    apiClient.token = token;
+    return await apiClient.deleteData(AppConstants.USER_URI + '/$idUser');
+  }
 }

@@ -50,6 +50,16 @@ class ApiClient extends GetConnect implements GetxService {
     }
   }
 
+  Future<Response> deleteData(String uri) async {
+    try {
+      _mainHeaders['Authorization'] = 'Bearer $token';
+      Response response = await delete(uri, headers: _mainHeaders);
+      return response;
+    } catch (e) {
+      return Response(statusCode: 1, statusText: e.toString());
+    }
+  }
+
   Future<Response> postAuth(String uri, LoginDTO login) async {
     try {
       Response response = await post(uri, login.toJson());

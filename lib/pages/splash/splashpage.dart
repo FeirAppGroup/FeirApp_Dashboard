@@ -19,6 +19,7 @@ class _SplashScreenState extends State<SplashPage> with TickerProviderStateMixin
 
   late AnimationController controller;
 
+  //TODO AJustar timeout
   loadPref() async {
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
     print(sharedUser.getString('user'));
