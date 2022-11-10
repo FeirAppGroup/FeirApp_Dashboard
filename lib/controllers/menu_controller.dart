@@ -28,9 +28,9 @@ class MenuController extends GetxController {
       case overViewPageDisplayName:
         return _customIcon(Icons.trending_up, itemName);
       case productorPageDisplayName:
-        return _customIcon(Icons.drive_eta, itemName);
+        return _customIcon(Icons.person_add, itemName);
       case clientsPageDisplayName:
-        return _customIcon(Icons.people_alt_outlined, itemName);
+        return _customIcon(Icons.add_home_work_rounded, itemName);
       case authenticationPageDisplayName:
         return _customIcon(Icons.exit_to_app, itemName);
       default:

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:dashboard_feirapp/helpers/shared_pref.dart';
+import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,10 +22,9 @@ class _SplashScreenState extends State<SplashPage> with TickerProviderStateMixin
   late AnimationController controller;
 
   int diff = 0;
-  //TODO AJustar timeout
   loadPref() async {
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
-    //print(sharedUser.getString('user'));
+    print(sharedUser.getString('user'));
 
     var existTime = await sharedUser.getInt('expireTime');
 
@@ -44,6 +45,25 @@ class _SplashScreenState extends State<SplashPage> with TickerProviderStateMixin
       token = user!.token;
       print(token);
     }
+
+    // SharedPref.readTimeout();
+    // var diff = 0;
+    // SharedPref.getIntByKey('diff', diff);
+
+    // if (diff > 3600000) {
+    //   SharedPref.clearPreferences();
+    //   Get.toNamed(
+    //     authenticationPageRoute,
+    //   );
+    // }
+
+    // SharedPref.read('user', user);
+
+    // if (user != null) {
+    //   SharedPref.read('user', user);
+    //   token = user!.token;
+    //   print(token);
+    // }
 
     setState(() {
       isLoading = false;
@@ -90,7 +110,7 @@ class _SplashScreenState extends State<SplashPage> with TickerProviderStateMixin
             child: Center(
               child: Image.asset(
                 'assets/images/logo.png',
-                width: 250,
+                width: Dimensions.width350,
               ),
             ),
           ),

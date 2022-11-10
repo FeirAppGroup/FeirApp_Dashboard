@@ -37,6 +37,9 @@ class _ProductorFormState extends State<ProductorForm> {
   String? token;
   final controller = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+  final formValidVN = ValueNotifier<bool>(false);
+
   String? _fullName;
   String? _phoneNumber;
   String? _email;
@@ -117,13 +120,8 @@ class _ProductorFormState extends State<ProductorForm> {
     });
   }
 
-  final _formKey = GlobalKey<FormState>();
-  final formValidVN = ValueNotifier<bool>(false);
-
   loadPref() async {
-    //TODO Refatorar todas as ocorrencias dessa function
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
-    //print(sharedUser.getString('user'));
     if (sharedUser.getString('user') != null) {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
