@@ -7,6 +7,7 @@ import '../../../utils/dimensions.dart';
 import '../../../widgets/Button/button_widget.dart';
 import '../../../widgets/Text/custom_text.dart';
 
+// ignore: must_be_immutable
 class CardTitle extends StatelessWidget {
   final String title;
   bool isActive;

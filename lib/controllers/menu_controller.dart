@@ -29,7 +29,7 @@ class MenuController extends GetxController {
         return _customIcon(Icons.trending_up, itemName);
       case productorPageDisplayName:
         return _customIcon(Icons.person_add, itemName);
-      case clientsPageDisplayName:
+      case propertyPageDisplayName:
         return _customIcon(Icons.add_home_work_rounded, itemName);
       case authenticationPageDisplayName:
         return _customIcon(Icons.exit_to_app, itemName);

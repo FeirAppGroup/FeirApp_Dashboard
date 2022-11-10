@@ -16,7 +16,7 @@ import '../../models/model/user_model.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/Text/custom_text.dart';
 import '../../widgets/TextFormField/custom_text_form_field.dart';
-import '../productors/widgets/card_title.dart';
+import 'widgets/card_title.dart';
 
 class ProductorForm extends StatefulWidget {
   final int? id;

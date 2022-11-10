@@ -1,21 +1,15 @@
 import 'package:dashboard_feirapp/constants/style.dart';
 import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
-import 'package:dashboard_feirapp/models/enum/type_user_enum.dart';
-import 'package:dashboard_feirapp/models/model/user_model.dart';
 import 'package:dashboard_feirapp/pages/productors/productor_form.dart';
-import 'package:dashboard_feirapp/routing/routes.dart';
 import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:dashboard_feirapp/widgets/Button/button_widget.dart';
 import 'package:dashboard_feirapp/widgets/Button/icon_button_widget.dart';
-import 'package:dashboard_feirapp/widgets/TextFormField/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/controllers.dart';
 import '../../helpers/responsiveness.dart';
-import '../../layout.dart';
 import '../../models/dtos/user_login_dto.dart';
 import '../../widgets/Text/custom_text.dart';
 import 'widgets/productor_table.dart';
