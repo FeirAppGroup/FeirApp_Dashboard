@@ -39,7 +39,6 @@ class _ProductorPageState extends State<ProductorPage> {
 
   loadPref() async {
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
-    //print(sharedUser.getString('user'));
     if (sharedUser.getString('user') != null) {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;

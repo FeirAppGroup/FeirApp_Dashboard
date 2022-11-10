@@ -2,18 +2,14 @@ import 'package:dashboard_feirapp/controllers/model_controller/user_controller.d
 import 'package:dashboard_feirapp/models/model/user_model.dart';
 import 'package:dashboard_feirapp/pages/productors/productor_form.dart';
 import 'package:dashboard_feirapp/utils/dimensions.dart';
-import 'package:dashboard_feirapp/widgets/Button/button_widget.dart';
 import 'package:dashboard_feirapp/widgets/Button/icon_button_widget.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../constants/controllers.dart';
 import '../../../constants/style.dart';
 import '../../../models/dtos/user_login_dto.dart';
-import '../../../routing/routes.dart';
 import '../../../widgets/Text/custom_text.dart';
 import '../productor_page.dart';
 
@@ -155,21 +151,8 @@ class _ProductorTableState extends State<ProductorTable> {
 
                     _deleteUser(productor.id!);
 
-                    // Just insert this code to button to refresh page.​
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProductorPage()), // this mainpage is your page to refresh.
-                      (Route<dynamic> route) => false,
-                    );
-
-                    // Just insert this code to button to refresh page.​
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProductorPage()), // this mainpage is your page to refresh.
-                      (Route<dynamic> route) => false,
-                    );
+                    _reloadPage();
+                    _reloadPage();
                   },
                 ),
               ),
@@ -181,6 +164,14 @@ class _ProductorTableState extends State<ProductorTable> {
 
   Future<void> _deleteUser(int idUser) async {
     await userController.deleteProfileUser(idUser, token!);
+  }
+
+  _reloadPage() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => ProductorPage()),
+      (Route<dynamic> route) => false,
+    );
   }
 
   @override

@@ -18,9 +18,6 @@ import '../../widgets/Text/custom_text.dart';
 import '../../widgets/TextFormField/custom_text_form_field.dart';
 import '../productors/widgets/card_title.dart';
 
-bool isOk = false;
-bool isClicked = false;
-
 class ProductorForm extends StatefulWidget {
   final int? id;
   const ProductorForm({
@@ -40,6 +37,9 @@ class _ProductorFormState extends State<ProductorForm> {
   String? token;
   final controller = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+  final formValidVN = ValueNotifier<bool>(false);
+
   String? _fullName;
   String? _phoneNumber;
   String? _email;
@@ -53,6 +53,8 @@ class _ProductorFormState extends State<ProductorForm> {
   bool isLoading = true;
   bool isEdit = false;
   bool pass = false;
+  bool isOk = false;
+  bool isClicked = false;
 
   var tipo = TipoUsuarioEnum.produtor;
 
@@ -118,13 +120,8 @@ class _ProductorFormState extends State<ProductorForm> {
     });
   }
 
-  final _formKey = GlobalKey<FormState>();
-  final formValidVN = ValueNotifier<bool>(false);
-
   loadPref() async {
-    //TODO Refatorar todas as ocorrencias dessa function
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
-    //print(sharedUser.getString('user'));
     if (sharedUser.getString('user') != null) {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
@@ -386,8 +383,13 @@ class _ProductorFormState extends State<ProductorForm> {
                                                 height: Dimensions.height40,
                                                 backgroundColor: active,
                                                 textColor: textWhite,
-                                                onTap: () => navigationController.navigateTo(productorPageRoute),
-                                              )
+                                                onTap: () {
+                                                  setState(() {
+                                                    isClicked = true;
+                                                  });
+                                                  navigationController.navigateTo(productorPageRoute);
+                                                },
+                                              ),
                                             ],
                                           )
                                         : Column(

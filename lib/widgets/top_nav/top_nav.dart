@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:dashboard_feirapp/routing/routes.dart';
+import 'package:dashboard_feirapp/utils/dimensions.dart';
+import 'package:dashboard_feirapp/widgets/Button/icon_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,7 +17,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
         ? Row(
             children: [
               Container(
-                padding: EdgeInsets.only(left: 14),
+                padding: EdgeInsets.only(left: Dimensions.width20),
                 child: Image.asset(
                   'assets/icons/logo.png',
                   width: 28,
@@ -36,28 +38,30 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
           child: CustomText(
             text: 'Dash',
             color: textWhite,
-            size: 20,
+            size: Dimensions.font20,
             weight: FontWeight.bold,
           ),
         ),
         Expanded(
           child: Container(),
         ),
-        IconButton(
-          icon: Icon(
-            Icons.settings,
-            color: mainWhite,
-          ),
-          onPressed: () {},
+        IconButtonWidget(
+          width: Dimensions.width30,
+          height: Dimensions.height40,
+          backgroundColor: Colors.transparent,
+          onTap: () {},
+          icon: Icons.settings,
+          iconColor: mainWhite,
         ),
         Stack(
           children: [
-            IconButton(
-              icon: Icon(
-                Icons.notifications,
-                color: mainWhite,
-              ),
-              onPressed: () {},
+            IconButtonWidget(
+              width: Dimensions.width30,
+              height: Dimensions.height40,
+              backgroundColor: Colors.transparent,
+              onTap: () {},
+              icon: Icons.notifications,
+              iconColor: mainWhite,
             ),
             Positioned(
               top: 7,
@@ -68,7 +72,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
                 padding: EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: active,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(Dimensions.radius30),
                   border: Border.all(color: Colors.black, width: 2),
                 ),
               ),
@@ -76,19 +80,17 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
           ],
         ),
         Container(
-          width: 1,
-          height: 22,
+          width: 2,
+          height: Dimensions.height30,
           color: mainWhite,
         ),
-        SizedBox(
-          width: 24,
-        ),
+        _space12,
         Container(
           height: 40,
           width: 40,
           decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(30),
+            color: mainStroke,
+            borderRadius: BorderRadius.circular(Dimensions.radius30),
           ),
           child: Container(
             padding: EdgeInsets.all(2),
@@ -97,24 +99,21 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
               backgroundColor: mainWhite,
               child: Icon(
                 Icons.person_outline,
-                color: dark,
+                color: mainBlack,
               ),
             ),
           ),
         ),
+        _space12,
         GestureDetector(
           onTap: () async {
             SharedPreferences preferences = await SharedPreferences.getInstance();
             await preferences.clear();
             Get.toNamed(authenticationPageRoute);
           },
-          child: Container(
+          child: SizedBox(
             height: 40,
             width: 40,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(30),
-            ),
             child: Container(
               padding: EdgeInsets.all(2),
               margin: EdgeInsets.all(2),
@@ -122,7 +121,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
                 backgroundColor: mainWhite,
                 child: Icon(
                   Icons.clear,
-                  color: dark,
+                  color: mainBlack,
                 ),
               ),
             ),
@@ -134,3 +133,11 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
     backgroundColor: Colors.transparent,
   );
 }
+
+final _space12 = SizedBox(
+  width: Dimensions.width12,
+);
+
+final _space24 = SizedBox(
+  width: Dimensions.width24,
+);

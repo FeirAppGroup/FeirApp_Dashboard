@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dashboard_feirapp/helpers/shared_pref.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/repository/login_repo.dart';
@@ -31,8 +32,11 @@ class LoginController extends GetxController with StateMixin {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       Map<String, dynamic> userMap = _user!.toMap();
       await prefs.setString('user', json.encode(userMap));
+      await prefs.setInt('expireTime', DateTime.now().millisecondsSinceEpoch);
 
-      await prefs.setInt('maxDuration', 15);
+      // DateTime now = DateTime.now();
+      // String formattedTime = DateFormat.Hms().format(now);
+      // DateTime convert = DateTime.parse(formattedTime);
 
       print(response.statusCode);
       print(response.body);
