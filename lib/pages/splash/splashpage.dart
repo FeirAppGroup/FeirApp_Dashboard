@@ -19,10 +19,26 @@ class _SplashScreenState extends State<SplashPage> with TickerProviderStateMixin
 
   late AnimationController controller;
 
+  int diff = 0;
   //TODO AJustar timeout
   loadPref() async {
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
-    print(sharedUser.getString('user'));
+    //print(sharedUser.getString('user'));
+
+    var existTime = await sharedUser.getInt('expireTime');
+
+    if (existTime != null) {
+      int? oldTime = await sharedUser.getInt('expireTime');
+      diff = DateTime.now().millisecondsSinceEpoch - oldTime!;
+    }
+
+    if (diff > 3600000) {
+      await sharedUser.clear();
+      Get.toNamed(
+        authenticationPageRoute,
+      );
+    }
+
     if (sharedUser.getString('user') != null) {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
@@ -74,7 +90,7 @@ class _SplashScreenState extends State<SplashPage> with TickerProviderStateMixin
             child: Center(
               child: Image.asset(
                 'assets/images/logo.png',
-                width: 150,
+                width: 250,
               ),
             ),
           ),

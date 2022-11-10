@@ -18,9 +18,6 @@ import '../../widgets/Text/custom_text.dart';
 import '../../widgets/TextFormField/custom_text_form_field.dart';
 import '../productors/widgets/card_title.dart';
 
-bool isOk = false;
-bool isClicked = false;
-
 class ProductorForm extends StatefulWidget {
   final int? id;
   const ProductorForm({
@@ -53,6 +50,8 @@ class _ProductorFormState extends State<ProductorForm> {
   bool isLoading = true;
   bool isEdit = false;
   bool pass = false;
+  bool isOk = false;
+  bool isClicked = false;
 
   var tipo = TipoUsuarioEnum.produtor;
 
@@ -386,8 +385,13 @@ class _ProductorFormState extends State<ProductorForm> {
                                                 height: Dimensions.height40,
                                                 backgroundColor: active,
                                                 textColor: textWhite,
-                                                onTap: () => navigationController.navigateTo(productorPageRoute),
-                                              )
+                                                onTap: () {
+                                                  setState(() {
+                                                    isClicked = true;
+                                                  });
+                                                  navigationController.navigateTo(productorPageRoute);
+                                                },
+                                              ),
                                             ],
                                           )
                                         : Column(
