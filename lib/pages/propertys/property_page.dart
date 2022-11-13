@@ -1,4 +1,5 @@
 import 'package:dashboard_feirapp/constants/style.dart';
+import 'package:dashboard_feirapp/controllers/model_controller/property_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +23,7 @@ class _PropertyPageState extends State<PropertyPage> {
   UserLoginDto? user;
   String? token;
 
-  //final UserController c = Get.put(UserController(userRepo: Get.find()));
+  final PropertyController p = Get.put(PropertyController(propertyRepo: Get.find()));
 
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _PropertyPageState extends State<PropertyPage> {
       token = user!.token;
       print(token);
 
-      //Get.find<UserController>().getProductorList(token!);
+      Get.find<PropertyController>().getPropertyList(token!);
     }
   }
 
@@ -105,15 +106,7 @@ class _PropertyPageState extends State<PropertyPage> {
             ],
           ),
         ),
-        Expanded(
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            children: [
-              PropertyTable(),
-            ],
-          ),
-        ),
+        PropertyTable(),
       ],
     );
   }
