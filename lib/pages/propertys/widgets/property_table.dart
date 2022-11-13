@@ -5,7 +5,12 @@ import '../../../constants/style.dart';
 import '../../../widgets/Text/custom_text.dart';
 
 /// Example without a datasource
-class ClientsTable extends StatelessWidget {
+class PropertyTable extends StatefulWidget {
+  @override
+  State<PropertyTable> createState() => _PropertyTableState();
+}
+
+class _PropertyTableState extends State<PropertyTable> {
   @override
   Widget build(BuildContext context) {
     return Container(

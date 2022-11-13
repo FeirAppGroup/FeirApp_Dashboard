@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/controllers.dart';
 import '../../helpers/responsiveness.dart';
 import '../../models/dtos/user_login_dto.dart';
+import '../../widgets/Cards/card_title_table.dart';
 import '../../widgets/Text/custom_text.dart';
 import 'widgets/productor_table.dart';
 
@@ -70,39 +71,40 @@ class _ProductorPageState extends State<ProductorPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ButtonWidget(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ProductorForm(id: null),
-                      ),
-                    );
-                  },
-                  text: 'Adicionar Produtor',
-                  backgroundColor: active,
-                  height: Dimensions.height40,
-                  width: Dimensions.width150,
-                  textColor: textWhite,
-                ),
-                SizedBox(
-                  width: Dimensions.width20,
-                ),
-                IconButtonWidget(
-                  backgroundColor: starTableColor,
-                  height: Dimensions.height40,
-                  width: Dimensions.width64,
-                  onTap: () {
-                    // Just insert this code to button to refresh page.​
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProductorPage()), // this mainpage is your page to refresh.
-                      (Route<dynamic> route) => false,
-                    );
-                  },
-                  icon: Icons.replay_outlined,
-                  iconColor: mainWhite,
+                CardTitleTable(
+                  title: "Tabela de Produtores",
+                  isActive: true,
+                  button: ButtonWidget(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProductorForm(id: null),
+                        ),
+                      );
+                    },
+                    text: 'Adicionar Produtor',
+                    backgroundColor: active,
+                    height: Dimensions.height40,
+                    width: Dimensions.width150,
+                    textColor: textWhite,
+                  ),
+                  iconButton: IconButtonWidget(
+                    backgroundColor: starTableColor,
+                    height: Dimensions.height40,
+                    width: Dimensions.width64,
+                    onTap: () {
+                      // Just insert this code to button to refresh page.​
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductorPage()), // this mainpage is your page to refresh.
+                        (Route<dynamic> route) => false,
+                      );
+                    },
+                    icon: Icons.replay_outlined,
+                    iconColor: mainWhite,
+                  ),
                 ),
               ],
             ),
