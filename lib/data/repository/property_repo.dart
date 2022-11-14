@@ -22,4 +22,21 @@ class PropertyRepo extends GetxService {
     apiClient.token = token;
     return await apiClient.getData(AppConstants.PROPERTY_URI + '/$idProperty');
   }
+
+  //cadastra um novo propriedade
+  Future<Response> registerNewProperty(String body) async {
+    return await apiClient.postData(AppConstants.PROPERTY_URI, body);
+  }
+
+  //edita informações da propriedade pelo ID
+  Future<Response> updateInfoProperty(int idProperty, String token, String body) async {
+    apiClient.token = token;
+    return await apiClient.putData(AppConstants.PROPERTY_URI + '/$idProperty', body);
+  }
+
+  //deleta informações da propriedade pelo ID
+  Future<Response> deleteProperty(int idProperty, String token) async {
+    apiClient.token = token;
+    return await apiClient.deleteData(AppConstants.PROPERTY_URI + '/$idProperty');
+  }
 }

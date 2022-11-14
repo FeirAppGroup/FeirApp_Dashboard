@@ -59,7 +59,6 @@ class _PropertyFormState extends State<PropertyForm> {
   double? _tamanho;
   int? _quantidadeTrabalhador;
   String? _uriFoto;
-  List<ProductModel>? produtos;
 
   bool isLoading = true;
   bool isEdit = false;
@@ -67,14 +66,67 @@ class _PropertyFormState extends State<PropertyForm> {
   bool isOk = false;
   bool isClicked = false;
   bool reload = false;
+  bool isValidate = false;
+
+  Future<void> _registerProperty() async {
+    var resp = await propertyController.registerNewProperty(
+      PropertyModel(
+        idUsuario: _idUsuario!,
+        matricula: _matricula!,
+        nome: _nome!,
+        endereco: _endereco!,
+        localizacao: _localizacao!,
+        tamanho: _tamanho!,
+        quantidadeTrabalhador: _quantidadeTrabalhador!,
+        uriFoto: _uriFoto!,
+      ),
+    );
+
+    setState(() {
+      isClicked = true;
+
+      if (resp == 'Propriedade cadastrada com sucesso!') {
+        isOk = true;
+      } else {
+        isOk = false;
+      }
+    });
+  }
+
+  Future<void> _updateProperty() async {
+    PropertyModel propertyEdit = PropertyModel(
+      idUsuario: _idUsuario!,
+      matricula: _matricula!,
+      nome: _nome!,
+      endereco: _endereco!,
+      localizacao: _localizacao!,
+      tamanho: _tamanho!,
+      quantidadeTrabalhador: _quantidadeTrabalhador!,
+      uriFoto: _uriFoto!,
+    );
+
+    var resp = await propertyController.updateInfoProperty(
+      widget.id!.toInt(),
+      token!,
+      propertyEdit,
+    );
+    //TODO EDIT FALHANDO
+    setState(() {
+      isClicked = true;
+
+      if (resp == 'Propriedade atualizada com sucesso!') {
+        isOk = true;
+      } else {
+        isOk = false;
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
 
     loadPref();
-
-    loadProductors();
   }
 
   loadPref() async {
@@ -82,22 +134,29 @@ class _PropertyFormState extends State<PropertyForm> {
     if (sharedUser.getString('user') != null) {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
-      print(token);
-    }
-  }
-
-  loadProductors() async {
-    SharedPreferences sharedUser = await SharedPreferences.getInstance();
-    if (sharedUser.getString('user') != null) {
-      user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
-      token = user!.token;
-      print(token);
 
       userController.getProductorList(token!);
       listProductors = userController.productorList;
       print(listProductors);
 
       loadDropdown();
+
+      if (widget.id != null && token != null && !pass) {
+        propertyModel = await propertyController.getInfoProperty(
+          widget.id!,
+          token!,
+        );
+        pass = true;
+
+        setState(() {
+          isEdit = true;
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -136,6 +195,7 @@ class _PropertyFormState extends State<PropertyForm> {
         fillColor: mainHover,
         alignLabelWithHint: true,
       ),
+
       isExpanded: true,
       icon: Icon(Icons.arrow_downward, color: mainWhite),
       scrollbarAlwaysShow: true,
@@ -240,23 +300,6 @@ class _PropertyFormState extends State<PropertyForm> {
         }
       },
     );
-
-    if (widget.id != null && token != null && !pass) {
-      propertyModel = await propertyController.getInfoProperty(
-        widget.id!,
-        token!,
-      );
-      pass = true;
-
-      setState(() {
-        isEdit = true;
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-    }
   }
 
   _reloadPage() {
@@ -331,7 +374,7 @@ class _PropertyFormState extends State<PropertyForm> {
                               text: 'Matricula',
                               suffixIconButton: null,
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
+                                if (value == null || value.isEmpty && isValidate) {
                                   return 'Campo obrigatório';
                                 } else {
                                   _matricula = value;
@@ -347,7 +390,7 @@ class _PropertyFormState extends State<PropertyForm> {
                               text: 'Nome Propriedade',
                               suffixIconButton: null,
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
+                                if (value == null || value.isEmpty && isValidate) {
                                   return 'Campo obrigatório';
                                 } else {
                                   _nome = value;
@@ -363,7 +406,7 @@ class _PropertyFormState extends State<PropertyForm> {
                               text: 'Endereço',
                               suffixIconButton: null,
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
+                                if (value == null || value.isEmpty && isValidate) {
                                   return 'Campo obrigatório';
                                 } else {
                                   _endereco = value;
@@ -379,7 +422,7 @@ class _PropertyFormState extends State<PropertyForm> {
                               text: 'Localização',
                               suffixIconButton: null,
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
+                                if (value == null || value.isEmpty && isValidate) {
                                   return 'Campo obrigatório';
                                 } else {
                                   _localizacao = value;
@@ -402,7 +445,7 @@ class _PropertyFormState extends State<PropertyForm> {
                                 }
                                 return null;
                               },
-                              onSaved: (value) => _tamanho = value as double?,
+                              onSaved: (value) => _tamanho,
                             ),
                             _space20,
                             CustomTextFormField(
@@ -418,7 +461,7 @@ class _PropertyFormState extends State<PropertyForm> {
                                 }
                                 return null;
                               },
-                              onSaved: (value) => _quantidadeTrabalhador = value as int?,
+                              onSaved: (value) => _quantidadeTrabalhador,
                             ),
                             _space20,
                             CustomTextFormField(
@@ -427,7 +470,7 @@ class _PropertyFormState extends State<PropertyForm> {
                               text: 'Uri Foto',
                               suffixIconButton: null,
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
+                                if (value == null || value.isEmpty && isValidate) {
                                   return 'Campo obrigatório';
                                 } else {
                                   _uriFoto = value;
@@ -450,7 +493,8 @@ class _PropertyFormState extends State<PropertyForm> {
                                         : () {
                                             _formKey.currentState!.validate();
                                             _formKey.currentState!.save();
-                                            // isEdit ? _updateUser() : _registerUser();
+                                            isEdit ? _updateProperty() : _registerProperty();
+                                            isValidate = true;
                                           },
                                     child: Container(
                                       alignment: Alignment.center,

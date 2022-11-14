@@ -1,5 +1,6 @@
 import 'package:dashboard_feirapp/controllers/model_controller/property_controller.dart';
 import 'package:dashboard_feirapp/models/model/property_model.dart';
+import 'package:dashboard_feirapp/pages/propertys/widgets/property_form.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,11 +33,9 @@ class _PropertyTableState extends State<PropertyTable> {
 
   loadPref() async {
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
-    //print(sharedUser.getString('user'));
     if (sharedUser.getString('user') != null) {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
-      print(token);
     }
   }
 
@@ -125,12 +124,12 @@ class _PropertyTableState extends State<PropertyTable> {
                   iconColor: mainBlack,
                   icon: Icons.edit,
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => ProductorForm(id: productor.id),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PropertyForm(id: propertys.id),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -142,25 +141,25 @@ class _PropertyTableState extends State<PropertyTable> {
                   iconColor: mainBlack,
                   icon: Icons.delete,
                   onTap: () {
-                    // showModalBottomSheet(
-                    //   context: context,
-                    //   builder: (BuildContext context) {
-                    //     return Container(
-                    //       height: 200,
-                    //       color: Colors.red,
-                    //       child: CustomText(
-                    //         text: "Remoção completa",
-                    //         color: textWhite,
-                    //         size: Dimensions.font12,
-                    //       ),
-                    //     );
-                    //   },
-                    // );
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          height: 200,
+                          color: Colors.red,
+                          child: CustomText(
+                            text: "Remoção completa",
+                            color: textWhite,
+                            size: Dimensions.font12,
+                          ),
+                        );
+                      },
+                    );
 
-                    // _deleteUser(productor.id!);
+                    _deleteProperty(propertys.id!);
 
-                    // _reloadPage();
-                    // _reloadPage();
+                    //_reloadPage();
+                    //_reloadPage();
                   },
                 ),
               ),
@@ -168,6 +167,18 @@ class _PropertyTableState extends State<PropertyTable> {
           ),
         )
         .toList();
+  }
+
+  Future<void> _deleteProperty(int idProperty) async {
+    await propertyController.deleteProperty(idProperty, token!);
+  }
+
+  _reloadPage() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => PropertyTable()),
+      (Route<dynamic> route) => false,
+    );
   }
 
   @override

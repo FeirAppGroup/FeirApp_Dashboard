@@ -18,10 +18,10 @@ Future<void> init() async {
 
   //repos
   Get.lazyPut(() => LoginRepo(apiClient: Get.find()));
-  //Get.lazyPut(() => UserRepo(apiClient: Get.find()));
-  //Get.lazyPut(() => PropertyRepo(apiClient: Get.find()));
-  Get.put(UserRepo(apiClient: Get.find()));
-  Get.put(PropertyRepo(apiClient: Get.find()));
+  Get.lazyPut(() => UserRepo(apiClient: Get.find()));
+  Get.lazyPut(() => PropertyRepo(apiClient: Get.find()));
+  //Get.put(UserRepo(apiClient: Get.find()));
+  //Get.put(PropertyRepo(apiClient: Get.find()));
 
   //controllers
   Get.lazyPut(() => LoginController(loginRepo: Get.find()));

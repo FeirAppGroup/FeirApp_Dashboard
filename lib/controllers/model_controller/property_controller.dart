@@ -34,4 +34,33 @@ class PropertyController extends GetxController {
       return throw Exception('Erro ao buscar propriedade.');
     }
   }
+
+  Future<String> registerNewProperty(PropertyModel property) async {
+    Response response = await propertyRepo.registerNewProperty(property.toJson());
+    print(property.toJson());
+    if (response.statusCode == 200) {
+      return 'Propriedade cadastrada com sucesso!';
+    } else {
+      return 'Erro ao cadastrar propriedade!';
+    }
+  }
+
+  Future<String> updateInfoProperty(int idProperty, String token, PropertyModel property) async {
+    Response response = await propertyRepo.updateInfoProperty(idProperty, token, property.toJson());
+    print(property.toJson());
+    if (response.statusCode == 200) {
+      return 'Propriedade atualizada com sucesso!';
+    } else {
+      return 'Erro ao atualizar propriedade!';
+    }
+  }
+
+  Future<String> deleteProperty(int idProperty, String token) async {
+    Response response = await propertyRepo.deleteProperty(idProperty, token);
+    if (response.statusCode == 200) {
+      return 'Propriedade apagada com sucesso!';
+    } else {
+      return 'Erro ao apagar propriedade!';
+    }
+  }
 }
