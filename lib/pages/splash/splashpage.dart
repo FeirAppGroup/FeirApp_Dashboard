@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:dashboard_feirapp/helpers/shared_pref.dart';
+import 'package:dashboard_feirapp/models/model/user_model.dart';
 import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../controllers/model_controller/user_controller.dart';
 import '../../models/dtos/user_login_dto.dart';
 import '../../routing/routes.dart';
 
@@ -69,6 +71,8 @@ class _SplashScreenState extends State<SplashPage> with TickerProviderStateMixin
       isLoading = false;
     });
   }
+
+  var userController = Get.find<UserController>();
 
   UserLoginDto? user;
   String? token;

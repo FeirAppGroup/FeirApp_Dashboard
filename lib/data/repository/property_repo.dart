@@ -16,4 +16,10 @@ class PropertyRepo extends GetxService {
     apiClient.token = token;
     return await apiClient.getData(AppConstants.PROPERTY_URI);
   }
+
+  //busca informações da propriedade pelo ID
+  Future<Response> getInfoProperty(int idProperty, String token) async {
+    apiClient.token = token;
+    return await apiClient.getData(AppConstants.PROPERTY_URI + '/$idProperty');
+  }
 }

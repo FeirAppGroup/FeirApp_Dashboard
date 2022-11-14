@@ -25,4 +25,13 @@ class PropertyController extends GetxController {
       update();
     } else {}
   }
+
+  Future<PropertyModel> getInfoProperty(int idProperty, String token) async {
+    Response response = await propertyRepo.getInfoProperty(idProperty, token);
+    if (response.statusCode == 200) {
+      return PropertyModel.fromMap(response.body);
+    } else {
+      return throw Exception('Erro ao buscar propriedade.');
+    }
+  }
 }

@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
           TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
           TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
         }),
-        primaryColor: Colors.blue,
+        primaryColor: mainWhite,
       ),
     );
   }

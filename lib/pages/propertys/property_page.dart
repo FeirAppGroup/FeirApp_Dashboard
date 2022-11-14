@@ -1,5 +1,9 @@
 import 'package:dashboard_feirapp/constants/style.dart';
 import 'package:dashboard_feirapp/controllers/model_controller/property_controller.dart';
+import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
+import 'package:dashboard_feirapp/data/api/api_client.dart';
+import 'package:dashboard_feirapp/pages/propertys/widgets/property_form.dart';
+import 'package:dashboard_feirapp/widgets/Cards/card_bottom_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +27,9 @@ class _PropertyPageState extends State<PropertyPage> {
   UserLoginDto? user;
   String? token;
 
-  final PropertyController p = Get.put(PropertyController(propertyRepo: Get.find()));
+  //final PropertyController p = Get.put(PropertyController(propertyRepo: Get.find()));
+  //final UserController u = Get.put(UserController(userRepo: Get.find()));
+  var userController = Get.find<UserController>();
 
   @override
   void initState() {
@@ -39,7 +45,17 @@ class _PropertyPageState extends State<PropertyPage> {
       print(token);
 
       Get.find<PropertyController>().getPropertyList(token!);
+      Get.find<UserController>().getProductorList(token!);
     }
+  }
+
+  _nextPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PropertyForm(id: null),
+      ),
+    );
   }
 
   @override
@@ -74,12 +90,7 @@ class _PropertyPageState extends State<PropertyPage> {
                 isActive: true,
                 button: ButtonWidget(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const ProductorForm(id: null),
-                    //   ),
-                    // );
+                    _nextPage();
                   },
                   text: 'Adicionar Propriedades',
                   backgroundColor: active,
