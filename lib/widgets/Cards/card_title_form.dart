@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/controllers.dart';
-import '../../../constants/style.dart';
-import '../../../routing/routes.dart';
-import '../../../utils/dimensions.dart';
-import '../../../widgets/Button/button_widget.dart';
-import '../../../widgets/Text/custom_text.dart';
+import '../../constants/controllers.dart';
+import '../../constants/style.dart';
+import '../../routing/routes.dart';
+import '../../utils/dimensions.dart';
+import '../Button/button_widget.dart';
+import '../Text/custom_text.dart';
 
-class CardTitle extends StatelessWidget {
+// ignore: must_be_immutable
+class CardTitleForm extends StatelessWidget {
   final String title;
   bool isActive;
+  ButtonWidget button;
 
-  CardTitle({
+  CardTitleForm({
     Key? key,
     required this.title,
     this.isActive = false,
+    required this.button,
   }) : super(key: key);
 
   @override
@@ -44,16 +47,7 @@ class CardTitle extends StatelessWidget {
               weight: FontWeight.bold,
               color: isActive ? textWhite : lightGrey,
             ),
-            ButtonWidget(
-              text: 'Cancelar',
-              backgroundColor: active,
-              height: Dimensions.height40,
-              width: Dimensions.width150,
-              textColor: textWhite,
-              onTap: () {
-                navigationController.navigateTo(productorPageRoute);
-              },
-            )
+            button,
           ],
         ),
       ),

@@ -25,6 +25,11 @@ class UserModel {
     required this.tipo,
   });
 
+  ///this method will prevent the override of toString
+  String userAsString() {
+    return '#${this.id} ${this.nome}';
+  }
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
@@ -63,4 +68,9 @@ class UserModel {
   String toJson() => json.encode(toMap());
 
   factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'UserModel(id: $id, nome: $nome, telefone: $telefone, email: $email, cep: $cep, senha: $senha, cpf: $cpf, cnpj: $cnpj, dap: $dap, tipo: $tipo)';
+  }
 }

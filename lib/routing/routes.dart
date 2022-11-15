@@ -15,8 +15,8 @@ const productorPageRoute = '/productor';
 const productorFormDisplayName = 'Produtor Form';
 const productorFormRoute = '/productor-form';
 
-const clientsPageDisplayName = 'Clients';
-const clientsPageRoute = '/clients';
+const propertyPageDisplayName = 'Propriedades';
+const propertyPageRoute = '/property';
 
 const authenticationPageDisplayName = 'Authentication';
 const authenticationPageRoute = '/authentication';
@@ -35,7 +35,7 @@ class MenuItem {
 List<MenuItem> sideMenuItems = [
   MenuItem(overViewPageDisplayName, overViewPageRoute),
   MenuItem(productorPageDisplayName, productorPageRoute),
-  MenuItem(clientsPageDisplayName, clientsPageRoute),
+  MenuItem(propertyPageDisplayName, propertyPageRoute),
   MenuItem(authenticationPageDisplayName, authenticationPageRoute),
 ];
 

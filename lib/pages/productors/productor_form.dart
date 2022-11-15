@@ -16,7 +16,7 @@ import '../../models/model/user_model.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/Text/custom_text.dart';
 import '../../widgets/TextFormField/custom_text_form_field.dart';
-import '../productors/widgets/card_title.dart';
+import '../../widgets/Cards/card_title_form.dart';
 
 class ProductorForm extends StatefulWidget {
   final int? id;
@@ -173,7 +173,20 @@ class _ProductorFormState extends State<ProductorForm> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CardTitle(title: !isEdit ? "Adicionar" : "Edição", isActive: true),
+                    CardTitleForm(
+                      title: !isEdit ? "Adicionar" : "Edição",
+                      isActive: true,
+                      button: ButtonWidget(
+                        text: 'Cancelar',
+                        backgroundColor: active,
+                        height: Dimensions.height40,
+                        width: Dimensions.width150,
+                        textColor: textWhite,
+                        onTap: () {
+                          navigationController.navigateTo(productorPageRoute);
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
