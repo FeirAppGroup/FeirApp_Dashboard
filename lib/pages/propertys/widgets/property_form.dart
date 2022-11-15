@@ -12,7 +12,6 @@ import '../../../constants/controllers.dart';
 import '../../../constants/style.dart';
 import '../../../controllers/model_controller/user_controller.dart';
 import '../../../models/dtos/user_login_dto.dart';
-import '../../../models/model/product_model.dart';
 import '../../../models/model/user_model.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/Button/button_widget.dart';
@@ -95,7 +94,7 @@ class _PropertyFormState extends State<PropertyForm> {
 
   Future<void> _updateProperty() async {
     PropertyModel propertyEdit = PropertyModel(
-      idUsuario: _idUsuario!,
+      idUsuario: propertyModel!.idUsuario,
       matricula: _matricula!,
       nome: _nome!,
       endereco: _endereco!,
@@ -110,7 +109,6 @@ class _PropertyFormState extends State<PropertyForm> {
       token!,
       propertyEdit,
     );
-    //TODO EDIT FALHANDO
     setState(() {
       isClicked = true;
 
@@ -480,7 +478,7 @@ class _PropertyFormState extends State<PropertyForm> {
                               onSaved: (value) => _uriFoto = value,
                             ),
                             _space20,
-                            dropdown,
+                            !isEdit ? dropdown : Container(),
                             _space20,
                             SizedBox(
                               width: double.infinity,

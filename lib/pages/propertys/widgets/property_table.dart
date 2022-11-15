@@ -47,39 +47,31 @@ class _PropertyTableState extends State<PropertyTable> {
     return [
       DataColumn2(
         label: CustomText(
-          text: 'ID',
+          text: 'Nome',
           color: textWhite,
+          size: Dimensions.font12,
         ),
         size: ColumnSize.L,
       ),
       DataColumn(
         label: CustomText(
-          text: 'ID Proprietario',
+          text: 'Endereço',
           color: textWhite,
-        ),
-      ),
-      DataColumn(
-        label: CustomText(
-          text: 'Nome',
-          color: textWhite,
-        ),
-      ),
-      DataColumn(
-        label: CustomText(
-          text: 'Endereco',
-          color: textWhite,
+          size: Dimensions.font10,
         ),
       ),
       DataColumn(
         label: CustomText(
           text: 'Editar',
           color: textWhite,
+          size: Dimensions.font12,
         ),
       ),
       DataColumn(
         label: CustomText(
           text: 'Apagar',
           color: textWhite,
+          size: Dimensions.font12,
         ),
       ),
     ];
@@ -92,18 +84,6 @@ class _PropertyTableState extends State<PropertyTable> {
         .map(
           (propertys) => DataRow(
             cells: [
-              DataCell(
-                CustomText(
-                  text: propertys.id.toString(),
-                  color: textWhite,
-                ),
-              ),
-              DataCell(
-                CustomText(
-                  text: propertys.idUsuario.toString(),
-                  color: textWhite,
-                ),
-              ),
               DataCell(
                 CustomText(
                   text: propertys.nome,
@@ -157,9 +137,6 @@ class _PropertyTableState extends State<PropertyTable> {
                     );
 
                     _deleteProperty(propertys.id!);
-
-                    //_reloadPage();
-                    //_reloadPage();
                   },
                 ),
               ),
@@ -171,14 +148,6 @@ class _PropertyTableState extends State<PropertyTable> {
 
   Future<void> _deleteProperty(int idProperty) async {
     await propertyController.deleteProperty(idProperty, token!);
-  }
-
-  _reloadPage() {
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => PropertyTable()),
-      (Route<dynamic> route) => false,
-    );
   }
 
   @override
