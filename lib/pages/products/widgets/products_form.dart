@@ -1,7 +1,6 @@
-import 'package:dashboard_feirapp/controllers/model_controller/property_controller.dart';
-import 'package:dashboard_feirapp/models/model/property_model.dart';
+import 'package:dashboard_feirapp/controllers/model_controller/product_controller.dart';
+import 'package:dashboard_feirapp/models/model/product_model.dart';
 import 'package:dashboard_feirapp/routing/routes.dart';
-import 'package:dashboard_feirapp/widgets/Text/custom_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -10,34 +9,35 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/controllers.dart';
 import '../../../constants/style.dart';
-import '../../../controllers/model_controller/user_controller.dart';
+import '../../../controllers/model_controller/property_controller.dart';
 import '../../../models/dtos/user_login_dto.dart';
-import '../../../models/model/user_model.dart';
+import '../../../models/model/property_model.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/Button/button_widget.dart';
 import '../../../widgets/Cards/card_bottom_form.dart';
 import '../../../widgets/Cards/card_title_form.dart';
+import '../../../widgets/Text/custom_text.dart';
 import '../../../widgets/TextFormField/custom_text_form_field.dart';
 
-class PropertyForm extends StatefulWidget {
+class ProductsForm extends StatefulWidget {
   final int? id;
-
-  const PropertyForm({
+  const ProductsForm({
     Key? key,
     this.id,
   }) : super(key: key);
 
   @override
-  State<PropertyForm> createState() => _PropertyFormState();
+  State<ProductsForm> createState() => _ProductsFormState();
 }
 
-class _PropertyFormState extends State<PropertyForm> {
-  UserModel? userModel;
-  var userController = Get.find<UserController>();
-  List<UserModel> listProductors = [];
-
+class _ProductsFormState extends State<ProductsForm> {
   PropertyModel? propertyModel;
   var propertyController = Get.find<PropertyController>();
+
+  ProductModel? productModel;
+  var productController = Get.find<ProductController>();
+
+  List<PropertyModel>? listProperty = [];
 
   UserLoginDto? user;
   String? token;
@@ -50,14 +50,14 @@ class _PropertyFormState extends State<PropertyForm> {
   final _formKey = GlobalKey<FormState>();
   final formValidVN = ValueNotifier<bool>(false);
 
-  int? _idUsuario;
-  String? _matricula;
+  int? _idPropriedade;
   String? _nome;
-  String? _endereco;
-  String? _localizacao;
-  double? _tamanho;
-  int? _quantidadeTrabalhador;
-  String? _uriFoto;
+  String? _categoria;
+  String? _descricao;
+  bool? _organico;
+  String? _urlFoto;
+  double? _valor;
+  bool? _oferta;
 
   bool isLoading = true;
   bool isEdit = false;
@@ -66,24 +66,24 @@ class _PropertyFormState extends State<PropertyForm> {
   bool isClicked = false;
   bool isValidate = false;
 
-  Future<void> _registerProperty() async {
-    var resp = await propertyController.registerNewProperty(
-      PropertyModel(
-        idUsuario: _idUsuario!,
-        matricula: _matricula!,
+  Future<void> _registerProduct() async {
+    var resp = await productController.registerNewProduct(
+      ProductModel(
+        idPropriedade: _idPropriedade!,
         nome: _nome!,
-        endereco: _endereco!,
-        localizacao: _localizacao!,
-        tamanho: _tamanho!,
-        quantidadeTrabalhador: _quantidadeTrabalhador!,
-        uriFoto: _uriFoto!,
+        categoria: _categoria!,
+        descricao: _descricao!,
+        organico: _organico!,
+        urlFoto: _urlFoto!,
+        valor: _valor!,
+        oferta: _oferta!,
       ),
     );
 
     setState(() {
       isClicked = true;
 
-      if (resp == 'Propriedade cadastrada com sucesso!') {
+      if (resp == 'Produto cadastrado com sucesso!') {
         isOk = true;
       } else {
         isOk = false;
@@ -91,27 +91,27 @@ class _PropertyFormState extends State<PropertyForm> {
     });
   }
 
-  Future<void> _updateProperty() async {
-    PropertyModel propertyEdit = PropertyModel(
-      idUsuario: propertyModel!.idUsuario,
-      matricula: _matricula!,
+  Future<void> _updateProduct() async {
+    ProductModel productEdit = ProductModel(
+      idPropriedade: _idPropriedade!,
       nome: _nome!,
-      endereco: _endereco!,
-      localizacao: _localizacao!,
-      tamanho: _tamanho!,
-      quantidadeTrabalhador: _quantidadeTrabalhador!,
-      uriFoto: _uriFoto!,
+      categoria: _categoria!,
+      descricao: _descricao!,
+      organico: _organico!,
+      urlFoto: _urlFoto!,
+      valor: _valor!,
+      oferta: _oferta!,
     );
 
-    var resp = await propertyController.updateInfoProperty(
+    var resp = await productController.updateInfoProduct(
       widget.id!.toInt(),
       token!,
-      propertyEdit,
+      productEdit,
     );
     setState(() {
       isClicked = true;
 
-      if (resp == 'Propriedade atualizada com sucesso!') {
+      if (resp == 'Produto atualizado com sucesso!') {
         isOk = true;
       } else {
         isOk = false;
@@ -132,14 +132,14 @@ class _PropertyFormState extends State<PropertyForm> {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
 
-      userController.getProductorList(token!);
-      listProductors = userController.productorList;
-      print(listProductors);
+      propertyController.getPropertyList(token!);
+      listProperty = propertyController.propertyList;
+      print(listProperty);
 
       loadDropdown();
 
       if (widget.id != null && token != null && !pass) {
-        propertyModel = await propertyController.getInfoProperty(
+        productModel = await productController.getInfoProduct(
           widget.id!,
           token!,
         );
@@ -160,7 +160,7 @@ class _PropertyFormState extends State<PropertyForm> {
   loadDropdown() async {
     dropdown = DropdownButtonFormField2(
       decoration: InputDecoration(
-        labelText: 'Produtor',
+        labelText: 'Propriedade',
         labelStyle: TextStyle(
           fontSize: Dimensions.font16,
           color: textWhite,
@@ -196,9 +196,9 @@ class _PropertyFormState extends State<PropertyForm> {
       isExpanded: true,
       icon: Icon(Icons.arrow_downward, color: mainWhite),
       scrollbarAlwaysShow: true,
-      items: listProductors
+      items: listProperty!
           .map(
-            (UserModel rtItem) => DropdownMenuItem<UserModel>(
+            (PropertyModel rtItem) => DropdownMenuItem<PropertyModel>(
               value: rtItem,
               child: CustomText(
                 text: '${rtItem.nome} (${rtItem.id})',
@@ -210,17 +210,17 @@ class _PropertyFormState extends State<PropertyForm> {
           .toList(),
       dropdownMaxHeight: 200,
       hint: CustomText(
-        text: _nome != null && _idUsuario != null ? '${_nome} (${_idUsuario})' : 'Selecione um Produtor',
+        text: _nome != null && _idPropriedade != null ? '${_nome} (${_idPropriedade})' : 'Selecione uma Propriedade',
         size: Dimensions.font16,
         color: textWhite,
       ),
       dropdownDecoration: BoxDecoration(
         color: mainHover,
       ),
-      onChanged: (UserModel? newValue) {},
-      onSaved: (UserModel? newValue) {
+      onChanged: (PropertyModel? newValue) {},
+      onSaved: (PropertyModel? newValue) {
         setState(() {
-          _idUsuario = newValue!.id;
+          _idPropriedade = newValue!.id;
         });
       },
       // Search Field
@@ -270,11 +270,11 @@ class _PropertyFormState extends State<PropertyForm> {
             filled: true,
             alignLabelWithHint: true,
             isDense: false,
-            labelText: 'Produtor',
+            labelText: 'Propriedade',
             //hoverColor: mainStroke,
             focusColor: mainWhite,
             counterText: '',
-            hintText: 'Começo do nome do produtor...',
+            hintText: 'Começo do nome do Propriedade...',
             hintStyle: TextStyle(
               fontSize: Dimensions.font16,
               color: textWhite,
@@ -327,7 +327,7 @@ class _PropertyFormState extends State<PropertyForm> {
                     width: Dimensions.width150,
                     textColor: textWhite,
                     onTap: () {
-                      navigationController.navigateTo(propertyPageRoute);
+                      navigationController.navigateTo(productPageRoute);
                     },
                   ),
                 ),
@@ -358,25 +358,9 @@ class _PropertyFormState extends State<PropertyForm> {
                           children: [
                             _space20,
                             CustomTextFormField(
-                              initialValue: isEdit ? propertyModel!.matricula : "",
+                              initialValue: isEdit ? productModel!.nome : "",
                               textInputType: TextInputType.text,
-                              text: 'Matricula',
-                              suffixIconButton: null,
-                              validator: (value) {
-                                if (value == null || value.isEmpty && isValidate) {
-                                  return 'Campo obrigatório';
-                                } else {
-                                  _matricula = value;
-                                }
-                                return null;
-                              },
-                              onSaved: (value) => _matricula = value,
-                            ),
-                            _space20,
-                            CustomTextFormField(
-                              initialValue: isEdit ? propertyModel!.nome : "",
-                              textInputType: TextInputType.name,
-                              text: 'Nome Propriedade',
+                              text: 'Nome',
                               suffixIconButton: null,
                               validator: (value) {
                                 if (value == null || value.isEmpty && isValidate) {
@@ -389,84 +373,70 @@ class _PropertyFormState extends State<PropertyForm> {
                               onSaved: (value) => _nome = value,
                             ),
                             _space20,
+                            CustomText(
+                              text: 'DROPDOWN CATEGORIA',
+                              color: mainWhite,
+                              size: Dimensions.font24,
+                            ),
+                            _space20,
                             CustomTextFormField(
-                              initialValue: isEdit ? propertyModel!.endereco : "",
-                              textInputType: TextInputType.text,
-                              text: 'Endereço',
+                              initialValue: isEdit ? productModel!.descricao : "",
+                              textInputType: TextInputType.multiline,
+                              text: 'Descrição',
                               suffixIconButton: null,
                               validator: (value) {
                                 if (value == null || value.isEmpty && isValidate) {
                                   return 'Campo obrigatório';
                                 } else {
-                                  _endereco = value;
+                                  _descricao = value;
                                 }
                                 return null;
                               },
-                              onSaved: (value) => _endereco = value,
+                              onSaved: (value) => _descricao = value,
+                            ),
+                            _space20,
+                            CustomText(
+                              text: 'DROPDOWN True/FALSE organico',
+                              color: mainWhite,
+                              size: Dimensions.font24,
                             ),
                             _space20,
                             CustomTextFormField(
-                              initialValue: isEdit ? propertyModel!.localizacao : "",
-                              textInputType: TextInputType.text,
-                              text: 'Localização',
+                              initialValue: isEdit ? productModel!.urlFoto : "",
+                              textInputType: TextInputType.url,
+                              text: 'URL Foto',
                               suffixIconButton: null,
                               validator: (value) {
                                 if (value == null || value.isEmpty && isValidate) {
                                   return 'Campo obrigatório';
                                 } else {
-                                  _localizacao = value;
+                                  _urlFoto = value;
                                 }
                                 return null;
                               },
-                              onSaved: (value) => _localizacao = value,
+                              onSaved: (value) => _urlFoto = value,
                             ),
                             _space20,
                             CustomTextFormField(
-                              initialValue: isEdit ? propertyModel!.tamanho.toString() : "",
+                              initialValue: isEdit ? productModel!.valor.toString() : "",
                               textInputType: TextInputType.number,
-                              text: 'Tamanho',
+                              text: 'Preço',
                               suffixIconButton: null,
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
+                                if (value == null || value.isEmpty && !isValidate) {
                                   return 'Campo obrigatório';
                                 } else {
-                                  _tamanho = double.parse(value);
+                                  _valor = double.parse(value);
                                 }
                                 return null;
                               },
-                              onSaved: (value) => _tamanho,
+                              onSaved: (value) => _valor,
                             ),
                             _space20,
-                            CustomTextFormField(
-                              initialValue: isEdit ? propertyModel!.quantidadeTrabalhador.toString() : "",
-                              textInputType: TextInputType.number,
-                              text: 'Quantidade de trabalhadores',
-                              suffixIconButton: null,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Campo obrigatório';
-                                } else {
-                                  _quantidadeTrabalhador = int.parse(value);
-                                }
-                                return null;
-                              },
-                              onSaved: (value) => _quantidadeTrabalhador,
-                            ),
-                            _space20,
-                            CustomTextFormField(
-                              initialValue: isEdit ? propertyModel!.uriFoto : "",
-                              textInputType: TextInputType.number,
-                              text: 'Uri Foto',
-                              suffixIconButton: null,
-                              validator: (value) {
-                                if (value == null || value.isEmpty && isValidate) {
-                                  return 'Campo obrigatório';
-                                } else {
-                                  _uriFoto = value;
-                                }
-                                return null;
-                              },
-                              onSaved: (value) => _uriFoto = value,
+                            CustomText(
+                              text: 'DROPDOWN TRUE/FALSE oferta',
+                              color: mainWhite,
+                              size: Dimensions.font24,
                             ),
                             _space20,
                             !isEdit ? dropdown : Container(),
@@ -482,7 +452,7 @@ class _PropertyFormState extends State<PropertyForm> {
                                         : () {
                                             _formKey.currentState!.validate();
                                             _formKey.currentState!.save();
-                                            isEdit ? _updateProperty() : _registerProperty();
+                                            isEdit ? _updateProduct() : _registerProduct();
                                             isValidate = true;
                                           },
                                     child: Container(
@@ -510,7 +480,7 @@ class _PropertyFormState extends State<PropertyForm> {
                                           CustomText(
                                             text: !isEdit
                                                 ? "Cadastro realizado com Sucesso "
-                                                : "Propriedade atualizada com Sucesso !",
+                                                : "Produto atualizado com Sucesso !",
                                             size: Dimensions.font18,
                                             color: textWhite,
                                           ),
@@ -525,7 +495,7 @@ class _PropertyFormState extends State<PropertyForm> {
                                               setState(() {
                                                 isClicked = true;
                                               });
-                                              navigationController.navigateTo(propertyPageRoute);
+                                              navigationController.navigateTo(productPageRoute);
                                             },
                                           ),
                                         ],
@@ -535,7 +505,7 @@ class _PropertyFormState extends State<PropertyForm> {
                                           CustomText(
                                             text: !isEdit
                                                 ? "Erro a realizar o cadastro"
-                                                : "Erro na atualização do propriedade",
+                                                : "Erro na atualização do produto",
                                             size: Dimensions.font18,
                                             color: tertiaryRed,
                                           ),

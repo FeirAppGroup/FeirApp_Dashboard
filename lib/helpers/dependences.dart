@@ -1,5 +1,7 @@
+import 'package:dashboard_feirapp/controllers/model_controller/product_controller.dart';
 import 'package:dashboard_feirapp/controllers/model_controller/property_controller.dart';
 import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
+import 'package:dashboard_feirapp/data/repository/product_repo.dart';
 import 'package:dashboard_feirapp/data/repository/property_repo.dart';
 import 'package:dashboard_feirapp/data/repository/user_repo.dart';
 import 'package:dashboard_feirapp/helpers/shared_pref.dart';
@@ -20,6 +22,7 @@ Future<void> init() async {
   Get.lazyPut(() => LoginRepo(apiClient: Get.find()));
   Get.lazyPut(() => UserRepo(apiClient: Get.find()));
   Get.lazyPut(() => PropertyRepo(apiClient: Get.find()));
+  Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
   //Get.put(UserRepo(apiClient: Get.find()));
   //Get.put(PropertyRepo(apiClient: Get.find()));
 
@@ -29,6 +32,7 @@ Future<void> init() async {
   //Get.lazyPut(() => PropertyController(propertyRepo: Get.find()));
   Get.put(UserController(userRepo: Get.find()));
   Get.put(PropertyController(propertyRepo: Get.find()));
+  Get.put(ProductController(productRepo: Get.find()));
 
   Get.put(MenuController());
   Get.put(NavigationController());
