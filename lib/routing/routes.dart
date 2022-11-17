@@ -18,6 +18,9 @@ const productorFormRoute = '/productor-form';
 const propertyPageDisplayName = 'Propriedades';
 const propertyPageRoute = '/property';
 
+const productPageDisplayName = 'Produtos';
+const productPageRoute = '/product';
+
 const authenticationPageDisplayName = 'Authentication';
 const authenticationPageRoute = '/authentication';
 
@@ -36,6 +39,7 @@ List<MenuItem> sideMenuItems = [
   MenuItem(overViewPageDisplayName, overViewPageRoute),
   MenuItem(productorPageDisplayName, productorPageRoute),
   MenuItem(propertyPageDisplayName, propertyPageRoute),
+  MenuItem(productPageDisplayName, productPageRoute),
   MenuItem(authenticationPageDisplayName, authenticationPageRoute),
 ];
 

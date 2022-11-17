@@ -45,7 +45,7 @@ class _PropertyFormState extends State<PropertyForm> {
   final controller = TextEditingController();
   final searchController = TextEditingController();
 
-  var dropdown;
+  //var dropdown;
 
   final _formKey = GlobalKey<FormState>();
   final formValidVN = ValueNotifier<bool>(false);
@@ -53,6 +53,7 @@ class _PropertyFormState extends State<PropertyForm> {
   int? _idUsuario;
   String? _matricula;
   String? _nome;
+  String? _nomeUser;
   String? _endereco;
   String? _localizacao;
   double? _tamanho;
@@ -64,7 +65,6 @@ class _PropertyFormState extends State<PropertyForm> {
   bool pass = false;
   bool isOk = false;
   bool isClicked = false;
-  bool reload = false;
   bool isValidate = false;
 
   Future<void> _registerProperty() async {
@@ -94,7 +94,7 @@ class _PropertyFormState extends State<PropertyForm> {
 
   Future<void> _updateProperty() async {
     PropertyModel propertyEdit = PropertyModel(
-      idUsuario: propertyModel!.idUsuario,
+      idUsuario: _idUsuario!,
       matricula: _matricula!,
       nome: _nome!,
       endereco: _endereco!,
@@ -145,6 +145,12 @@ class _PropertyFormState extends State<PropertyForm> {
           token!,
         );
         pass = true;
+        userModel = await userController.getInfoProfileUser(
+          propertyModel!.idUsuario,
+          token!,
+        );
+        _idUsuario = propertyModel!.idUsuario;
+        _nomeUser = userModel!.nome;
 
         setState(() {
           isEdit = true;
@@ -158,8 +164,8 @@ class _PropertyFormState extends State<PropertyForm> {
     }
   }
 
-  loadDropdown() async {
-    dropdown = DropdownButtonFormField2(
+  Widget dropDown() {
+    return DropdownButtonFormField2(
       decoration: InputDecoration(
         labelText: 'Produtor',
         labelStyle: TextStyle(
@@ -211,7 +217,7 @@ class _PropertyFormState extends State<PropertyForm> {
           .toList(),
       dropdownMaxHeight: 200,
       hint: CustomText(
-        text: _nome != null && _idUsuario != null ? '${_nome} (${_idUsuario})' : 'Selecione um Produtor',
+        text: isEdit ? '$_nomeUser $_idUsuario' : 'Selecione um Produtor',
         size: Dimensions.font16,
         color: textWhite,
       ),
@@ -224,7 +230,7 @@ class _PropertyFormState extends State<PropertyForm> {
           _idUsuario = newValue!.id;
         });
       },
-      // Search Field
+      //Search Field
       searchController: searchController,
       searchInnerWidget: Padding(
         padding: const EdgeInsets.only(
@@ -300,12 +306,8 @@ class _PropertyFormState extends State<PropertyForm> {
     );
   }
 
-  _reloadPage() {
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => PropertyForm()),
-      (Route<dynamic> route) => false,
-    );
+  loadDropdown() async {
+    dropDown();
   }
 
   @override
@@ -478,7 +480,8 @@ class _PropertyFormState extends State<PropertyForm> {
                               onSaved: (value) => _uriFoto = value,
                             ),
                             _space20,
-                            !isEdit ? dropdown : Container(),
+                            //!isEdit ? dropdown : Container(),
+                            dropDown(),
                             _space20,
                             SizedBox(
                               width: double.infinity,

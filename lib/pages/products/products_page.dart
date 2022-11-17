@@ -1,14 +1,12 @@
-import 'package:dashboard_feirapp/constants/style.dart';
+import 'package:dashboard_feirapp/controllers/model_controller/product_controller.dart';
 import 'package:dashboard_feirapp/controllers/model_controller/property_controller.dart';
-import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
-import 'package:dashboard_feirapp/data/api/api_client.dart';
-import 'package:dashboard_feirapp/pages/propertys/widgets/property_form.dart';
-import 'package:dashboard_feirapp/widgets/Cards/card_bottom_form.dart';
+import 'package:dashboard_feirapp/pages/products/widgets/products_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/controllers.dart';
+import '../../constants/style.dart';
 import '../../helpers/responsiveness.dart';
 import '../../models/dtos/user_login_dto.dart';
 import '../../utils/dimensions.dart';
@@ -16,20 +14,18 @@ import '../../widgets/Button/button_widget.dart';
 import '../../widgets/Button/icon_button_widget.dart';
 import '../../widgets/Cards/card_title_table.dart';
 import '../../widgets/Text/custom_text.dart';
-import 'widgets/property_table.dart';
+import 'widgets/products_table.dart';
 
-class PropertyPage extends StatefulWidget {
+class ProductsPage extends StatefulWidget {
+  const ProductsPage({Key? key}) : super(key: key);
+
   @override
-  State<PropertyPage> createState() => _PropertyPageState();
+  State<ProductsPage> createState() => _ProductsPageState();
 }
 
-class _PropertyPageState extends State<PropertyPage> {
+class _ProductsPageState extends State<ProductsPage> {
   UserLoginDto? user;
   String? token;
-
-  //final PropertyController p = Get.put(PropertyController(propertyRepo: Get.find()));
-  //final UserController u = Get.put(UserController(userRepo: Get.find()));
-  var userController = Get.find<UserController>();
 
   @override
   void initState() {
@@ -44,8 +40,8 @@ class _PropertyPageState extends State<PropertyPage> {
       token = user!.token;
       print(token);
 
+      Get.find<ProductController>().getProductsList(token!);
       Get.find<PropertyController>().getPropertyList(token!);
-      Get.find<UserController>().getProductorList(token!);
     }
   }
 
@@ -53,7 +49,7 @@ class _PropertyPageState extends State<PropertyPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const PropertyForm(id: null),
+        builder: (context) => const ProductsForm(id: null),
       ),
     );
   }
@@ -87,13 +83,13 @@ class _PropertyPageState extends State<PropertyPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 CardTitleTable(
-                  title: "Tabela de Propriedades",
+                  title: "Tabela de Produtos",
                   isActive: true,
                   button: ButtonWidget(
                     onTap: () {
                       _nextPage();
                     },
-                    text: 'Adicionar Propriedades',
+                    text: 'Adicionar Produto',
                     backgroundColor: active,
                     height: Dimensions.height40,
                     width: Dimensions.width150,
@@ -108,7 +104,7 @@ class _PropertyPageState extends State<PropertyPage> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PropertyPage()), // this mainpage is your page to refresh.
+                            builder: (context) => ProductsPage()), // this mainpage is your page to refresh.
                         (Route<dynamic> route) => false,
                       );
                     },
@@ -119,7 +115,7 @@ class _PropertyPageState extends State<PropertyPage> {
               ],
             ),
           ),
-          PropertyTable(),
+          ProductsTable(),
         ],
       ),
     );

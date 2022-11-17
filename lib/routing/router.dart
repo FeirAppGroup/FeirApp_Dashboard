@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../pages/productors/productor_page.dart';
 import '../pages/overview/overview.dart';
+import '../pages/products/products_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -17,6 +18,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(ProductorPage());
     case propertyPageRoute:
       return _getPageRoute(PropertyPage());
+    case productPageRoute:
+      return _getPageRoute(ProductsPage());
     case notfoundPageRoute:
       return _getPageRoute(PageNotFound());
     case splashPageRoute:
