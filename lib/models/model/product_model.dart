@@ -10,6 +10,7 @@ class ProductModel {
   String urlFoto;
   double valor;
   bool oferta;
+  DateTime dataValidade;
 
   ProductModel({
     this.id,
@@ -21,6 +22,7 @@ class ProductModel {
     required this.urlFoto,
     required this.valor,
     required this.oferta,
+    required this.dataValidade,
   });
 
   Map<String, dynamic> toMap() {
@@ -37,6 +39,7 @@ class ProductModel {
     result.addAll({'urlFoto': urlFoto});
     result.addAll({'valor': valor});
     result.addAll({'oferta': oferta});
+    result.addAll({'dataValidade': dataValidade.toString()});
 
     return result;
   }
@@ -52,6 +55,7 @@ class ProductModel {
       urlFoto: map['urlFoto'] ?? '',
       valor: map['valor']?.toDouble() ?? 0.0,
       oferta: map['oferta'] ?? false,
+      dataValidade: DateTime.parse(map['dataValidade']),
     );
   }
 

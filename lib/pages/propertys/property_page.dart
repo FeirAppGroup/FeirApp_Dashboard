@@ -60,65 +60,68 @@ class _PropertyPageState extends State<PropertyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Obx(
-          () => Row(
-            children: [
-              Container(
-                height: Dimensions.height50,
-                margin: EdgeInsets.only(
-                  top: ResponsiveWidget.isSmallScreen(context) ? Dimensions.height56 : Dimensions.height5,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Obx(
+            () => Row(
+              children: [
+                Container(
+                  height: Dimensions.height50,
+                  margin: EdgeInsets.only(
+                    top: ResponsiveWidget.isSmallScreen(context) ? Dimensions.height56 : Dimensions.height5,
+                  ),
+                  child: CustomText(
+                    text: menuController.activeItem.value,
+                    size: Dimensions.font24,
+                    color: mainWhite,
+                    weight: FontWeight.bold,
+                  ),
                 ),
-                child: CustomText(
-                  text: menuController.activeItem.value,
-                  size: Dimensions.font24,
-                  color: mainWhite,
-                  weight: FontWeight.bold,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CardTitleTable(
-                title: "Tabela de Propriedades",
-                isActive: true,
-                button: ButtonWidget(
-                  onTap: () {
-                    _nextPage();
-                  },
-                  text: 'Adicionar Propriedades',
-                  backgroundColor: active,
-                  height: Dimensions.height40,
-                  width: Dimensions.width150,
-                  textColor: textWhite,
+          Padding(
+            padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CardTitleTable(
+                  title: "Tabela de Propriedades",
+                  isActive: true,
+                  button: ButtonWidget(
+                    onTap: () {
+                      _nextPage();
+                    },
+                    text: 'Adicionar Propriedades',
+                    backgroundColor: active,
+                    height: Dimensions.height40,
+                    width: Dimensions.width150,
+                    textColor: textWhite,
+                  ),
+                  iconButton: IconButtonWidget(
+                    backgroundColor: starTableColor,
+                    height: Dimensions.height40,
+                    width: Dimensions.width64,
+                    onTap: () {
+                      // Just insert this code to button to refresh page.​
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PropertyPage()), // this mainpage is your page to refresh.
+                        (Route<dynamic> route) => false,
+                      );
+                    },
+                    icon: Icons.replay_outlined,
+                    iconColor: mainWhite,
+                  ),
                 ),
-                iconButton: IconButtonWidget(
-                  backgroundColor: starTableColor,
-                  height: Dimensions.height40,
-                  width: Dimensions.width64,
-                  onTap: () {
-                    // Just insert this code to button to refresh page.​
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => PropertyPage()), // this mainpage is your page to refresh.
-                      (Route<dynamic> route) => false,
-                    );
-                  },
-                  icon: Icons.replay_outlined,
-                  iconColor: mainWhite,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        PropertyTable(),
-      ],
+          PropertyTable(),
+        ],
+      ),
     );
   }
 }

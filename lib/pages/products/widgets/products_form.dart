@@ -5,6 +5,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/controllers.dart';
@@ -44,6 +45,7 @@ class _ProductsFormState extends State<ProductsForm> {
 
   final controller = TextEditingController();
   final searchController = TextEditingController();
+  TextEditingController dateinput = TextEditingController();
 
   var dropdown;
 
@@ -58,6 +60,8 @@ class _ProductsFormState extends State<ProductsForm> {
   String? _urlFoto;
   double? _valor;
   bool? _oferta;
+  String? _nomePropriedade;
+  DateTime? _validade;
 
   bool isLoading = true;
   bool isEdit = false;
@@ -77,6 +81,7 @@ class _ProductsFormState extends State<ProductsForm> {
         urlFoto: _urlFoto!,
         valor: _valor!,
         oferta: _oferta!,
+        dataValidade: _validade!,
       ),
     );
 
@@ -101,6 +106,7 @@ class _ProductsFormState extends State<ProductsForm> {
       urlFoto: _urlFoto!,
       valor: _valor!,
       oferta: _oferta!,
+      dataValidade: _validade!,
     );
 
     var resp = await productController.updateInfoProduct(
@@ -123,6 +129,8 @@ class _ProductsFormState extends State<ProductsForm> {
   void initState() {
     super.initState();
 
+    dateinput.text = "";
+
     loadPref();
   }
 
@@ -144,10 +152,24 @@ class _ProductsFormState extends State<ProductsForm> {
           token!,
         );
         pass = true;
+        propertyModel = await propertyController.getInfoProperty(
+          productModel!.idPropriedade,
+          token!,
+        );
+        _idPropriedade = productModel!.idPropriedade;
+        _nomePropriedade = propertyModel!.nome;
+
+        _categoria = productModel!.categoria;
+        _oferta = productModel!.oferta;
+        _organico = productModel!.organico;
+        _validade = productModel!.dataValidade;
 
         setState(() {
           isEdit = true;
           isLoading = false;
+
+          String formattedDate = DateFormat('yyyy-MM-dd').format(productModel!.dataValidade);
+          dateinput.text = formattedDate;
         });
       } else {
         setState(() {
@@ -157,10 +179,241 @@ class _ProductsFormState extends State<ProductsForm> {
     }
   }
 
-  loadDropdown() async {
-    dropdown = DropdownButtonFormField2(
-      decoration: InputDecoration(
-        labelText: 'Propriedade',
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: Dimensions.height60,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  bottom: Dimensions.height50,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CardTitleForm(
+                      title: !isEdit ? "Adicionar" : "Edição",
+                      isActive: true,
+                      button: ButtonWidget(
+                        text: 'Cancelar',
+                        backgroundColor: active,
+                        height: Dimensions.height40,
+                        width: Dimensions.width150,
+                        textColor: textWhite,
+                        onTap: () {
+                          navigationController.navigateTo(productPageRoute);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              isLoading
+                  ? SpinKitCircle(
+                      itemBuilder: (BuildContext context, int index) {
+                        return DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: textWhite,
+                          ),
+                        );
+                      },
+                    )
+                  : Padding(
+                      padding: EdgeInsets.only(bottom: Dimensions.height50),
+                      child: Container(
+                        padding: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
+                        child: SingleChildScrollView(
+                          child: Form(
+                            key: _formKey,
+                            onChanged: () {
+                              formValidVN.value = _formKey.currentState?.validate() ?? false;
+                            },
+                            child: Column(
+                              children: [
+                                _space20,
+                                CustomTextFormField(
+                                  initialValue: isEdit ? productModel!.nome : "",
+                                  textInputType: TextInputType.text,
+                                  text: 'Nome',
+                                  suffixIconButton: null,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty && isValidate) {
+                                      return 'Campo obrigatório';
+                                    } else {
+                                      _nome = value;
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) => _nome = value,
+                                ),
+                                _space20,
+                                dropDownCategory('Categoria'),
+                                _space20,
+                                CustomTextFormField(
+                                  initialValue: isEdit ? productModel!.descricao : "",
+                                  textInputType: TextInputType.multiline,
+                                  text: 'Descrição',
+                                  suffixIconButton: null,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty && isValidate) {
+                                      return 'Campo obrigatório';
+                                    } else {
+                                      _descricao = value;
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) => _descricao = value,
+                                ),
+                                _space20,
+                                dropDownOrganic(
+                                  'Organico ?',
+                                  'Organico',
+                                  _organico!,
+                                ),
+                                _space20,
+                                CustomTextFormField(
+                                  initialValue: isEdit ? productModel!.urlFoto : "",
+                                  textInputType: TextInputType.url,
+                                  text: 'URL Foto',
+                                  suffixIconButton: null,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty && isValidate) {
+                                      return 'Campo obrigatório';
+                                    } else {
+                                      _urlFoto = value;
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) => _urlFoto = value,
+                                ),
+                                _space20,
+                                CustomTextFormField(
+                                  initialValue: isEdit ? productModel!.valor.toString() : "",
+                                  textInputType: TextInputType.number,
+                                  text: 'Preço',
+                                  suffixIconButton: null,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty && !isValidate) {
+                                      return 'Campo obrigatório';
+                                    } else {
+                                      _valor = double.parse(value);
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) => _valor,
+                                ),
+                                _space20,
+                                dropDownOffer(
+                                  'Oferta ?',
+                                  'Oferta',
+                                  _oferta!,
+                                ),
+                                _space20,
+                                //!isEdit ? dropdown : Container(),
+                                selectDate(),
+                                _space20,
+                                dropDownProperty('Propriedade'),
+                                _space20,
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ValueListenableBuilder<bool>(
+                                    valueListenable: formValidVN,
+                                    builder: (context, formValid, child) {
+                                      return InkWell(
+                                        onTap: !formValid
+                                            ? null
+                                            : () {
+                                                _formKey.currentState!.validate();
+                                                _formKey.currentState!.save();
+                                                isEdit ? _updateProduct() : _registerProduct();
+                                                isValidate = true;
+                                              },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          width: double.maxFinite,
+                                          padding: EdgeInsets.symmetric(vertical: Dimensions.height20),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(Dimensions.radius20),
+                                            color: active,
+                                          ),
+                                          child: CustomText(
+                                            text: "Continuar",
+                                            color: textWhite,
+                                            size: Dimensions.font16,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                isClicked
+                                    ? isOk
+                                        ? Column(
+                                            children: [
+                                              CustomText(
+                                                text: !isEdit
+                                                    ? "Cadastro realizado com Sucesso "
+                                                    : "Produto atualizado com Sucesso !",
+                                                size: Dimensions.font18,
+                                                color: textWhite,
+                                              ),
+                                              _space20,
+                                              ButtonWidget(
+                                                text: "Prosseguir",
+                                                width: Dimensions.width150,
+                                                height: Dimensions.height40,
+                                                backgroundColor: active,
+                                                textColor: textWhite,
+                                                onTap: () {
+                                                  setState(() {
+                                                    isClicked = true;
+                                                  });
+                                                  navigationController.navigateTo(productPageRoute);
+                                                },
+                                              ),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              CustomText(
+                                                text: !isEdit
+                                                    ? "Erro a realizar o cadastro"
+                                                    : "Erro na atualização do produto",
+                                                size: Dimensions.font18,
+                                                color: tertiaryRed,
+                                              ),
+                                            ],
+                                          )
+                                    : Container(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+              CardBottomForm(
+                marginLeft: Dimensions.width20,
+                marginRight: Dimensions.width20,
+                marginBottom: Dimensions.height30,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  decorationDropFormDropForm(String labeltext, Icon? icon) => InputDecoration(
+        labelText: labeltext,
+        icon: icon,
         labelStyle: TextStyle(
           fontSize: Dimensions.font16,
           color: textWhite,
@@ -191,8 +444,27 @@ class _ProductsFormState extends State<ProductsForm> {
         filled: true,
         fillColor: mainHover,
         alignLabelWithHint: true,
-      ),
+      );
 
+  var categorias = [
+    {'tipo': 'Frutas'},
+    {'tipo': 'Verduras'},
+    {'tipo': 'Legumes'}
+  ];
+
+  var trueFalse = [
+    {'boolean': 'Verdadeiro'},
+    {'boolean': 'Falso'}
+  ];
+
+  bool passCat = true;
+  bool passOrg = true;
+  bool passOff = true;
+  bool passProp = true;
+
+  Widget dropDownProperty(String labeltext) {
+    return DropdownButtonFormField2(
+      decoration: decorationDropFormDropForm(labeltext, null),
       isExpanded: true,
       icon: Icon(Icons.arrow_downward, color: mainWhite),
       scrollbarAlwaysShow: true,
@@ -210,17 +482,32 @@ class _ProductsFormState extends State<ProductsForm> {
           .toList(),
       dropdownMaxHeight: 200,
       hint: CustomText(
-        text: _nome != null && _idPropriedade != null ? '${_nome} (${_idPropriedade})' : 'Selecione uma Propriedade',
+        text: isEdit ? '$_nomePropriedade $_idPropriedade' : 'Selecione uma Propriedade',
         size: Dimensions.font16,
         color: textWhite,
       ),
       dropdownDecoration: BoxDecoration(
         color: mainHover,
       ),
-      onChanged: (PropertyModel? newValue) {},
-      onSaved: (PropertyModel? newValue) {
+      validator: (PropertyModel? value) {
+        if (value == null && isValidate) {
+          return 'Campo obrigatório';
+        } else {
+          if (value != null && passProp) {
+            _idPropriedade = value.id;
+            passProp = false;
+          }
+        }
+        return null;
+      },
+      onChanged: (PropertyModel? value) {},
+      onSaved: (PropertyModel? value) {
         setState(() {
-          _idPropriedade = newValue!.id;
+          if (isEdit && _idPropriedade == propertyModel!.id) {
+            _idPropriedade = propertyModel!.id;
+          } else {
+            _idPropriedade = value!.id;
+          }
         });
       },
       // Search Field
@@ -299,233 +586,295 @@ class _ProductsFormState extends State<ProductsForm> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-              top: Dimensions.height60,
+  Widget dropDownCategory(String labeltext) {
+    return DropdownButtonFormField2(
+      decoration: decorationDropFormDropForm(labeltext, null),
+      isExpanded: true,
+      icon: Icon(Icons.arrow_downward, color: mainWhite),
+      scrollbarAlwaysShow: true,
+      items: categorias
+          .map(
+            (value) => DropdownMenuItem<String>(
+              value: value['tipo'],
+              child: CustomText(
+                text: value['tipo'].toString(),
+                color: mainWhite,
+                size: Dimensions.font16,
+              ),
+            ),
+          )
+          .toList(),
+      dropdownMaxHeight: 200,
+      hint: CustomText(
+        text: isEdit ? '$_categoria' : 'Selecione uma categoria',
+        size: Dimensions.font16,
+        color: textWhite,
+      ),
+      dropdownDecoration: BoxDecoration(
+        color: mainHover,
+      ),
+      validator: (value) {
+        if (value == null && isValidate) {
+          return 'Campo obrigatório';
+        } else {
+          if (value != null && passCat) {
+            _categoria = value.toString();
+            passCat = false;
+          }
+        }
+        return null;
+      },
+      onChanged: (value) {},
+      onSaved: (value) {
+        setState(() {
+          if (isEdit && _categoria == productModel!.categoria) {
+            _categoria = productModel!.categoria;
+          } else {
+            _categoria = value as String?;
+          }
+        });
+      },
+      // Search Field
+      searchController: searchController,
+      searchInnerWidget: Padding(
+        padding: const EdgeInsets.only(
+          top: 8,
+          bottom: 4,
+          right: 8,
+          left: 8,
+        ),
+        child: TextFormField(
+          controller: searchController,
+          style: TextStyle(
+            color: mainWhite,
+            fontSize: Dimensions.font16,
+            fontWeight: FontWeight.w400,
+          ),
+          decoration: InputDecoration(
+            labelStyle: TextStyle(
+              fontSize: Dimensions.font16,
+              color: mainWhite,
+              fontWeight: FontWeight.w400,
+            ),
+            contentPadding: EdgeInsets.only(
               left: Dimensions.width20,
               right: Dimensions.width20,
-              bottom: Dimensions.height50,
+              bottom: Dimensions.height20,
+              top: Dimensions.height20,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CardTitleForm(
-                  title: !isEdit ? "Adicionar" : "Edição",
-                  isActive: true,
-                  button: ButtonWidget(
-                    text: 'Cancelar',
-                    backgroundColor: active,
-                    height: Dimensions.height40,
-                    width: Dimensions.width150,
-                    textColor: textWhite,
-                    onTap: () {
-                      navigationController.navigateTo(productPageRoute);
-                    },
-                  ),
-                ),
-              ],
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: mainWhite),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: tertiaryRed),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: tertiaryRed),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            filled: true,
+            alignLabelWithHint: true,
+            isDense: false,
+            labelText: 'Categoria',
+            //hoverColor: mainStroke,
+            focusColor: mainWhite,
+            counterText: '',
+            hintText: 'Começo do nome do Categoria...',
+            hintStyle: TextStyle(
+              fontSize: Dimensions.font16,
+              color: textWhite,
+              fontWeight: FontWeight.w400,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
-          isLoading
-              ? SpinKitCircle(
-                  itemBuilder: (BuildContext context, int index) {
-                    return DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: textWhite,
-                      ),
-                    );
-                  },
-                )
-              : Padding(
-                  padding: EdgeInsets.only(bottom: Dimensions.height50),
-                  child: Container(
-                    padding: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
-                    child: SingleChildScrollView(
-                      child: Form(
-                        key: _formKey,
-                        onChanged: () {
-                          formValidVN.value = _formKey.currentState?.validate() ?? false;
-                        },
-                        child: Column(
-                          children: [
-                            _space20,
-                            CustomTextFormField(
-                              initialValue: isEdit ? productModel!.nome : "",
-                              textInputType: TextInputType.text,
-                              text: 'Nome',
-                              suffixIconButton: null,
-                              validator: (value) {
-                                if (value == null || value.isEmpty && isValidate) {
-                                  return 'Campo obrigatório';
-                                } else {
-                                  _nome = value;
-                                }
-                                return null;
-                              },
-                              onSaved: (value) => _nome = value,
-                            ),
-                            _space20,
-                            CustomText(
-                              text: 'DROPDOWN CATEGORIA',
-                              color: mainWhite,
-                              size: Dimensions.font24,
-                            ),
-                            _space20,
-                            CustomTextFormField(
-                              initialValue: isEdit ? productModel!.descricao : "",
-                              textInputType: TextInputType.multiline,
-                              text: 'Descrição',
-                              suffixIconButton: null,
-                              validator: (value) {
-                                if (value == null || value.isEmpty && isValidate) {
-                                  return 'Campo obrigatório';
-                                } else {
-                                  _descricao = value;
-                                }
-                                return null;
-                              },
-                              onSaved: (value) => _descricao = value,
-                            ),
-                            _space20,
-                            CustomText(
-                              text: 'DROPDOWN True/FALSE organico',
-                              color: mainWhite,
-                              size: Dimensions.font24,
-                            ),
-                            _space20,
-                            CustomTextFormField(
-                              initialValue: isEdit ? productModel!.urlFoto : "",
-                              textInputType: TextInputType.url,
-                              text: 'URL Foto',
-                              suffixIconButton: null,
-                              validator: (value) {
-                                if (value == null || value.isEmpty && isValidate) {
-                                  return 'Campo obrigatório';
-                                } else {
-                                  _urlFoto = value;
-                                }
-                                return null;
-                              },
-                              onSaved: (value) => _urlFoto = value,
-                            ),
-                            _space20,
-                            CustomTextFormField(
-                              initialValue: isEdit ? productModel!.valor.toString() : "",
-                              textInputType: TextInputType.number,
-                              text: 'Preço',
-                              suffixIconButton: null,
-                              validator: (value) {
-                                if (value == null || value.isEmpty && !isValidate) {
-                                  return 'Campo obrigatório';
-                                } else {
-                                  _valor = double.parse(value);
-                                }
-                                return null;
-                              },
-                              onSaved: (value) => _valor,
-                            ),
-                            _space20,
-                            CustomText(
-                              text: 'DROPDOWN TRUE/FALSE oferta',
-                              color: mainWhite,
-                              size: Dimensions.font24,
-                            ),
-                            _space20,
-                            !isEdit ? dropdown : Container(),
-                            _space20,
-                            SizedBox(
-                              width: double.infinity,
-                              child: ValueListenableBuilder<bool>(
-                                valueListenable: formValidVN,
-                                builder: (context, formValid, child) {
-                                  return InkWell(
-                                    onTap: !formValid
-                                        ? null
-                                        : () {
-                                            _formKey.currentState!.validate();
-                                            _formKey.currentState!.save();
-                                            isEdit ? _updateProduct() : _registerProduct();
-                                            isValidate = true;
-                                          },
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      width: double.maxFinite,
-                                      padding: EdgeInsets.symmetric(vertical: Dimensions.height20),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(Dimensions.radius20),
-                                        color: active,
-                                      ),
-                                      child: CustomText(
-                                        text: "Continuar",
-                                        color: textWhite,
-                                        size: Dimensions.font16,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            isClicked
-                                ? isOk
-                                    ? Column(
-                                        children: [
-                                          CustomText(
-                                            text: !isEdit
-                                                ? "Cadastro realizado com Sucesso "
-                                                : "Produto atualizado com Sucesso !",
-                                            size: Dimensions.font18,
-                                            color: textWhite,
-                                          ),
-                                          _space20,
-                                          ButtonWidget(
-                                            text: "Prosseguir",
-                                            width: Dimensions.width150,
-                                            height: Dimensions.height40,
-                                            backgroundColor: active,
-                                            textColor: textWhite,
-                                            onTap: () {
-                                              setState(() {
-                                                isClicked = true;
-                                              });
-                                              navigationController.navigateTo(productPageRoute);
-                                            },
-                                          ),
-                                        ],
-                                      )
-                                    : Column(
-                                        children: [
-                                          CustomText(
-                                            text: !isEdit
-                                                ? "Erro a realizar o cadastro"
-                                                : "Erro na atualização do produto",
-                                            size: Dimensions.font18,
-                                            color: tertiaryRed,
-                                          ),
-                                        ],
-                                      )
-                                : Container(),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-          CardBottomForm(
-            marginLeft: Dimensions.width20,
-            marginRight: Dimensions.width20,
-            marginBottom: Dimensions.height30,
-          ),
-        ],
+        ),
       ),
+      // Verifica se existe
+      // searchMatchFn: (rtItem, searchValue) {
+      //   return (rtItem.value.nome.toLowerCase().contains(searchValue.toLowerCase()));
+      // },
+      // Limpa a pesquisa
+      onMenuStateChange: (isOpen) {
+        if (!isOpen) {
+          searchController.clear();
+        }
+      },
     );
+  }
+
+  Widget dropDownOrganic(String labeltext, String hinttext, bool variavel) {
+    return DropdownButtonFormField2(
+      decoration: decorationDropFormDropForm(labeltext, null),
+      isExpanded: true,
+      icon: Icon(Icons.arrow_downward, color: mainWhite),
+      scrollbarAlwaysShow: true,
+      items: trueFalse
+          .map(
+            (value) => DropdownMenuItem<String>(
+              value: value['boolean'],
+              child: CustomText(
+                text: value['boolean'].toString(),
+                color: mainWhite,
+                size: Dimensions.font16,
+              ),
+            ),
+          )
+          .toList(),
+      dropdownMaxHeight: 200,
+      hint: CustomText(
+        text: isEdit
+            ? variavel == true
+                ? 'Verdadeiro'
+                : 'Falso'
+            : '$hinttext',
+        size: Dimensions.font16,
+        color: textWhite,
+      ),
+      dropdownDecoration: BoxDecoration(
+        color: mainHover,
+      ),
+      validator: (value) {
+        if (value == null && isValidate) {
+          return 'Campo obrigatório';
+        } else {
+          if (value != null && passOrg) {
+            if (value == 'Verdadeiro') {
+              _organico = true;
+            } else {
+              _organico = false;
+            }
+            passOrg = false;
+          }
+        }
+        return null;
+      },
+      onChanged: (value) {},
+      onSaved: (value) {
+        setState(() {
+          if (value == 'Verdadeiro') {
+            _organico = true;
+          } else {
+            _organico = false;
+          }
+        });
+      },
+    );
+  }
+
+  Widget dropDownOffer(String labeltext, String hinttext, bool variavel) {
+    return DropdownButtonFormField2(
+      decoration: decorationDropFormDropForm(labeltext, null),
+      isExpanded: true,
+      icon: Icon(Icons.arrow_downward, color: mainWhite),
+      scrollbarAlwaysShow: true,
+      items: trueFalse
+          .map(
+            (value) => DropdownMenuItem<String>(
+              value: value['boolean'],
+              child: CustomText(
+                text: value['boolean'].toString(),
+                color: mainWhite,
+                size: Dimensions.font16,
+              ),
+            ),
+          )
+          .toList(),
+      dropdownMaxHeight: 200,
+      hint: CustomText(
+        text: isEdit
+            ? variavel == true
+                ? 'Verdadeiro'
+                : 'Falso'
+            : '$hinttext',
+        size: Dimensions.font16,
+        color: textWhite,
+      ),
+      dropdownDecoration: BoxDecoration(
+        color: mainHover,
+      ),
+      validator: (value) {
+        if (value == null && isValidate) {
+          return 'Campo obrigatório';
+        } else {
+          if (value != null && passOff) {
+            if (value == 'Verdadeiro') {
+              _oferta = true;
+            } else {
+              _oferta = false;
+            }
+
+            passOff = false;
+          }
+        }
+        return null;
+      },
+      onChanged: (value) {},
+      onSaved: (value) {
+        setState(() {
+          if (value == 'Verdadeiro') {
+            _oferta = true;
+          } else {
+            _oferta = false;
+          }
+        });
+      },
+      // Limpa a pesquisa
+      onMenuStateChange: (isOpen) {
+        if (!isOpen) {
+          searchController.clear();
+        }
+      },
+    );
+  }
+
+  Widget selectDate() {
+    return TextFormField(
+      controller: dateinput, //editing controller of this TextField
+      decoration: decorationDropFormDropForm(
+        'Data de Validade',
+        Icon(
+          Icons.calendar_today,
+          color: mainHover,
+        ),
+      ),
+      style: TextStyle(
+        color: mainWhite,
+        fontSize: Dimensions.font16,
+      ),
+      readOnly: true, //set it true, so that user will not able to edit text
+      onTap: () async {
+        DateTime? pickedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2101),
+        );
+
+        if (pickedDate != null) {
+          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+
+          setState(() {
+            dateinput.text = formattedDate; //set output date to TextField value.
+
+            _validade = pickedDate;
+          });
+        } else {
+          print("Date is not selected");
+        }
+      },
+    );
+  }
+
+  loadDropdown() async {
+    dropDownProperty('');
   }
 }
 
