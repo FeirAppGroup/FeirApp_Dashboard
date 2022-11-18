@@ -56,10 +56,10 @@ class _ProductsFormState extends State<ProductsForm> {
   String? _nome;
   String? _categoria;
   String? _descricao;
-  bool? _organico;
+  bool? _organico = false;
   String? _urlFoto;
   double? _valor;
-  bool? _oferta;
+  bool? _oferta = false;
   String? _nomePropriedade;
   DateTime? _validade;
 
