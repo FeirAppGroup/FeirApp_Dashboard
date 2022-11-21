@@ -10,6 +10,9 @@ class AppConstants {
   static const String PRODUCTS_CATEGORY_URI = '/produto/categoria/';
   static const String PROPERTY_URI = '/propriedade';
 
+  static const String INVENTORY_URI = '/estoque';
+  static const String INVENTORY_PRODUCT_URI = '/estoque/produto';
+
   static const String AUTH_URI = '/login';
 
   static const String USER_URI = '/usuario';

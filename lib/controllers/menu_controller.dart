@@ -33,6 +33,8 @@ class MenuController extends GetxController {
         return _customIcon(Icons.add_home_work_rounded, itemName);
       case productPageDisplayName:
         return _customIcon(Icons.add_box, itemName);
+      case inventoryPageDisplayName:
+        return _customIcon(Icons.inventory, itemName);
       case authenticationPageDisplayName:
         return _customIcon(Icons.exit_to_app, itemName);
       default:
