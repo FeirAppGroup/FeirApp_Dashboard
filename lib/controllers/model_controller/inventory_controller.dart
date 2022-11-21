@@ -1,5 +1,7 @@
 import 'package:dashboard_feirapp/data/repository/inventory_repo.dart';
+import 'package:dashboard_feirapp/models/dtos/inventory_dto.dart';
 import 'package:dashboard_feirapp/models/model/inventory_model.dart';
+
 import 'package:get/get.dart';
 
 class InventoryController extends GetxController {
@@ -16,6 +18,8 @@ class InventoryController extends GetxController {
   set inventoryList(List<InventoryModel> inventoryList) {
     _inventoryList = inventoryList;
   }
+
+  List<InventoryDto> inventoryDtoList = [];
 
   Future<void> getInventoryList(String token) async {
     Response response = await inventoryRepo.getInventoryList(token);
@@ -79,5 +83,17 @@ class InventoryController extends GetxController {
     } else {
       return 'Erro ao apagar estoque!';
     }
+  }
+
+  Future<void> getInventoryDtoList(String token) async {
+    Response response = await inventoryRepo.getInventoryList(token);
+    if (response.statusCode == 200) {
+      inventoryDtoList = response.body
+          .map<InventoryDto>(
+            (e) => InventoryDto.fromMap(e),
+          )
+          .toList();
+      update();
+    } else {}
   }
 }

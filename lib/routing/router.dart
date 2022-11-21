@@ -1,5 +1,6 @@
 import 'package:dashboard_feirapp/pages/404/circular.dart';
 import 'package:dashboard_feirapp/pages/404/error_page.dart';
+import 'package:dashboard_feirapp/pages/inventory/inventory_page.dart';
 import 'package:dashboard_feirapp/pages/productors/productor_form.dart';
 import 'package:dashboard_feirapp/pages/propertys/property_page.dart';
 import 'package:dashboard_feirapp/pages/splash/splashpage.dart';
@@ -20,6 +21,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(PropertyPage());
     case productPageRoute:
       return _getPageRoute(ProductsPage());
+    case inventoryPageRoute:
+      return _getPageRoute(InventoryPage());
     case notfoundPageRoute:
       return _getPageRoute(PageNotFound());
     case splashPageRoute:

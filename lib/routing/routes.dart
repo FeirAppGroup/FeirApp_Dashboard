@@ -21,6 +21,9 @@ const propertyPageRoute = '/property';
 const productPageDisplayName = 'Produtos';
 const productPageRoute = '/product';
 
+const inventoryPageDisplayName = 'Estoque';
+const inventoryPageRoute = '/estoque';
+
 const authenticationPageDisplayName = 'Authentication';
 const authenticationPageRoute = '/authentication';
 
@@ -40,6 +43,7 @@ List<MenuItem> sideMenuItems = [
   MenuItem(productorPageDisplayName, productorPageRoute),
   MenuItem(propertyPageDisplayName, propertyPageRoute),
   MenuItem(productPageDisplayName, productPageRoute),
+  MenuItem(inventoryPageDisplayName, inventoryPageRoute),
   MenuItem(authenticationPageDisplayName, authenticationPageRoute),
 ];
 
