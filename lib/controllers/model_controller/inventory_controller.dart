@@ -33,6 +33,18 @@ class InventoryController extends GetxController {
     } else {}
   }
 
+  Future<void> getInventoryListProductName(String token) async {
+    Response response = await inventoryRepo.getInventoryListProductName(token);
+    if (response.statusCode == 200) {
+      _inventoryList = response.body
+          .map<InventoryModel>(
+            (e) => InventoryModel.fromMap(e),
+          )
+          .toList();
+      update();
+    } else {}
+  }
+
   Future<InventoryModel> getInfoInventory(int idInventory, String token) async {
     Response response = await inventoryRepo.getInfoInventory(idInventory, token);
     if (response.statusCode == 200) {

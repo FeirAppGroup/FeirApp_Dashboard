@@ -12,6 +12,7 @@ class AppConstants {
 
   static const String INVENTORY_URI = '/estoque';
   static const String INVENTORY_PRODUCT_URI = '/estoque/produto';
+  static const String INVENTORY_INFOPRODUCT_URI = '/estoque/infoproduto';
 
   static const String AUTH_URI = '/login';
 

@@ -4,11 +4,13 @@ class InventoryModel {
   int? id;
   int idProduto;
   int quantidade;
+  String? nomeProduto;
 
   InventoryModel({
     this.id,
     required this.idProduto,
     required this.quantidade,
+    this.nomeProduto,
   });
 
   Map<String, dynamic> toMap() {
@@ -19,6 +21,9 @@ class InventoryModel {
     }
     result.addAll({'idProduto': idProduto});
     result.addAll({'quantidade': quantidade});
+    if (nomeProduto != null) {
+      result.addAll({'nomeProduto': nomeProduto});
+    }
 
     return result;
   }
@@ -28,6 +33,7 @@ class InventoryModel {
       id: map['id']?.toInt(),
       idProduto: map['idProduto']?.toInt() ?? 0,
       quantidade: map['quantidade']?.toInt() ?? 0,
+      nomeProduto: map['nomeProduto'],
     );
   }
 

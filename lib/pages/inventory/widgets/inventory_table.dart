@@ -23,7 +23,6 @@ class InventoryTable extends StatefulWidget {
 
 class _InventoryTableState extends State<InventoryTable> {
   var inventoryController = Get.find<InventoryController>();
-  var productController = Get.find<ProductController>();
 
   UserLoginDto? user;
   String? token;
@@ -90,7 +89,7 @@ class _InventoryTableState extends State<InventoryTable> {
             cells: [
               DataCell(
                 CustomText(
-                  text: inventorys.idProduto.toString(),
+                  text: inventorys.nomeProduto!,
                   color: textWhite,
                 ),
               ),
@@ -180,7 +179,6 @@ class _InventoryTableState extends State<InventoryTable> {
         mainAxisSize: MainAxisSize.min,
         children: [
           initInventorys,
-          initProducts,
           _createDataTable(context),
         ],
       ),
@@ -189,14 +187,8 @@ class _InventoryTableState extends State<InventoryTable> {
 }
 
 List<InventoryModel> inventorys = [];
-List<ProductModel> products = [];
 
 //TODO necessita exibir o nome do produto
-
-var initProducts = GetBuilder<ProductController>(builder: (product) {
-  products = product.productsList;
-  return Container();
-});
 
 var initInventorys = GetBuilder<InventoryController>(builder: (inventory) {
   inventorys = inventory.inventoryList;
