@@ -1,8 +1,5 @@
-import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
-import 'package:dashboard_feirapp/models/model/user_model.dart';
-import 'package:dashboard_feirapp/pages/productors/productor_form.dart';
-import 'package:dashboard_feirapp/utils/dimensions.dart';
-import 'package:dashboard_feirapp/widgets/Button/icon_button_widget.dart';
+import 'package:dashboard_feirapp/controllers/model_controller/order_controller.dart';
+import 'package:dashboard_feirapp/models/model/order_model.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -11,21 +8,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/style.dart';
 import '../../../models/dtos/user_login_dto.dart';
+import '../../../utils/dimensions.dart';
+import '../../../widgets/Button/icon_button_widget.dart';
 import '../../../widgets/Text/custom_text.dart';
-import '../productor_page.dart';
 
-/// Example without a datasource
-class ProductorTable extends StatefulWidget {
-  const ProductorTable({Key? key}) : super(key: key);
+class OrderTable extends StatefulWidget {
+  const OrderTable({Key? key}) : super(key: key);
 
   @override
-  State<ProductorTable> createState() => _ProductorTableState();
+  State<OrderTable> createState() => _OrderTableState();
 }
 
-class _ProductorTableState extends State<ProductorTable> {
-  var userController = Get.find<UserController>();
+class _OrderTableState extends State<OrderTable> {
+  var orderController = Get.find<OrderController>();
 
-  List<UserModel> productors = [];
+  List<OrderModel> orders = [];
 
   UserLoginDto? user;
   String? token;
@@ -38,13 +35,13 @@ class _ProductorTableState extends State<ProductorTable> {
     loadPref();
   }
 
-  initProductors() async {
+  initOrders() async {
     setState(() {
       isLoading = true;
     });
 
-    await userController.getProductorList(token!);
-    productors = userController.productorList;
+    await orderController.getListOrders(token!);
+    orders = orderController.orders!;
 
     setState(() {
       isLoading = false;
@@ -59,7 +56,7 @@ class _ProductorTableState extends State<ProductorTable> {
       token = user!.token;
       print(token);
 
-      initProductors();
+      initOrders();
     }
   }
 
@@ -78,25 +75,25 @@ class _ProductorTableState extends State<ProductorTable> {
       ),
       DataColumn(
         label: CustomText(
-          text: 'Nome',
+          text: 'Quantidade de Itens',
           color: textWhite,
         ),
       ),
       DataColumn(
         label: CustomText(
-          text: 'Email',
+          text: 'Endereço de Entrega',
           color: textWhite,
         ),
       ),
       DataColumn(
         label: CustomText(
-          text: 'Editar',
+          text: 'Valor Total',
           color: textWhite,
         ),
       ),
       DataColumn(
         label: CustomText(
-          text: 'Apagar',
+          text: 'Aceitar Pedido',
           color: textWhite,
         ),
       ),
@@ -106,43 +103,32 @@ class _ProductorTableState extends State<ProductorTable> {
   List<DataRow> _createRows(
     BuildContext context,
   ) {
-    return productors
+    return orders
         .map(
-          (productor) => DataRow(
+          (order) => DataRow(
             cells: [
               DataCell(
                 CustomText(
-                  text: productor.id.toString(),
+                  text: order.id.toString(),
                   color: textWhite,
                 ),
               ),
               DataCell(
                 CustomText(
-                  text: productor.nome,
+                  text: order.itemPedidos.length.toString(),
                   color: textWhite,
                 ),
               ),
               DataCell(
                 CustomText(
-                  text: productor.email,
+                  text: order.enderecoEntrega,
                   color: textWhite,
                 ),
               ),
               DataCell(
-                IconButtonWidget(
-                  width: Dimensions.width40,
-                  height: Dimensions.height40,
-                  backgroundColor: textLiteblue,
-                  iconColor: mainBlack,
-                  icon: Icons.edit,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProductorForm(id: productor.id),
-                      ),
-                    );
-                  },
+                CustomText(
+                  text: order.valorTotal.toStringAsFixed(2),
+                  color: textWhite,
                 ),
               ),
               DataCell(
@@ -152,27 +138,7 @@ class _ProductorTableState extends State<ProductorTable> {
                   backgroundColor: tertiaryRed,
                   iconColor: mainBlack,
                   icon: Icons.delete,
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Container(
-                          height: 200,
-                          color: Colors.red,
-                          child: CustomText(
-                            text: "Remoção completa",
-                            color: textWhite,
-                            size: Dimensions.font12,
-                          ),
-                        );
-                      },
-                    );
-
-                    _deleteUser(productor.id!);
-
-                    _reloadPage();
-                    _reloadPage();
-                  },
+                  onTap: () {},
                 ),
               ),
             ],
@@ -181,21 +147,9 @@ class _ProductorTableState extends State<ProductorTable> {
         .toList();
   }
 
-  Future<void> _deleteUser(int idUser) async {
-    await userController.deleteProfileUser(idUser, token!);
-  }
-
-  _reloadPage() {
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => ProductorPage()),
-      (Route<dynamic> route) => false,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return isLoading == true || productors.isEmpty
+    return isLoading == true || orders.isEmpty
         ? Center(
             child: SpinKitCircle(
               itemBuilder: (BuildContext context, int index) {

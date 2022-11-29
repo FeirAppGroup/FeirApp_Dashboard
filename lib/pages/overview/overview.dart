@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dashboard_feirapp/main.dart';
 import 'package:dashboard_feirapp/models/dtos/user_login_dto.dart';
+import 'package:dashboard_feirapp/pages/overview/widgets/order_table.dart';
 import 'package:dashboard_feirapp/pages/overview/widgets/revenue_section/revenue_section_large.dart';
 import 'package:dashboard_feirapp/pages/overview/widgets/revenue_section/revenue_section_small.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +91,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     else
                       OverviewCardsSmallScreen(),
                     if (!ResponsiveWidget.isSmallScreen(context)) RevenueSectionLarge() else RevenueSectionSmall(),
-                    AvailableDrivers(),
+                    OrderTable(),
                   ],
                 ),
               ),
