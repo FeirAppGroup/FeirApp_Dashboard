@@ -6,7 +6,7 @@ import '../pages/splash/splashpage.dart';
 
 const rootRoute = "/";
 
-const overViewPageDisplayName = 'Overview';
+const overViewPageDisplayName = 'Home';
 const overViewPageRoute = '/overview';
 
 const productorPageDisplayName = 'Produtor';

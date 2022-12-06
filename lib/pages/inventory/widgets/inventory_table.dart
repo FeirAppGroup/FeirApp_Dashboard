@@ -5,6 +5,7 @@ import 'package:dashboard_feirapp/models/model/product_model.dart';
 import 'package:dashboard_feirapp/pages/inventory/widgets/inventory_form.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,8 +25,11 @@ class InventoryTable extends StatefulWidget {
 class _InventoryTableState extends State<InventoryTable> {
   var inventoryController = Get.find<InventoryController>();
 
+  List<InventoryModel> inventorys = [];
+
   UserLoginDto? user;
   String? token;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -34,11 +38,26 @@ class _InventoryTableState extends State<InventoryTable> {
     loadPref();
   }
 
+  initInventorys() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    await inventoryController.getInventoryListProductName(token!);
+    inventorys = inventoryController.inventoryList;
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   loadPref() async {
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
     if (sharedUser.getString('user') != null) {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
+
+      initInventorys();
     }
   }
 
@@ -157,40 +176,42 @@ class _InventoryTableState extends State<InventoryTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(Dimensions.height16),
-      margin: EdgeInsets.only(bottom: Dimensions.height30),
-      decoration: BoxDecoration(
-        color: mainBlack,
-        borderRadius: BorderRadius.circular(Dimensions.radius8),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, Dimensions.height5),
-            color: lightGrey.withOpacity(.1),
-            blurRadius: Dimensions.radius12,
-          ),
-        ],
-        border: Border.all(
-          color: mainWhite,
-          width: .5,
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          initInventorys,
-          _createDataTable(context),
-        ],
-      ),
-    );
+    return isLoading == true || inventorys.isEmpty
+        ? Center(
+            child: SpinKitCircle(
+              itemBuilder: (BuildContext context, int index) {
+                return const DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                );
+              },
+            ),
+          )
+        : Container(
+            padding: EdgeInsets.all(Dimensions.height16),
+            margin: EdgeInsets.only(bottom: Dimensions.height30),
+            decoration: BoxDecoration(
+              color: mainBlack,
+              borderRadius: BorderRadius.circular(Dimensions.radius8),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, Dimensions.height5),
+                  color: lightGrey.withOpacity(.1),
+                  blurRadius: Dimensions.radius12,
+                ),
+              ],
+              border: Border.all(
+                color: mainWhite,
+                width: .5,
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _createDataTable(context),
+              ],
+            ),
+          );
   }
 }
-
-List<InventoryModel> inventorys = [];
-
-//TODO necessita exibir o nome do produto
-
-var initInventorys = GetBuilder<InventoryController>(builder: (inventory) {
-  inventorys = inventory.inventoryList;
-  return Container();
-});
