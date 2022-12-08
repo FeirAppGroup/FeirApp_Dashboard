@@ -58,10 +58,12 @@ class _ChartsDriversState extends State<ChartsDrivers> {
             tooltipBehavior: _tooltip,
             series: <ChartSeries<_ChartData, String>>[
               ColumnSeries<_ChartData, String>(
-                  dataSource: data,
-                  xValueMapper: (_ChartData data, _) => data.x,
-                  yValueMapper: (_ChartData data, _) => data.y,
-                  color: Color.fromRGBO(8, 142, 255, 1))
+                name: 'Utilização',
+                dataSource: data,
+                xValueMapper: (_ChartData data, _) => data.x,
+                yValueMapper: (_ChartData data, _) => data.y,
+                color: Color.fromRGBO(8, 142, 255, 1),
+              )
             ]));
   }
 }

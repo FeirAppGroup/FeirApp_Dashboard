@@ -93,12 +93,12 @@ class _OrderTableState extends State<OrderTable> {
           color: textWhite,
         ),
       ),
-      DataColumn(
-        label: CustomText(
-          text: 'Aceitar Pedido',
-          color: textWhite,
-        ),
-      ),
+      // DataColumn(
+      //   label: CustomText(
+      //     text: 'Aceitar Pedido',
+      //     color: textWhite,
+      //   ),
+      // ),
     ];
   }
 
@@ -133,16 +133,16 @@ class _OrderTableState extends State<OrderTable> {
                   color: textWhite,
                 ),
               ),
-              DataCell(
-                IconButtonWidget(
-                  width: Dimensions.width40,
-                  height: Dimensions.height40,
-                  backgroundColor: tertiaryRed,
-                  iconColor: mainBlack,
-                  icon: Icons.delete,
-                  onTap: () {},
-                ),
-              ),
+              // DataCell(
+              //   IconButtonWidget(
+              //     width: Dimensions.width40,
+              //     height: Dimensions.height40,
+              //     backgroundColor: tertiaryRed,
+              //     iconColor: mainBlack,
+              //     icon: Icons.delete,
+              //     onTap: () {},
+              //   ),
+              // ),
             ],
           ),
         )

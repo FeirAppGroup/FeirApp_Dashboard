@@ -227,7 +227,11 @@ class _PropertyFormState extends State<PropertyForm> {
       onChanged: (UserModel? newValue) {},
       onSaved: (UserModel? newValue) {
         setState(() {
-          _idUsuario = newValue!.id;
+          if (isEdit && _idUsuario == propertyModel!.idUsuario) {
+            _idUsuario = propertyModel!.idUsuario;
+          } else {
+            _idUsuario = newValue!.id;
+          }
         });
       },
       //Search Field
