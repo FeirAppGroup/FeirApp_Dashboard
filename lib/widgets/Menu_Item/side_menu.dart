@@ -1,3 +1,4 @@
+import 'package:dashboard_feirapp/utils/dimensions.dart';
 import 'package:dashboard_feirapp/widgets/Menu_Item/side_menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,14 @@ class SideMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
 
+    final space40 = SizedBox(
+      height: Dimensions.height40,
+    );
+
+    final width48 = SizedBox(
+      width: _width / Dimensions.width48,
+    );
+
     return Container(
       color: mainBlack,
       child: ListView(
@@ -22,36 +31,31 @@ class SideMenu extends StatelessWidget {
           if (ResponsiveWidget.isSmallScreen(context))
             Column(
               children: [
-                SizedBox(
-                  height: 40,
-                ),
+                space40,
                 Row(
                   children: [
-                    SizedBox(
-                      width: _width / 48,
-                    ),
+                    width48,
                     Padding(
-                      padding: EdgeInsets.only(right: 12),
-                      child: Image.asset("assets/icons/logo.png"),
+                      padding: EdgeInsets.only(right: Dimensions.width12),
+                      child: Icon(
+                        Icons.agriculture,
+                        color: textWhite,
+                      ),
                     ),
                     Flexible(
                       child: CustomText(
-                        text: "Dash",
-                        size: 20,
+                        text: "Painel FeirApp",
+                        size: Dimensions.font20,
                         weight: FontWeight.bold,
-                        color: textGray,
+                        color: textWhite,
                       ),
                     ),
-                    SizedBox(
-                      width: _width / 48,
-                    ),
+                    width48,
                   ],
                 ),
               ],
             ),
-          SizedBox(
-            height: 40,
-          ),
+          space40,
           Divider(
             color: mainDividers,
           ),
@@ -63,7 +67,6 @@ class SideMenu extends StatelessWidget {
                     itemName: item.name,
                     onTap: () {
                       if (item.route == authenticationPageRoute) {
-                        //menuController.changeActiveitemTo(overViewPageDisplayName);
                         Get.offAllNamed(authenticationPageRoute);
                       }
 

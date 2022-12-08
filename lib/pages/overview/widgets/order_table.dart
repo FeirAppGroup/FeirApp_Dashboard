@@ -8,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/style.dart';
 import '../../../models/dtos/user_login_dto.dart';
+import '../../../models/enum/forma_pagamento_enum.dart';
+import '../../../models/model/item_cart_model.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/Button/icon_button_widget.dart';
 import '../../../widgets/Text/custom_text.dart';

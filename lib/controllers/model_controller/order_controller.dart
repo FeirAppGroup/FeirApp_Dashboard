@@ -30,7 +30,7 @@ class OrderController extends GetxController with StateMixin {
   Future<void> getOverview(String token) async {
     Response response = await orderRepo.getOverview(token);
     if (response.statusCode == 200) {
-      overviewModel = OverviewModel.fromJson(response.body);
+      overviewModel = OverviewModel.fromMap(response.body);
       update();
     }
   }

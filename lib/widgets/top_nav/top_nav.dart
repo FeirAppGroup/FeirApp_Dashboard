@@ -17,10 +17,10 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
         ? Row(
             children: [
               Container(
-                padding: EdgeInsets.only(left: Dimensions.width20),
-                child: Image.asset(
-                  'assets/icons/logo.png',
-                  width: 28,
+                padding: EdgeInsets.only(left: 20),
+                child: Icon(
+                  Icons.agriculture,
+                  color: textWhite,
                 ),
               ),
             ],
@@ -36,7 +36,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) {
       children: [
         Visibility(
           child: CustomText(
-            text: 'Dash',
+            text: 'Painel FeirApp',
             color: textWhite,
             size: Dimensions.font20,
             weight: FontWeight.bold,

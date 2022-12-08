@@ -3,7 +3,29 @@ import 'package:flutter/material.dart';
 import '../../pages/overview/widgets/info_card_small.dart';
 
 class OverviewCardsSmallScreen extends StatelessWidget {
-  const OverviewCardsSmallScreen({Key? key}) : super(key: key);
+  String title1;
+  String value1;
+
+  String title2;
+  String value2;
+
+  String title3;
+  String value3;
+
+  String title4;
+  String value4;
+
+  OverviewCardsSmallScreen({
+    Key? key,
+    required this.title1,
+    required this.value1,
+    required this.title2,
+    required this.value2,
+    required this.title3,
+    required this.value3,
+    required this.title4,
+    required this.value4,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +36,8 @@ class OverviewCardsSmallScreen extends StatelessWidget {
       child: Column(
         children: [
           InfoCardSmall(
-            title: "Rides in progress",
-            value: "7",
+            title: title1,
+            value: value1,
             isActive: true,
             onTap: () {},
           ),
@@ -23,8 +45,8 @@ class OverviewCardsSmallScreen extends StatelessWidget {
             height: _width / 64,
           ),
           InfoCardSmall(
-            title: "Packages delivered",
-            value: "17",
+            title: title2,
+            value: value2,
             isActive: false,
             onTap: () {},
           ),
@@ -32,8 +54,8 @@ class OverviewCardsSmallScreen extends StatelessWidget {
             height: _width / 64,
           ),
           InfoCardSmall(
-            title: "Cancelled delivery",
-            value: "3",
+            title: title3,
+            value: value3,
             isActive: false,
             onTap: () {},
           ),
@@ -41,8 +63,8 @@ class OverviewCardsSmallScreen extends StatelessWidget {
             height: _width / 64,
           ),
           InfoCardSmall(
-            title: "Scheduled deliveries",
-            value: "3",
+            title: title4,
+            value: value4,
             isActive: false,
             onTap: () {},
           ),
