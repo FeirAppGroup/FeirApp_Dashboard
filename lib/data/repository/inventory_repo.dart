@@ -16,6 +16,12 @@ class InventoryRepo extends GetxService {
     return await apiClient.getData(AppConstants.INVENTORY_URI);
   }
 
+  //Busca os estoques cadastrados
+  Future<Response> getInventoryListProductName(String token) async {
+    apiClient.token = token;
+    return await apiClient.getData(AppConstants.INVENTORY_INFOPRODUCT_URI);
+  }
+
   //busca informações do estoque pelo seu ID
   Future<Response> getInfoInventory(int idInventory, String token) async {
     apiClient.token = token;

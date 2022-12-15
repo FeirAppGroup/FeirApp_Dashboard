@@ -37,20 +37,14 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             children: [
               Row(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 12),
-                    child: Image.asset("assets/icons/logo.png"),
+                  Icon(
+                    Icons.agriculture,
+                    color: textWhite,
+                    size: 50,
                   ),
-                  Expanded(
-                    child: Container(),
+                  SizedBox(
+                    width: Dimensions.width20,
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
                   Text(
                     "Login",
                     style: GoogleFonts.roboto(
@@ -59,12 +53,15 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  Expanded(
+                    child: Container(),
+                  ),
                 ],
               ),
               Row(
                 children: [
                   CustomText(
-                    text: "Welcome back to the admin panel",
+                    text: "Bem-Vindo novamente ao Painel FeirApp !!!",
                     color: textBlue,
                   ),
                 ],
@@ -197,31 +194,31 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               SizedBox(
                 height: 15,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: true,
-                        onChanged: (value) {},
-                      ),
-                    ],
-                  ),
-                  CustomText(
-                    text: "Forgot password",
-                    color: textLiteblue,
-                  ),
-                  Text(
-                    'Forgot password',
-                    style: TextStyle(
-                      color: textLiteblue,
-                      decoration: TextDecoration.underline,
-                      fontSize: Dimensions.font16,
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Row(
+              //       children: [
+              //         Checkbox(
+              //           value: true,
+              //           onChanged: (value) {},
+              //         ),
+              //       ],
+              //     ),
+              //     CustomText(
+              //       text: "Forgot password",
+              //       color: textLiteblue,
+              //     ),
+              //     Text(
+              //       'Forgot password',
+              //       style: TextStyle(
+              //         color: textLiteblue,
+              //         decoration: TextDecoration.underline,
+              //         fontSize: Dimensions.font16,
+              //       ),
+              //     ),
+              //   ],
+              // ),
               SizedBox(
                 height: 15,
               ),
@@ -259,13 +256,13 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 height: 15,
               ),
               RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   children: [
-                    TextSpan(text: "Do not have admin credentials ?"),
-                    TextSpan(
-                      text: "Request credentials !",
-                      style: TextStyle(color: active),
-                    ),
+                    TextSpan(text: "Não tem credenciais de acesso ? Contate a AFFLA !"),
+                    // TextSpan(
+                    //   text: "Request credentials !",
+                    //   style: TextStyle(color: active),
+                    // ),
                   ],
                 ),
               ),

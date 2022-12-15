@@ -3,6 +3,7 @@ import 'package:dashboard_feirapp/models/model/property_model.dart';
 import 'package:dashboard_feirapp/pages/propertys/widgets/property_form.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,8 +22,11 @@ class PropertyTable extends StatefulWidget {
 class _PropertyTableState extends State<PropertyTable> {
   var propertyController = Get.find<PropertyController>();
 
+  List<PropertyModel> propertys = [];
+
   UserLoginDto? user;
   String? token;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -31,11 +35,26 @@ class _PropertyTableState extends State<PropertyTable> {
     loadPref();
   }
 
+  initPropertys() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    await propertyController.getPropertyList(token!);
+    propertys = propertyController.propertyList;
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   loadPref() async {
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
     if (sharedUser.getString('user') != null) {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
+
+      initPropertys();
     }
   }
 
@@ -152,38 +171,42 @@ class _PropertyTableState extends State<PropertyTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(Dimensions.height16),
-      margin: EdgeInsets.only(bottom: Dimensions.height30),
-      decoration: BoxDecoration(
-        color: mainBlack,
-        borderRadius: BorderRadius.circular(Dimensions.radius8),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, Dimensions.height5),
-            color: lightGrey.withOpacity(.1),
-            blurRadius: Dimensions.radius12,
-          ),
-        ],
-        border: Border.all(
-          color: mainWhite,
-          width: .5,
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          initPropertys,
-          _createDataTable(context),
-        ],
-      ),
-    );
+    return isLoading == true || propertys.isEmpty
+        ? Center(
+            child: SpinKitCircle(
+              itemBuilder: (BuildContext context, int index) {
+                return const DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                );
+              },
+            ),
+          )
+        : Container(
+            padding: EdgeInsets.all(Dimensions.height16),
+            margin: EdgeInsets.only(bottom: Dimensions.height30),
+            decoration: BoxDecoration(
+              color: mainBlack,
+              borderRadius: BorderRadius.circular(Dimensions.radius8),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, Dimensions.height5),
+                  color: lightGrey.withOpacity(.1),
+                  blurRadius: Dimensions.radius12,
+                ),
+              ],
+              border: Border.all(
+                color: mainWhite,
+                width: .5,
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _createDataTable(context),
+              ],
+            ),
+          );
   }
 }
-
-List<PropertyModel> propertys = [];
-
-var initPropertys = GetBuilder<PropertyController>(builder: (property) {
-  propertys = property.propertyList;
-  return Container();
-});

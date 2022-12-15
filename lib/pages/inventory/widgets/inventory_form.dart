@@ -220,7 +220,9 @@ class _InventoryFormState extends State<InventoryForm> {
       onChanged: (ProductModel? newValue) {},
       onSaved: (ProductModel? newValue) {
         setState(() {
-          _idProduto = newValue!.id;
+          if (newValue != null) {
+            _idProduto = newValue.id;
+          }
         });
       },
       //Search Field

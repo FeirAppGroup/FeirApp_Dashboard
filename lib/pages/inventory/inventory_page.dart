@@ -42,7 +42,7 @@ class _InventoryPageState extends State<InventoryPage> {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
 
-      Get.find<InventoryController>().getInventoryList(token!);
+      Get.find<InventoryController>().getInventoryListProductName(token!);
       Get.find<ProductController>().getProductsList(token!);
     }
   }

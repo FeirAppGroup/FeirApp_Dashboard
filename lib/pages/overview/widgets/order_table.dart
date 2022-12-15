@@ -1,8 +1,5 @@
-import 'package:dashboard_feirapp/controllers/model_controller/inventory_controller.dart';
-import 'package:dashboard_feirapp/controllers/model_controller/product_controller.dart';
-import 'package:dashboard_feirapp/models/model/inventory_model.dart';
-import 'package:dashboard_feirapp/models/model/product_model.dart';
-import 'package:dashboard_feirapp/pages/inventory/widgets/inventory_form.dart';
+import 'package:dashboard_feirapp/controllers/model_controller/order_controller.dart';
+import 'package:dashboard_feirapp/models/model/order_model.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -11,21 +8,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/style.dart';
 import '../../../models/dtos/user_login_dto.dart';
+import '../../../models/enum/forma_pagamento_enum.dart';
+import '../../../models/model/item_cart_model.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/Button/icon_button_widget.dart';
 import '../../../widgets/Text/custom_text.dart';
 
-class InventoryTable extends StatefulWidget {
-  const InventoryTable({Key? key}) : super(key: key);
+class OrderTable extends StatefulWidget {
+  const OrderTable({Key? key}) : super(key: key);
 
   @override
-  State<InventoryTable> createState() => _InventoryTableState();
+  State<OrderTable> createState() => _OrderTableState();
 }
 
-class _InventoryTableState extends State<InventoryTable> {
-  var inventoryController = Get.find<InventoryController>();
+class _OrderTableState extends State<OrderTable> {
+  var orderController = Get.find<OrderController>();
 
-  List<InventoryModel> inventorys = [];
+  List<OrderModel> orders = [];
 
   UserLoginDto? user;
   String? token;
@@ -38,13 +37,13 @@ class _InventoryTableState extends State<InventoryTable> {
     loadPref();
   }
 
-  initInventorys() async {
+  initOrders() async {
     setState(() {
       isLoading = true;
     });
 
-    await inventoryController.getInventoryListProductName(token!);
-    inventorys = inventoryController.inventoryList;
+    await orderController.getListOrders(token!);
+    orders = orderController.orders!;
 
     setState(() {
       isLoading = false;
@@ -53,11 +52,13 @@ class _InventoryTableState extends State<InventoryTable> {
 
   loadPref() async {
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
+    //print(sharedUser.getString('user'));
     if (sharedUser.getString('user') != null) {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
+      print(token);
 
-      initInventorys();
+      initOrders();
     }
   }
 
@@ -69,114 +70,88 @@ class _InventoryTableState extends State<InventoryTable> {
     return [
       DataColumn2(
         label: CustomText(
-          text: 'Nome Produto',
+          text: 'ID',
           color: textWhite,
-          size: Dimensions.font12,
         ),
         size: ColumnSize.L,
       ),
       DataColumn(
         label: CustomText(
-          text: 'Quantidade',
+          text: 'Quantidade de Itens',
           color: textWhite,
-          size: Dimensions.font10,
         ),
       ),
       DataColumn(
         label: CustomText(
-          text: 'Editar',
+          text: 'Endereço de Entrega',
           color: textWhite,
-          size: Dimensions.font12,
         ),
       ),
       DataColumn(
         label: CustomText(
-          text: 'Apagar',
+          text: 'Valor Total',
           color: textWhite,
-          size: Dimensions.font12,
         ),
       ),
+      // DataColumn(
+      //   label: CustomText(
+      //     text: 'Aceitar Pedido',
+      //     color: textWhite,
+      //   ),
+      // ),
     ];
   }
 
   List<DataRow> _createRows(
     BuildContext context,
   ) {
-    return inventorys
+    return orders
         .map(
-          (inventorys) => DataRow(
+          (order) => DataRow(
             cells: [
               DataCell(
                 CustomText(
-                  text: inventorys.nomeProduto!,
+                  text: order.id.toString(),
                   color: textWhite,
                 ),
               ),
               DataCell(
                 CustomText(
-                  text: inventorys.quantidade.toString(),
+                  text: order.itemPedidos.length.toString(),
                   color: textWhite,
                 ),
               ),
               DataCell(
-                IconButtonWidget(
-                  width: Dimensions.width40,
-                  height: Dimensions.height40,
-                  backgroundColor: textLiteblue,
-                  iconColor: mainBlack,
-                  icon: Icons.edit,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => InventoryForm(id: inventorys.id),
-                      ),
-                    );
-                  },
+                CustomText(
+                  text: order.enderecoEntrega,
+                  color: textWhite,
                 ),
               ),
               DataCell(
-                IconButtonWidget(
-                  width: Dimensions.width40,
-                  height: Dimensions.height40,
-                  backgroundColor: tertiaryRed,
-                  iconColor: mainBlack,
-                  icon: Icons.delete,
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Container(
-                          height: 200,
-                          color: tertiaryRed,
-                          child: Center(
-                            child: CustomText(
-                              text: "Remoção completa",
-                              color: textWhite,
-                              size: Dimensions.font12,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-
-                    _deleteInventory(inventorys.id!);
-                  },
+                CustomText(
+                  text: order.valorTotal.toStringAsFixed(2),
+                  color: textWhite,
                 ),
               ),
+              // DataCell(
+              //   IconButtonWidget(
+              //     width: Dimensions.width40,
+              //     height: Dimensions.height40,
+              //     backgroundColor: tertiaryRed,
+              //     iconColor: mainBlack,
+              //     icon: Icons.delete,
+              //     onTap: () {},
+              //   ),
+              // ),
             ],
           ),
         )
         .toList();
   }
 
-  Future<void> _deleteInventory(int idInventory) async {
-    await inventoryController.deleteInventory(idInventory, token!);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return isLoading == true || inventorys.isEmpty
+    return isLoading == true || orders.isEmpty
         ? Center(
             child: SpinKitCircle(
               itemBuilder: (BuildContext context, int index) {

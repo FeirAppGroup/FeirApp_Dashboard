@@ -2,12 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../../../../constants/style.dart';
 import '../../../../widgets/Text/custom_text.dart';
-
 import '../bar_chart.dart';
 import 'revenue_info.dart';
 
 class RevenueSectionSmall extends StatelessWidget {
-  const RevenueSectionSmall({Key? key}) : super(key: key);
+  double value1;
+  double value2;
+  double value3;
+  double value4;
+
+  RevenueSectionSmall({
+    Key? key,
+    required this.value1,
+    required this.value2,
+    required this.value3,
+    required this.value4,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +40,7 @@ class RevenueSectionSmall extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 CustomText(
-                  text: "Revenue Chart",
+                  text: "Gráfico de Utilização",
                   size: 20,
                   weight: FontWeight.bold,
                   color: textWhite,
@@ -39,43 +49,16 @@ class RevenueSectionSmall extends StatelessWidget {
                   color: bgBlackMain,
                   width: 400,
                   height: 200,
-                  child: ChartsDrivers(),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: bgBlackMain,
-            height: 260,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    RevenueInfo(
-                      title: "Today\'s revenue",
-                      amount: "23",
-                    ),
-                    RevenueInfo(
-                      title: "Last 7 days",
-                      amount: "150",
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  children: [
-                    RevenueInfo(
-                      title: "Last 30 days",
-                      amount: "1,203",
-                    ),
-                    RevenueInfo(
-                      title: "Last 12 months",
-                      amount: "3,234",
-                    ),
-                  ],
+                  child: ChartsDrivers(
+                    title1: 'Total de Produtores',
+                    value1: value1,
+                    title2: 'Total de Usuários',
+                    value2: value2,
+                    title3: 'Pedidos Abertos',
+                    value3: value3,
+                    title4: 'Pedidos Fechados',
+                    value4: value4,
+                  ),
                 ),
               ],
             ),

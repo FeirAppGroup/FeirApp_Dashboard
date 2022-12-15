@@ -1,8 +1,10 @@
 import 'package:dashboard_feirapp/controllers/model_controller/inventory_controller.dart';
+import 'package:dashboard_feirapp/controllers/model_controller/order_controller.dart';
 import 'package:dashboard_feirapp/controllers/model_controller/product_controller.dart';
 import 'package:dashboard_feirapp/controllers/model_controller/property_controller.dart';
 import 'package:dashboard_feirapp/controllers/model_controller/user_controller.dart';
 import 'package:dashboard_feirapp/data/repository/inventory_repo.dart';
+import 'package:dashboard_feirapp/data/repository/order_repo.dart';
 import 'package:dashboard_feirapp/data/repository/product_repo.dart';
 import 'package:dashboard_feirapp/data/repository/property_repo.dart';
 import 'package:dashboard_feirapp/data/repository/user_repo.dart';
@@ -26,6 +28,7 @@ Future<void> init() async {
   Get.lazyPut(() => PropertyRepo(apiClient: Get.find()));
   Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
   Get.lazyPut(() => InventoryRepo(apiClient: Get.find()));
+  Get.lazyPut(() => OrderRepo(apiClient: Get.find()));
 
   //controllers
   Get.lazyPut(() => LoginController(loginRepo: Get.find()));
@@ -33,6 +36,7 @@ Future<void> init() async {
   Get.put(PropertyController(propertyRepo: Get.find()));
   Get.put(ProductController(productRepo: Get.find()));
   Get.put(InventoryController(inventoryRepo: Get.find()));
+  Get.lazyPut(() => OrderController(orderRepo: Get.find()));
 
   Get.put(MenuController());
   Get.put(NavigationController());

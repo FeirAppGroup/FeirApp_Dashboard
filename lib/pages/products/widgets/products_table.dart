@@ -2,6 +2,7 @@ import 'package:dashboard_feirapp/controllers/model_controller/product_controlle
 import 'package:dashboard_feirapp/pages/products/widgets/products_form.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,8 +23,11 @@ class ProductsTable extends StatefulWidget {
 class _ProductsTableState extends State<ProductsTable> {
   var productController = Get.find<ProductController>();
 
+  List<ProductModel> products = [];
+
   UserLoginDto? user;
   String? token;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -32,11 +36,26 @@ class _ProductsTableState extends State<ProductsTable> {
     loadPref();
   }
 
+  initProducts() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    await productController.getProductsList(token!);
+    products = productController.productsList;
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   loadPref() async {
     SharedPreferences sharedUser = await SharedPreferences.getInstance();
     if (sharedUser.getString('user') != null) {
       user = UserLoginDto.fromJson(sharedUser.getString('user') ?? "");
       token = user!.token;
+
+      initProducts();
     }
   }
 
@@ -153,38 +172,42 @@ class _ProductsTableState extends State<ProductsTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(Dimensions.height16),
-      margin: EdgeInsets.only(bottom: Dimensions.height30),
-      decoration: BoxDecoration(
-        color: mainBlack,
-        borderRadius: BorderRadius.circular(Dimensions.radius8),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, Dimensions.height5),
-            color: lightGrey.withOpacity(.1),
-            blurRadius: Dimensions.radius12,
-          ),
-        ],
-        border: Border.all(
-          color: mainWhite,
-          width: .5,
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          initProducts,
-          _createDataTable(context),
-        ],
-      ),
-    );
+    return isLoading == true || products.isEmpty
+        ? Center(
+            child: SpinKitCircle(
+              itemBuilder: (BuildContext context, int index) {
+                return const DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                );
+              },
+            ),
+          )
+        : Container(
+            padding: EdgeInsets.all(Dimensions.height16),
+            margin: EdgeInsets.only(bottom: Dimensions.height30),
+            decoration: BoxDecoration(
+              color: mainBlack,
+              borderRadius: BorderRadius.circular(Dimensions.radius8),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, Dimensions.height5),
+                  color: lightGrey.withOpacity(.1),
+                  blurRadius: Dimensions.radius12,
+                ),
+              ],
+              border: Border.all(
+                color: mainWhite,
+                width: .5,
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _createDataTable(context),
+              ],
+            ),
+          );
   }
 }
-
-List<ProductModel> products = [];
-
-var initProducts = GetBuilder<ProductController>(builder: (product) {
-  products = product.productsList;
-  return Container();
-});
