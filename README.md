@@ -9,20 +9,14 @@
   <img src="https://img.shields.io/static/v1?label=FLUTTER%20VERSION&message=3.0.5&color=blue&style=for-the-badge"/>
 </p>
 
-
-
 # Índice 
 
 * [Índice](#índice)
 * [Sobre o Projeto](#sobre-o-projeto)
-* [Funcionalidades](#funcionalidades)
-* [Funcionalidades e Demonstração da Aplicação](#funcionalidades-e-demonstração-da-aplicação)
-* [Acesso ao Projeto](#acesso-ao-projeto)
-* [Tecnologias utilizadas](#tecnologias-utilizadas)
-* [Pessoas Contribuidoras](#pessoas-contribuidoras)
-* [Pessoas Desenvolvedoras do Projeto](#pessoas-desenvolvedoras)
-* [Licença](#licença)
-* [Conclusão](#conclusão)
+* [Funcionalidades do projeto](#funcionalidades-do-projeto)
+* [Demonstração da Aplicação](#demonstração-da-aplicação)
+* [Principais Bibliotecas Utilizadas](#principais-bibliotecas-utilizadas)
+* [Autores](#autores)
 
 ## Sobre o projeto
 
@@ -37,7 +31,7 @@
   Desenvolvido em Flutter na sua versão 3.0.5.
 </p>
 
-## :hammer: Funcionalidades do projeto
+## Funcionalidades do projeto
 
 :heavy_check_mark: Realizar inserção, edição, visualização e deleção de produtores, produtos junto com seus estoques e propriedades.
 
@@ -47,23 +41,58 @@
 
 :heavy_check_mark: Mostrar visualmente todos os dados que foram inseridos pelo painel de controle.
 
+❌ Preparar café
 
-![Logando na Dashboard](https://user-images.githubusercontent.com/71350546/207959607-5d67443e-ef23-430e-82e9-0f2e09386cee.gif)
+## Demonstração da Aplicação
 
-  
+<h3> Demonstração da tela Home da Dashboard 👇 </h3>
+
+![Login](https://user-images.githubusercontent.com/71350546/207991513-e46f18a2-ed2a-42f5-9d59-0b8a3aa1b84f.gif)
+
+<p text-align: justify;> 
+  O fluxo de execução de todas as telas na utilização da Dashboard é bem parecido, com excessão de algumas que dispõem de DropDowns ao invés apenas de inputs.
+  Um fato a se destacar é que cada um possui uma lógica própria para fazer a adição, remoção e a deleção.
+</p>
+
+<h3> Demonstração da Tela de Cadastro e Edição de Produtor 👇 </h3>
+
+![Produtor](https://user-images.githubusercontent.com/71350546/207991148-4739f98f-05c5-4ccd-8c0f-e3e5966b1c1a.gif)
+
+<h3> Demonstração da tela Propriedades da Dashboard 👇 </h3>
+
+![Propriedades](https://user-images.githubusercontent.com/71350546/207991867-e83c2ae0-0ebc-4284-886b-c8299fb758ef.gif)
+
+<h3> Dropdown desenvolvido para a aplicação 👇 </h3>
+
+![Produto_drop](https://user-images.githubusercontent.com/71350546/207992737-831d9913-fb14-4092-b741-8ed7099fb66e.gif)
 
 
+## Principais Bibliotecas Utilizadas
 
-## Getting Started
+<p>
+📘 - get 4.6.5 - Utilizado para praticamente tudo do projeto - Disponível em: https://pub.dev/packages/get </br>
 
-This project is a starting point for a Flutter application.
+📖 - Bibliotecas que já vem junto com o framework Flutter
 
-A few resources to get you started if this is your first Flutter project:
+```
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^3.0.1
+  get: ^4.6.5
+  syncfusion_flutter_charts: ^20.3.48
+  data_table_2: ^2.3.7
+  flutter_spinkit: ^5.1.0
+  shared_preferences: ^2.0.15
+  dropdown_button2: ^1.8.9
+  intl: ^0.17.0
+```
+</p>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Autores
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| [<img src="https://avatars.githubusercontent.com/u/71350546?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) | [<img src="https://avatars.githubusercontent.com/u/71350546?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) |  [<img src="https://avatars.githubusercontent.com/u/71350546?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) |
+| :---: | :---: | :---: 
+
+Copyright :copyright: 2022 - Dashboard FeirApp
 
