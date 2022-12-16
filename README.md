@@ -72,7 +72,7 @@
 <p>
 📘 - get 4.6.5 - Utilizado para praticamente tudo do projeto - Disponível em: https://pub.dev/packages/get </br>
 
-📖 - Bibliotecas que já vem junto com o framework Flutter
+📖 - Bibliotecas que já vem junto com o framework Flutter, além de mais algumas que ajudam na exibição de dados na tela, como pode ser visto abaixo:
 
 ```
 dependencies:
@@ -94,5 +94,6 @@ dependencies:
 | [<img src="https://avatars.githubusercontent.com/u/71350546?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) | [<img src="https://avatars.githubusercontent.com/u/71350546?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) |  [<img src="https://avatars.githubusercontent.com/u/71350546?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) |
 | :---: | :---: | :---: 
 
+<p align="center">
 Copyright :copyright: 2022 - Dashboard FeirApp
-
+</p>
