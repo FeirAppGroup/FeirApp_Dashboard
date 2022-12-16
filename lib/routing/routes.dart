@@ -24,7 +24,7 @@ const productPageRoute = '/product';
 const inventoryPageDisplayName = 'Estoque';
 const inventoryPageRoute = '/estoque';
 
-const authenticationPageDisplayName = 'Authentication';
+const authenticationPageDisplayName = 'Autenticação';
 const authenticationPageRoute = '/authentication';
 
 const notfoundPageRoute = '/notfound';
