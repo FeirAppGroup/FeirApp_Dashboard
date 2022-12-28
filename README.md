@@ -91,7 +91,7 @@ dependencies:
 
 # Autores
 
-| [<img src="https://avatars.githubusercontent.com/u/71350546?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) | [<img src="https://avatars.githubusercontent.com/u/71350546?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) |  [<img src="https://avatars.githubusercontent.com/u/71350546?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) |
+| [<img src="https://avatars.githubusercontent.com/u/71350546?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) | [<img src="https://avatars.githubusercontent.com/u/71300827?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) |  [<img src="https://avatars.githubusercontent.com/u/71300702?v=4" width=115><br><sub>Matheus Fidelis</sub>](https://github.com/FidelisMatheus) |
 | :---: | :---: | :---: 
 
 <p align="center">
